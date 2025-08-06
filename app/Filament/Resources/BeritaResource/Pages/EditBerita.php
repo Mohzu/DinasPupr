@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\NewsResource\Pages;
+namespace App\Filament\Resources\BeritaResource\Pages;
 
-use App\Filament\Resources\NewsResource;
+use App\Filament\Resources\BeritaResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 
-class EditNews extends EditRecord
+class EditBerita extends EditRecord
 {
-    protected static string $resource = NewsResource::class;
+    protected static string $resource = BeritaResource::class;
 
     protected function getHeaderActions(): array
     {

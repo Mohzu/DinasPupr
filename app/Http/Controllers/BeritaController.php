@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Berita; // Import model Berita
 
-class HomeController extends Controller
+class BeritaController extends Controller
 {
     public function index()
     {
@@ -16,6 +16,6 @@ class HomeController extends Controller
         $beritas = Berita::latest()->take(5)->get(); 
 
         // Meneruskan data berita ke view
-        return view('pages.index', compact('beritas')); // 'beritas' akan tersedia di view
+        return view('pages.berita', compact('beritas')); // 'beritas' akan tersedia di view
     }
 }

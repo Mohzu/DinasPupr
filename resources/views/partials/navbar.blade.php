@@ -7,7 +7,7 @@
                         <!-- Ganti dengan logo Anda -->
                         <div class="h-10 w-10 lg:h-12 lg:w-12 rounded-lg shadow-md bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
                             <img 
-                                src="img/logoPU.png" 
+                                src="{{ asset('img/logoPU.png') }}" 
                                 alt="Logo Dinas PU" 
                                 class="h-8 w-8 lg:h-10 lg:w-10 object-contain"
                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
@@ -105,7 +105,7 @@
                             @click.away="open = false" 
                             class="absolute top-full left-1/2 transform -translate-x-1/2 mt-3 bg-white shadow-xl rounded-xl w-56 py-3 border border-gray-100 backdrop-blur-sm">
                             <li>
-                                <a href="#" class="block px-5 py-3 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 hover:translate-x-1">
+                                <a href="{{ route('berita') }}" class="block px-5 py-3 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 hover:translate-x-1">
                                     <div class="flex items-center space-x-3">
                                         <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
                                         <span>Berita Terkini</span>
