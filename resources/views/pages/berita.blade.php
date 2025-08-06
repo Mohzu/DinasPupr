@@ -5,45 +5,60 @@
 
 @section('content')
 <div class="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50">
-    <!-- Hero Section with Dynamic Background -->
-    <div class="relative bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 overflow-hidden">
-        <!-- Animated Background Elements -->
+    <!-- Hero Section with Background Image -->
+    <div class="relative overflow-hidden mb-8 shadow-2xl mt-20 h-[70vh] min-h-[500px]">
+        <!-- Background Image dengan object positioning yang lebih baik -->
         <div class="absolute inset-0">
+            <img src="{{ asset('img/DinasPUPR.jpg') }}" alt="Background PUPR Garut" class="w-full h-full object-cover object-center">
+            <!-- Overlay yang lebih gelap untuk kontras text yang lebih baik -->
+            <div class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/70"></div>
+            <!-- Tambahan overlay untuk memastikan text terbaca -->
+            <div class="absolute inset-0 bg-black/20"></div>
+        </div>
+        
+        <!-- Animated Background Elements -->
+        <div class="absolute inset-0 z-5">
             <div class="absolute top-20 left-20 w-32 h-32 bg-white bg-opacity-10 rounded-full animate-bounce"></div>
             <div class="absolute top-40 right-32 w-20 h-20 bg-yellow-300 bg-opacity-20 rounded-full animate-ping"></div>
             <div class="absolute bottom-32 left-1/3 w-24 h-24 bg-green-400 bg-opacity-15 rounded-full animate-pulse"></div>
             <div class="absolute top-1/2 right-20 w-16 h-16 bg-pink-400 bg-opacity-10 rounded-full animate-spin"></div>
         </div>
         
-        <div class="container mx-auto px-6 py-24 relative z-10 mt-16">
-            <div class="text-center space-y-6">
-                <div class="inline-flex items-center gap-3 bg-white bg-opacity-20 backdrop-blur-sm rounded-full px-6 py-3 text-white font-medium animate-pulse">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <!-- Content dengan positioning yang lebih centered -->
+        <div class="relative z-10 container mx-auto px-6 h-full flex items-center justify-center text-center">
+            <div class="max-w-4xl mx-auto space-y-6">
+                <div class="inline-flex items-center gap-3 bg-white/90 backdrop-blur-md rounded-full px-6 py-3 text-gray-800 font-semibold shadow-lg border border-white/50">
+                    <svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                     </svg>
                     Update Terkini
                 </div>
                 
-                <h1 class="text-6xl md:text-7xl font-black text-white drop-shadow-2xl leading-tight">
+                <!-- Title dengan shadow yang lebih kuat -->
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-black text-white drop-shadow-[4px_4px_8px_rgba(0,0,0,0.9)] leading-tight">
                     Berita 
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-200 animate-pulse">
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-100 drop-shadow-[2px_2px_4px_rgba(0,0,0,0.8)]">
                         Terkini
                     </span>
                 </h1>
                 
-                <p class="text-2xl text-blue-100 font-semibold max-w-3xl mx-auto leading-relaxed">
-                    Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Garut
-                </p>
+                <!-- Subtitle dengan background semi-transparent -->
+                <div class="inline-block bg-black/30 backdrop-blur-sm rounded-2xl px-6 py-3">
+                    <p class="text-xl md:text-2xl text-white font-semibold max-w-3xl mx-auto drop-shadow-[2px_2px_4px_rgba(0,0,0,0.8)]">
+                        Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Garut
+                    </p>
+                </div>
                 
+                <!-- Stats dengan background yang lebih kontras -->
                 <div class="flex flex-wrap justify-center gap-4 mt-8">
-                    <div class="bg-gradient-to-r from-white/20 to-white/10 backdrop-blur-lg rounded-2xl px-6 py-3 text-white font-medium border border-white/20">
-                        <svg class="w-5 h-5 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <div class="bg-white/90 backdrop-blur-md rounded-2xl px-6 py-3 text-gray-800 font-semibold border border-white/50 shadow-lg">
+                        <svg class="w-5 h-5 inline mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/>
                         </svg>
                         Update: 5 Agustus 2025
                     </div>
-                    <div class="bg-gradient-to-r from-green-500/20 to-emerald-500/10 backdrop-blur-lg rounded-2xl px-6 py-3 text-white font-medium border border-green-400/20">
-                        <svg class="w-5 h-5 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <div class="bg-white/90 backdrop-blur-md rounded-2xl px-6 py-3 text-gray-800 font-semibold border border-white/50 shadow-lg">
+                        <svg class="w-5 h-5 inline mr-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                         15 Berita Baru

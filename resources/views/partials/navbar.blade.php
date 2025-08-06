@@ -113,7 +113,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="block px-5 py-3 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 hover:translate-x-1">
+                                <a href="{{ route('pengumuman') }}" class="block px-5 py-3 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 hover:translate-x-1">
                                     <div class="flex items-center space-x-3">
                                         <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
                                         <span>Pengumuman</span>
