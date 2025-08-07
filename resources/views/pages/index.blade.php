@@ -204,7 +204,6 @@
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Infrastruktur Jalan</h3>
                     <p class="text-gray-600 mb-6 leading-relaxed">Pembangunan, pemeliharaan, dan rehabilitasi jalan kabupaten untuk meningkatkan konektivitas antar wilayah.</p>
                     <a href="#" class="flex items-center text-blue-600 font-semibold group-hover:text-blue-700">
-                        <span class="mr-2">Pelajari lebih lanjut</span>
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
@@ -222,7 +221,6 @@
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Penataan Ruang</h3>
                     <p class="text-gray-600 mb-6 leading-relaxed">Perencanaan tata ruang wilayah yang terstruktur dan berkelanjutan sesuai dengan kebutuhan masa depan.</p>
                     <a href="#" class="flex items-center text-green-600 font-semibold group-hover:text-green-700">
-                        <span class="mr-2">Pelajari lebih lanjut</span>
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
@@ -240,22 +238,11 @@
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Perizinan IMB</h3>
                     <p class="text-gray-600 mb-6 leading-relaxed">Layanan perizinan mendirikan bangunan dan konsultasi teknis untuk masyarakat dan pengembang.</p>
                     <a href="#" class="flex items-center text-purple-600 font-semibold group-hover:text-purple-700">
-                        <span class="mr-2">Pelajari lebih lanjut</span>
                         <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </a>
                 </div>
-            </div>
-
-            {{-- View All Button --}}
-            <div class="text-center mt-12">
-                <a href="#" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-700 hover:to-indigo-700 transform hover:-translate-y-1 transition-all duration-300 shadow-xl">
-                    <span class="mr-2">Lihat Semua Layanan</span>
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                    </svg>
-                </a>
             </div>
         </div>
     </section>
@@ -278,7 +265,7 @@
                     <div class="w-1 h-12 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full"></div>
                     <h2 class="text-3xl lg:text-4xl font-bold text-gray-900">Berita Terkini</h2>
                 </div>
-                <a href="#" class="group inline-flex items-center bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold px-6 py-3 rounded-xl hover:from-blue-700 hover:to-blue-800 transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-xl">
+                <a href="{{ route('berita') }}" class="group inline-flex items-center bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold px-6 py-3 rounded-xl hover:from-blue-700 hover:to-blue-800 transform hover:-translate-y-1 transition-all duration-300 shadow-lg hover:shadow-xl">
                     <span class="mr-2">Lihat Semua Berita</span>
                     <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>

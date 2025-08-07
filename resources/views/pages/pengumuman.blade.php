@@ -3,416 +3,580 @@
 @section('title', 'Pengumuman')
 @section('description', 'Pengumuman resmi dari Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Garut')
 
-@section('content')
-<div class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+@push('styles')
+<style>
+    .glass-effect {
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        background: rgba(255, 255, 255, 0.1);
+    }
     
-    <!-- Hero Section - Full Width dengan height yang pas -->
-    <div class="relative overflow-hidden mb-8 shadow-2xl mt-20 h-[70vh] min-h-[500px] mt-16">
-        <!-- Background Image dengan object positioning yang lebih baik -->
+    .card-hover {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .card-hover:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .fade-in {
+        animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+@endpush
+
+@section('content')
+<div class="min-h-screen bg-gray-50">
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden mb-8 shadow-2xl mt-20 h-[70vh] min-h-[500px]">
         <div class="absolute inset-0">
             <img src="{{ asset('img/DinasPUPR.jpg') }}" alt="Background PUPR Garut" class="w-full h-full object-cover object-center">
-            <!-- Overlay yang lebih gelap untuk kontras text yang lebih baik -->
             <div class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/70"></div>
-            <!-- Tambahan overlay untuk memastikan text terbaca -->
             <div class="absolute inset-0 bg-black/20"></div>
         </div>
-        
-        <!-- Decorative Elements -->
+
         <div class="absolute inset-0 z-5">
             <div class="absolute top-8 left-8 w-16 h-16 bg-white bg-opacity-10 rounded-full animate-pulse"></div>
             <div class="absolute top-24 right-12 w-12 h-12 bg-yellow-300 bg-opacity-30 rounded-full animate-bounce"></div>
             <div class="absolute bottom-16 left-1/4 w-10 h-10 bg-green-400 bg-opacity-20 rounded-full animate-ping"></div>
         </div>
-        
-        <!-- Content dengan positioning yang lebih centered -->
+
         <div class="relative z-10 container mx-auto px-6 h-full flex items-center justify-center text-center">
             <div class="max-w-4xl mx-auto">
                 <div class="inline-flex items-center gap-2 bg-white bg-opacity-95 backdrop-blur-md rounded-full px-4 py-2 text-gray-800 text-sm font-semibold mb-6 border border-white border-opacity-50 shadow-lg">
-                    <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     Update Terkini
                 </div>
-                
-                <!-- Title dengan shadow yang lebih kuat -->
+
                 <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 drop-shadow-[4px_4px_8px_rgba(0,0,0,0.9)]">
-                    Pengumuman 
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-200 to-orange-300 drop-shadow-[2px_2px_4px_rgba(0,0,0,0.8)]">
+                    Pengumuman
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-300 drop-shadow-[2px_2px_4px_rgba(0,0,0,0.8)]">
                         Resmi
                     </span>
                 </h1>
-                
-                <!-- Subtitle dengan background semi-transparent -->
+
                 <div class="inline-block bg-black/30 backdrop-blur-sm rounded-2xl px-6 py-3 mb-8">
                     <p class="text-lg md:text-xl text-white font-semibold max-w-3xl mx-auto drop-shadow-[2px_2px_4px_rgba(0,0,0,0.8)]">
                         Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Garut
                     </p>
                 </div>
-                
-                <!-- Stats dengan background yang lebih kontras -->
+
                 <div class="flex flex-wrap justify-center gap-3">
                     <div class="bg-white/90 backdrop-blur-md rounded-xl px-4 py-2 text-gray-800 text-sm font-semibold border border-white/50 shadow-lg">
                         <svg class="w-4 h-4 inline mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/>
+                            <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" />
                         </svg>
                         6 Agustus 2025
                     </div>
                     <div class="bg-white/90 backdrop-blur-md rounded-xl px-4 py-2 text-gray-800 text-sm font-semibold border border-white/50 shadow-lg">
                         <svg class="w-4 h-4 inline mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
                         127 Pengumuman
                     </div>
                     <div class="bg-white/90 backdrop-blur-md rounded-xl px-4 py-2 text-gray-800 text-sm font-semibold border border-white/50 shadow-lg">
                         <svg class="w-4 h-4 inline mr-2 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         5 Baru
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Container untuk konten selanjutnya -->
-    <div class="container mx-auto px-6 py-8">
-
-        <!-- Featured Announcement -->
-        <div class="mb-12">
-            <div class="bg-gradient-to-r from-red-500 to-pink-600 rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
-                <div class="p-8">
-                    <div class="flex items-start gap-6">
-                        <div class="flex-shrink-0">
-                            <div class="w-14 h-14 bg-white bg-opacity-20 backdrop-blur-sm rounded-xl flex items-center justify-center">
-                                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
-                                </svg>
-                            </div>
-                        </div>
-                        
-                        <div class="flex-1 text-white">
-                            <div class="flex flex-wrap items-center gap-3 mb-4">
-                                <span class="bg-yellow-300 text-yellow-900 px-3 py-1 rounded-full text-xs font-bold">
-                                    URGENT
-                                </span>
-                                <span class="bg-white bg-opacity-20 backdrop-blur-sm px-3 py-1 rounded-full text-xs">
-                                    Deadline: 15 Agustus 2025
-                                </span>
-                            </div>
-                            
-                            <h2 class="text-2xl font-bold mb-3">
-                                Lelang Terbuka Pembangunan Jalan Lingkar Utara Garut Tahap II
-                            </h2>
-                            
-                            <p class="text-white text-opacity-90 mb-4 leading-relaxed">
-                                Pengumuman lelang untuk proyek strategis pembangunan infrastruktur jalan senilai Rp 45 Miliar. 
-                                Batas akhir pendaftaran dalam 10 hari.
-                            </p>
-                            
-                            <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="bg-white bg-opacity-20 backdrop-blur-sm px-3 py-1 rounded-lg text-xs">💰 Rp 45 Miliar</span>
-                                <span class="bg-white bg-opacity-20 backdrop-blur-sm px-3 py-1 rounded-lg text-xs">🏗️ Infrastruktur</span>
-                                <span class="bg-white bg-opacity-20 backdrop-blur-sm px-3 py-1 rounded-lg text-xs">📍 Garut Utara</span>
-                            </div>
-                            
-                            <button class="bg-white hover:bg-gray-100 text-red-600 px-6 py-2 rounded-xl font-semibold transition-all duration-300 hover:scale-105">
-                                Lihat Detail Lengkap
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Announcements Grid -->
-        <div class="space-y-8 mb-12">
+    <!-- Content Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-6">
             
-            <!-- Announcement Card 1 -->
-            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
-                <div class="p-8">
-                    <div class="flex items-start gap-6">
-                        <div class="flex-shrink-0">
-                            <div class="w-14 h-14 bg-gradient-to-br from-green-400 to-emerald-500 rounded-xl flex items-center justify-center shadow-md">
-                                <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+            <!-- Filters -->
+            <div class="max-w-7xl mx-auto mb-12">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                    <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
+                        <!-- Search -->
+                        <div class="relative flex-1 max-w-md">
+                            <input id="search-input" 
+                                   type="text" 
+                                   placeholder="Cari pengumuman..." 
+                                   class="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-4">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                                 </svg>
                             </div>
                         </div>
                         
-                        <div class="flex-1">
-                            <div class="flex flex-wrap items-center gap-3 mb-4">
-                                <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                                    Pengadaan
-                                </span>
-                                <span class="text-gray-500 text-sm">5 Agustus 2025</span>
-                                <span class="ml-auto bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
-                                    SELESAI
-                                </span>
-                            </div>
+                        <!-- Filters -->
+                        <div class="flex gap-3">
+                            <select id="category-filter" class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+                                <option value="">Semua Kategori</option>
+                            </select>
                             
-                            <h3 class="text-xl font-bold text-gray-900 mb-3 hover:text-blue-600 transition-colors cursor-pointer">
-                                Pengumuman Hasil Lelang Rehabilitasi Jembatan Cikandang
-                            </h3>
-                            
-                            <p class="text-gray-600 mb-4 leading-relaxed">
-                                Telah selesai dilakukan evaluasi terhadap penawaran yang masuk untuk pekerjaan rehabilitasi 
-                                Jembatan Cikandang. Pemenang lelang telah ditetapkan dengan nilai kontrak Rp 2.8 Miliar.
-                            </p>
-                            
-                            <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm">🏗️ Infrastruktur</span>
-                                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm">💰 Rp 2.8M</span>
-                                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm">⏱️ 6 Bulan</span>
-                            </div>
-                            
-                            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                                <div class="flex items-center gap-4 text-sm text-gray-500">
-                                    <span class="flex items-center gap-1">
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
-                                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
-                                        </svg>
-                                        245 dilihat
-                                    </span>
-                                    <span class="flex items-center gap-1">
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                                        </svg>
-                                        23 unduhan
-                                    </span>
-                                </div>
-                                
-                                <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl font-medium transition-all duration-300">
-                                    Baca Selengkapnya
-                                </button>
-                            </div>
+                            <select id="sort-filter" class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+                                <option value="terbaru">Terbaru</option>
+                                <option value="terlama">Terlama</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Announcement Card 2 -->
-            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
-                <div class="p-8">
-                    <div class="flex items-start gap-6">
-                        <div class="flex-shrink-0">
-                            <div class="w-14 h-14 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-xl flex items-center justify-center shadow-md">
-                                <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"/>
-                                </svg>
-                            </div>
-                        </div>
-                        
-                        <div class="flex-1">
-                            <div class="flex flex-wrap items-center gap-3 mb-4">
-                                <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                                    Kebijakan
-                                </span>
-                                <span class="text-gray-500 text-sm">3 Agustus 2025</span>
-                                <span class="ml-auto bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-medium">
-                                    BARU
-                                </span>
-                            </div>
-                            
-                            <h3 class="text-xl font-bold text-gray-900 mb-3 hover:text-blue-600 transition-colors cursor-pointer">
-                                Peraturan Baru Tata Cara Pengurusan IMB di Kabupaten Garut
-                            </h3>
-                            
-                            <p class="text-gray-600 mb-4 leading-relaxed">
-                                Dalam rangka meningkatkan pelayanan publik, Dinas PUPR mengeluarkan peraturan terbaru 
-                                mengenai tata cara pengurusan Izin Mendirikan Bangunan (IMB) dengan sistem digital terintegrasi.
-                            </p>
-                            
-                            <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm">📋 Perizinan</span>
-                                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm">💻 Digital</span>
-                                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm">⚡ Cepat</span>
-                            </div>
-                            
-                            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                                <div class="flex items-center gap-4 text-sm text-gray-500">
-                                    <span class="flex items-center gap-1">
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
-                                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
-                                        </svg>
-                                        189 dilihat
-                                    </span>
-                                    <span class="flex items-center gap-1">
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                                        </svg>
-                                        45 unduhan
-                                    </span>
-                                </div>
-                                
-                                <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl font-medium transition-all duration-300">
-                                    Baca Selengkapnya
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Announcement Card 3 -->
-            <div class="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden">
-                <div class="p-8">
-                    <div class="flex items-start gap-6">
-                        <div class="flex-shrink-0">
-                            <div class="w-14 h-14 bg-gradient-to-br from-purple-400 to-violet-500 rounded-xl flex items-center justify-center shadow-md">
-                                <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
-                                    <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"/>
-                                </svg>
-                            </div>
-                        </div>
-                        
-                        <div class="flex-1">
-                            <div class="flex flex-wrap items-center gap-3 mb-4">
-                                <span class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                                    Rekrutmen
-                                </span>
-                                <span class="text-gray-500 text-sm">1 Agustus 2025</span>
-                                <span class="ml-auto bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-medium">
-                                    HOT
-                                </span>
-                            </div>
-                            
-                            <h3 class="text-xl font-bold text-gray-900 mb-3 hover:text-blue-600 transition-colors cursor-pointer">
-                                Lowongan Tenaga Kontrak PUPR Garut Periode 2025
-                            </h3>
-                            
-                            <p class="text-gray-600 mb-4 leading-relaxed">
-                                Dinas PUPR Kabupaten Garut membuka kesempatan bagi putra-putri terbaik untuk bergabung 
-                                sebagai tenaga kontrak pada berbagai bidang keahlian teknis dan administrasi.
-                            </p>
-                            
-                            <div class="flex flex-wrap gap-2 mb-6">
-                                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm">👥 15 Posisi</span>
-                                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm">🎓 S1/D3</span>
-                                <span class="bg-gray-100 text-gray-700 px-3 py-1 rounded-lg text-sm">📅 Deadline 20 Agt</span>
-                            </div>
-                            
-                            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                                <div class="flex items-center gap-4 text-sm text-gray-500">
-                                    <span class="flex items-center gap-1">
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
-                                            <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
-                                        </svg>
-                                        412 dilihat
-                                    </span>
-                                    <span class="flex items-center gap-1">
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                                        </svg>
-                                        67 unduhan
-                                    </span>
-                                </div>
-                                
-                                <button class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl font-medium transition-all duration-300">
-                                    Baca Selengkapnya
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Pagination -->
-        <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
-            <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
-                <div class="flex items-center gap-4">
-                    <span class="text-gray-700 font-medium">Tampilkan:</span>
-                    <select class="bg-white border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                        <option>10 per halaman</option>
-                        <option>25 per halaman</option>
-                        <option>50 per halaman</option>
-                    </select>
-                    <span class="text-gray-500">dari 127 pengumuman</span>
-                </div>
-                
-                <div class="flex items-center space-x-1">
-                    <button class="p-2 text-gray-400 rounded-lg hover:bg-gray-100 transition-colors" disabled>
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                        </svg>
-                    </button>
+            <!-- Announcements List -->
+            <div class="max-w-7xl mx-auto">
+                <div class="space-y-6 pengumuman-list fade-in">
                     
-                    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium shadow-md">1</button>
-                    <button class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition-colors">2</button>
-                    <button class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition-colors">3</button>
-                    <span class="px-2 text-gray-400">...</span>
-                    <button class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition-colors">13</button>
+                    <!-- Announcement Item 1 -->
+                    <article class="pengumuman-item bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover" 
+                             data-kategori="pengadaan" 
+                             data-tanggal="2025-08-06">
+                        <div class="p-8">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-red-700 bg-red-50 rounded-full border border-red-200">
+                                            <span class="w-1.5 h-1.5 bg-red-500 rounded-full mr-2"></span>
+                                            URGENT
+                                        </span>
+                                        <span class="text-sm text-gray-500">06 Agustus 2025</span>
+                                    </div>
+                                    
+                                    <h2 class="pengumuman-judul text-2xl font-bold text-gray-900 mb-3 leading-tight">
+                                        Lelang Terbuka Pembangunan Jalan Lingkar Utara Garut Tahap II
+                                    </h2>
+                                    
+                                    <p class="text-gray-600 leading-relaxed mb-6">
+                                        Pengumuman lelang untuk proyek strategis pembangunan infrastruktur jalan senilai Rp 45 Miliar. Batas akhir pendaftaran dalam 10 hari.
+                                    </p>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-4 text-sm text-gray-500">
+                                            <div class="flex items-center gap-1">
+                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                <span>Pengadaan</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <a href="#" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors duration-200 font-medium">
+                                            Baca selengkapnya
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Announcement Item 2 -->
+                    <article class="pengumuman-item bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover"
+                             data-kategori="pengadaan"
+                             data-tanggal="2025-08-05">
+                        <div class="p-8">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-blue-700 bg-blue-50 rounded-full border border-blue-200">
+                                            <span class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></span>
+                                            Pengadaan
+                                        </span>
+                                        <span class="text-sm text-gray-500">05 Agustus 2025</span>
+                                    </div>
+                                    
+                                    <h2 class="pengumuman-judul text-2xl font-bold text-gray-900 mb-3 leading-tight">
+                                        Pengumuman Hasil Lelang Rehabilitasi Jembatan Cikandang
+                                    </h2>
+                                    
+                                    <p class="text-gray-600 leading-relaxed mb-6">
+                                        Telah selesai dilakukan evaluasi terhadap penawaran yang masuk untuk pekerjaan rehabilitasi Jembatan Cikandang. Pemenang lelang telah ditetapkan dengan nilai kontrak Rp 2.8 Miliar.
+                                    </p>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-4 text-sm text-gray-500">
+                                            <div class="flex items-center gap-1">
+                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                <span>Pengadaan</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <a href="#" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors duration-200 font-medium">
+                                            Baca selengkapnya
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Announcement Item 3 -->
+                    <article class="pengumuman-item bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover"
+                             data-kategori="kebijakan"
+                             data-tanggal="2025-08-03">
+                        <div class="p-8">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-green-700 bg-green-50 rounded-full border border-green-200">
+                                            <span class="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></span>
+                                            Kebijakan
+                                        </span>
+                                        <span class="text-sm text-gray-500">03 Agustus 2025</span>
+                                    </div>
+                                    
+                                    <h2 class="pengumuman-judul text-2xl font-bold text-gray-900 mb-3 leading-tight">
+                                        Peraturan Baru Tata Cara Pengurusan IMB di Kabupaten Garut
+                                    </h2>
+                                    
+                                    <p class="text-gray-600 leading-relaxed mb-6">
+                                        Dalam rangka meningkatkan pelayanan publik, Dinas PUPR mengeluarkan peraturan terbaru mengenai tata cara pengurusan Izin Mendirikan Bangunan (IMB) dengan sistem digital terintegrasi.
+                                    </p>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-4 text-sm text-gray-500">
+                                            <div class="flex items-center gap-1">
+                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                <span>Kebijakan</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <a href="#" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors duration-200 font-medium">
+                                            Baca selengkapnya
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Announcement Item 4 -->
+                    <article class="pengumuman-item bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover"
+                             data-kategori="rekrutmen"
+                             data-tanggal="2025-08-01">
+                        <div class="p-8">
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <span class="inline-flex items-center px-3 py-1 text-xs font-medium text-purple-700 bg-purple-50 rounded-full border border-purple-200">
+                                            <span class="w-1.5 h-1.5 bg-purple-500 rounded-full mr-2"></span>
+                                            Rekrutmen
+                                        </span>
+                                        <span class="text-sm text-gray-500">01 Agustus 2025</span>
+                                    </div>
+                                    
+                                    <h2 class="pengumuman-judul text-2xl font-bold text-gray-900 mb-3 leading-tight">
+                                        Lowongan Tenaga Kontrak PUPR Garut Periode 2025
+                                    </h2>
+                                    
+                                    <p class="text-gray-600 leading-relaxed mb-6">
+                                        Dinas PUPR Kabupaten Garut membuka kesempatan bagi putra-putri terbaik untuk bergabung sebagai tenaga kontrak pada berbagai bidang keahlian teknis dan administrasi.
+                                    </p>
+                                    
+                                    <div class="flex items-center justify-between">
+                                        <div class="flex items-center gap-4 text-sm text-gray-500">
+                                            <div class="flex items-center gap-1">
+                                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                <span>Rekrutmen</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <a href="#" class="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-600 rounded-lg hover:bg-blue-100 transition-colors duration-200 font-medium">
+                                            Baca selengkapnya
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
                     
-                    <button class="p-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                    <!-- No Results Message -->
+                    <div class="no-results-message bg-white rounded-2xl border border-gray-100 p-12 text-center" style="display:none;">
+                        <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                    </button>
+                        <h3 class="text-lg font-medium text-gray-900 mb-2">Tidak ada pengumuman ditemukan</h3>
+                        <p class="text-gray-500">Coba ubah kata kunci pencarian atau filter kategori Anda.</p>
+                    </div>
+
+                </div>
+
+                <!-- Pagination -->
+                <div class="mt-12 pagination-container">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                        <nav class="flex items-center justify-between">
+                            <!-- Mobile Pagination -->
+                            <div class="flex-1 flex justify-between sm:hidden">
+                                <button id="prev-page-mobile" class="relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 transition-colors">
+                                    Previous
+                                </button>
+                                <button id="next-page-mobile" class="ml-3 relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 transition-colors">
+                                    Next
+                                </button>
+                            </div>
+                            
+                            <!-- Desktop Pagination -->
+                            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                                <div>
+                                    <p class="text-sm text-gray-700">
+                                        Menampilkan
+                                        <span id="first-item" class="font-medium">1</span>
+                                        sampai
+                                        <span id="last-item" class="font-medium">10</span>
+                                        dari
+                                        <span id="total-items" class="font-medium">127</span>
+                                        hasil
+                                    </p>
+                                </div>
+                                <div>
+                                    <nav class="relative z-0 inline-flex rounded-xl shadow-sm -space-x-px" aria-label="Pagination" id="pagination-links">
+                                    </nav>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
                 </div>
             </div>
         </div>
-
-    </div>
+    </section>
 </div>
 @endsection
 
 @push('scripts')
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Filter functionality
-    const filterButtons = document.querySelectorAll('.filter-btn');
-    
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            filterButtons.forEach(btn => {
-                btn.classList.remove('bg-blue-600', 'text-white');
-                btn.classList.add('bg-white', 'text-gray-700');
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search-input');
+        const categoryFilter = document.getElementById('category-filter');
+        const sortFilter = document.getElementById('sort-filter');
+        const pengumumanContainer = document.querySelector('.pengumuman-list');
+        const noResultMessage = document.querySelector('.no-results-message');
+        const paginationContainer = document.querySelector('.pagination-container');
+
+        let allPengumumanItems = [];
+        const itemsPerPage = 3;
+        let currentPage = 1;
+
+        // Inisialisasi data dari DOM saat halaman dimuat
+        function initPengumumanData() {
+            const initialItems = pengumumanContainer.querySelectorAll('.pengumuman-item');
+            allPengumumanItems = Array.from(initialItems).map(item => {
+                const judul = item.querySelector('.pengumuman-judul').textContent.trim();
+                const kategori = item.getAttribute('data-kategori') || '';
+                const tanggal = item.getAttribute('data-tanggal') || '';
+                
+                return {
+                    element: item,
+                    judul: judul,
+                    kategori: kategori,
+                    tanggal: new Date(tanggal),
+                    displayText: judul.toLowerCase(),
+                };
+            });
+        }
+        
+        // Fungsi utama untuk filter, sorting, dan paginasi
+        function updateDisplay() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const selectedCategory = categoryFilter.value;
+            const sortOrder = sortFilter.value;
+
+            // 1. Filter
+            let filteredItems = allPengumumanItems.filter(item => {
+                const matchesSearch = item.displayText.includes(searchTerm);
+                const matchesCategory = selectedCategory === '' || item.kategori === selectedCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            // 2. Sort
+            filteredItems.sort((a, b) => {
+                switch(sortOrder) {
+                    case 'terbaru':
+                        return b.tanggal - a.tanggal;
+                    case 'terlama':
+                        return a.tanggal - b.tanggal;
+                    case 'a-z':
+                        return a.judul.localeCompare(b.judul);
+                    case 'z-a':
+                        return b.judul.localeCompare(a.judul);
+                    default:
+                        return 0;
+                }
+            });
+
+            // 3. Display
+            displayResults(filteredItems);
+            // 4. Update Pagination
+            updatePagination(filteredItems.length);
+        }
+
+        // Tampilkan hasil yang sudah difilter dan diurutkan
+        function displayResults(items) {
+            // Sembunyikan semua item di DOM terlebih dahulu
+            allPengumumanItems.forEach(item => {
+                item.element.style.display = 'none';
             });
             
-            this.classList.remove('bg-white', 'text-gray-700');
-            this.classList.add('bg-blue-600', 'text-white');
-        });
-    });
-    
-    // Search functionality
-    const searchInput = document.querySelector('input[type="text"]');
-    let searchTimeout;
-    
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                console.log('Searching for:', this.value);
-            }, 300);
-        });
-    }
-    
-    // Scroll animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+            // Tampilkan item untuk halaman saat ini
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, items.length);
+            
+            for (let i = startIndex; i < endIndex; i++) {
+                items[i].element.style.display = '';
             }
+            
+            // Tampilkan/sembunyikan pesan "tidak ditemukan"
+            if (items.length === 0) {
+                noResultMessage.style.display = 'block';
+            } else {
+                noResultMessage.style.display = 'none';
+            }
+        }
+        
+        // Update tampilan pagination
+        function updatePagination(totalItems) {
+            const totalPages = Math.ceil(totalItems / itemsPerPage);
+            const paginationLinks = document.getElementById('pagination-links');
+            
+            // Bersihkan pagination sebelumnya
+            if (paginationLinks) {
+                paginationLinks.innerHTML = '';
+            }
+
+            // Update info total items
+            document.getElementById('total-items').textContent = totalItems;
+            document.getElementById('first-item').textContent = (totalItems > 0) ? (currentPage - 1) * itemsPerPage + 1 : 0;
+            document.getElementById('last-item').textContent = Math.min(currentPage * itemsPerPage, totalItems);
+
+            if (totalPages <= 1) {
+                paginationContainer.style.display = 'none';
+                return;
+            } else {
+                paginationContainer.style.display = 'block';
+            }
+
+            // Buat tombol navigasi Previous
+            const prevButton = document.createElement('button');
+            prevButton.className = 'relative inline-flex items-center px-3 py-2 rounded-l-xl border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors';
+            prevButton.innerHTML = `<span class="sr-only">Previous</span><svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>`;
+            prevButton.disabled = currentPage === 1;
+            if (prevButton.disabled) {
+                prevButton.className = 'relative inline-flex items-center px-3 py-2 rounded-l-xl border border-gray-300 bg-gray-50 text-sm font-medium text-gray-300 cursor-not-allowed';
+            }
+            prevButton.onclick = () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updateDisplay();
+                }
+            };
+            paginationLinks.appendChild(prevButton);
+
+            // Buat tautan halaman
+            for (let i = 1; i <= totalPages; i++) {
+                const pageButton = document.createElement('button');
+                pageButton.textContent = i;
+                pageButton.className = `relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors ${
+                    i === currentPage 
+                        ? 'z-10 bg-blue-50 border-blue-500 text-blue-600' 
+                        : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'
+                }`;
+                pageButton.onclick = () => {
+                    currentPage = i;
+                    updateDisplay();
+                };
+                paginationLinks.appendChild(pageButton);
+            }
+            
+            // Buat tombol navigasi Next
+            const nextButton = document.createElement('button');
+            nextButton.className = 'relative inline-flex items-center px-3 py-2 rounded-r-xl border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors';
+            nextButton.innerHTML = `<span class="sr-only">Next</span><svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>`;
+            nextButton.disabled = currentPage === totalPages;
+            if (nextButton.disabled) {
+                nextButton.className = 'relative inline-flex items-center px-3 py-2 rounded-r-xl border border-gray-300 bg-gray-50 text-sm font-medium text-gray-300 cursor-not-allowed';
+            }
+            nextButton.onclick = () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updateDisplay();
+                }
+            };
+            paginationLinks.appendChild(nextButton);
+        }
+
+        // Event Listeners
+        searchInput.addEventListener('input', () => {
+            currentPage = 1; 
+            updateDisplay();
         });
-    }, observerOptions);
-    
-    // Observe cards for animation
-    document.querySelectorAll('.bg-white').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = 'all 0.6s ease-out';
-        observer.observe(card);
+        
+        categoryFilter.addEventListener('change', () => {
+            currentPage = 1; 
+            updateDisplay();
+        });
+        
+        sortFilter.addEventListener('change', () => {
+            currentPage = 1; 
+            updateDisplay();
+        });
+
+        // Mobile pagination event listeners
+        const prevMobile = document.getElementById('prev-page-mobile');
+        const nextMobile = document.getElementById('next-page-mobile');
+        
+        if (prevMobile) {
+            prevMobile.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    updateDisplay();
+                }
+            });
+        }
+        
+        if (nextMobile) {
+            nextMobile.addEventListener('click', () => {
+                const totalItems = allPengumumanItems.filter(item => {
+                    const searchTerm = searchInput.value.toLowerCase().trim();
+                    const selectedCategory = categoryFilter.value;
+                    const matchesSearch = item.displayText.includes(searchTerm);
+                    const matchesCategory = selectedCategory === '' || item.kategori === selectedCategory;
+                    return matchesSearch && matchesCategory;
+                }).length;
+                const totalPages = Math.ceil(totalItems / itemsPerPage);
+                
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    updateDisplay();
+                }
+            });
+        }
+
+        // Inisialisasi awal
+        initPengumumanData();
+        updateDisplay();
     });
-});
 </script>
 @endpush
