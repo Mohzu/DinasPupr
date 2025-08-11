@@ -72,19 +72,10 @@
         </div>
       </div>
 
-      <!-- Leaders Carousel -->
-      @php $leaders = [
-        ['role' => 'Kepala Dinas', 'name' => 'Nama Kepala Dinas', 'photo' => 'img/pejabat/kepala.jpg'],
-        ['role' => 'Sekretaris Dinas', 'name' => 'Nama Sekretaris', 'photo' => 'img/pejabat/sekretaris.jpg'],
-        ['role' => 'Kepala Bidang Bina Marga', 'name' => 'Nama Kabid Bina Marga', 'photo' => 'img/pejabat/kabid-bina-marga.jpg'],
-        ['role' => 'Kepala Bidang Cipta Karya', 'name' => 'Nama Kabid Cipta Karya', 'photo' => 'img/pejabat/kabid-cipta-karya.jpg'],
-        ['role' => 'Kepala Bidang Sumber Daya Air', 'name' => 'Nama Kabid SDA', 'photo' => 'img/pejabat/kabid-sda.jpg'],
-        ['role' => 'Koordinator Fungsional', 'name' => 'Nama Koordinator', 'photo' => 'img/pejabat/koor-fungsional.jpg'],
-      ]; @endphp
-
+      <!-- Leaders Carousel (from DB) -->
       <div class="mt-10">
         <div class="flex items-center justify-between mb-4">
-          <h2 class="text-xl font-bold text-gray-900">Pejabat Struktural</h2>
+          <h2 class="text-xl font-bold text-gray-900">Pejabat Struktural</h2> @php use Illuminate\Support\Facades\Storage; use Illuminate\Support\Str; @endphp
           <div class="flex gap-2">
             <button id="leaders-prev" type="button" class="p-2 rounded-lg border bg-white hover:bg-gray-50">
               <svg class="h-5 w-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
@@ -97,22 +88,28 @@
 
         <div id="leaders-scroll" class="relative">
           <div class="flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth pb-2">
-            @foreach ($leaders as $person)
+            @forelse ($leaders as $person)
             <div class="shrink-0 w-64 snap-start">
               <div class="rounded-2xl border bg-white shadow-sm overflow-hidden">
                 <div class="h-40 w-full bg-gray-100 relative">
-                  <img src="{{ asset($person['photo']) }}" alt="{{ $person['name'] }}" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
-                  <div class="absolute inset-0 grid place-content-center text-gray-400">
-                    <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-3.31 0-6 2.69-6 6h12c0-3.31-2.69-6-6-6z"/></svg>
-                  </div>
+                  @php $foto = $person->foto ? (Str::startsWith($person->foto, ['http://','https://']) ? $person->foto : Storage::disk('public')->url($person->foto)) : null; @endphp
+                  @if ($foto)
+                    <img src="{{ $foto }}" alt="{{ $person->nama }}" class="absolute inset-0 w-full h-full object-cover">
+                  @else
+                    <div class="absolute inset-0 grid place-content-center text-gray-400">
+                      <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-3.31 0-6 2.69-6 6h12c0-3.31-2.69-6-6-6z"/></svg>
+                    </div>
+                  @endif
                 </div>
                 <div class="p-4">
-                  <p class="text-xs uppercase tracking-wide text-blue-700 font-semibold">{{ $person['role'] }}</p>
-                  <p class="mt-1 font-semibold text-gray-900">{{ $person['name'] }}</p>
+                  <p class="text-xs uppercase tracking-wide text-blue-700 font-semibold">{{ $person->jabatan }}</p>
+                  <p class="mt-1 font-semibold text-gray-900">{{ $person->nama }}</p>
                 </div>
               </div>
             </div>
-            @endforeach
+            @empty
+            <p class="text-gray-500">Belum ada data pejabat struktural.</p>
+            @endforelse
           </div>
         </div>
       </div>
