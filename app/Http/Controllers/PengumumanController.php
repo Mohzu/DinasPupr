@@ -10,7 +10,7 @@ class PengumumanController extends Controller
     // Menampilkan list pengumuman di frontend
     public function index()
     {
-        $pengumuman = Pengumuman::orderByDesc('published_at')->take(5)->get();
+        $pengumuman = Pengumuman::orderByDesc('published_at')->get();
 
         return view('pages.pengumuman', compact('pengumuman'));
     }
