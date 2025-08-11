@@ -52,7 +52,11 @@
                 <div class="flex flex-wrap justify-center gap-3">
                     <div class="bg-white/90 backdrop-blur-md rounded-xl px-4 py-2 text-gray-800 text-sm font-semibold border border-white/50 shadow-lg">
                         <svg class="w-4 h-4 inline mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" /></svg>
-                        {{ optional($pengumuman->first())->published_at ? optional($pengumuman->first()->published_at)->format('d M Y, H:i') : '-' }}
+                        @php
+                            $latest = $pengumuman->first();
+                            $latestTime = $latest ? ($latest->published_at ?? $latest->created_at) : null;
+                        @endphp
+                        {{ $latestTime ? $latestTime->format('d M Y, H:i') : '-' }}
                     </div>
                     <div class="bg-white/90 backdrop-blur-md rounded-xl px-4 py-2 text-gray-800 text-sm font-semibold border border-white/50 shadow-lg">
                         <svg class="w-4 h-4 inline mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
@@ -92,7 +96,7 @@
             <div class="max-w-7xl mx-auto">
                 <div class="space-y-6 pengumuman-list fade-in">
                     @forelse ($pengumuman as $item)
-                        <article class="pengumuman-item bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover" data-tanggal="{{ optional($item->published_at)->format('Y-m-d H:i:s') }}">
+                        <article class="pengumuman-item bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover" data-tanggal="{{ optional($item->published_at ?? $item->created_at)->format('Y-m-d H:i:s') }}">
                             <div class="p-8">
                                 <div class="flex items-start justify-between mb-4">
                                     <div class="flex-1">
@@ -105,7 +109,7 @@
                                             @endif
                                             <span class="inline-flex items-center gap-2 text-sm text-gray-500">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                                {{ optional($item->published_at)->format('d M Y, H:i') }}
+                                                {{ optional($item->published_at ?? $item->created_at)->format('d M Y, H:i') }}
                                             </span>
                                         </div>
 
