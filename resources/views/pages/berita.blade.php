@@ -115,6 +115,13 @@
 
         <!-- Featured News Section -->
         <div class="mb-16">
+            <!-- Category pills -->
+            <div class="mb-6 flex flex-wrap items-center gap-3 justify-center">
+                @php $tags = ['Semua','Infrastruktur','Tata Ruang','Lingkungan','Transportasi','Teknologi']; @endphp
+                @foreach ($tags as $idx => $tag)
+                <button class="px-4 py-2 rounded-full text-sm font-semibold border @if($idx===0) bg-blue-600 text-white border-blue-600 @else bg-white text-gray-700 border-gray-200 hover:border-blue-300 hover:text-blue-700 @endif transition">{{ $tag }}</button>
+                @endforeach
+            </div>
             <div class="text-center mb-12">
                 <h2 class="text-4xl font-black text-gray-800 mb-4">
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
@@ -185,6 +192,18 @@
 
                 <!-- Recent News Sidebar -->
                 <div class="space-y-6">
+                    <div class="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl p-1 shadow-xl">
+                        <div class="bg-white rounded-2xl p-5">
+                            <h4 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
+                                <svg class="h-5 w-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m2 0V9a4 4 0 10-8 0v3H4l4 4 4-4h-2"/></svg>
+                                Langganan Update
+                            </h4>
+                            <div class="flex gap-2">
+                                <input type="email" placeholder="Email Anda" class="flex-1 px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <button class="px-4 py-2 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700">Kirim</button>
+                            </div>
+                        </div>
+                    </div>
                     <h3 class="text-2xl font-black text-gray-800 mb-6 flex items-center gap-3">
                         <div class="w-1 h-8 bg-gradient-to-b from-purple-600 to-pink-600 rounded-full"></div>
                         Berita Terbaru
@@ -244,6 +263,43 @@
 
         <!-- All News Grid -->
         <div class="mb-16">
+            <!-- Horizontal Highlights Carousel -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-xl font-bold text-gray-900">Sorotan</h3>
+                    <div class="flex gap-2">
+                        <button id="hl-prev" class="p-2 rounded-lg border bg-white hover:bg-gray-50">
+                            <svg class="h-5 w-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                        </button>
+                        <button id="hl-next" class="p-2 rounded-lg border bg-white hover:bg-gray-50">
+                            <svg class="h-5 w-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <div id="hl-scroll" class="relative">
+                    <div class="flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth pb-2">
+                        @php $highlights = [
+                          ['title'=>'Pembangunan Jembatan Baru','tag'=>'INFRASTRUKTUR','color'=>'blue','img'=>'https://via.placeholder.com/360x200/3B82F6/FFFFFF?text=Jembatan'],
+                          ['title'=>'Penataan Kawasan Kota','tag'=>'TATA RUANG','color'=>'purple','img'=>'https://via.placeholder.com/360x200/8B5CF6/FFFFFF?text=Kota'],
+                          ['title'=>'Program Air Bersih','tag'=>'LINGKUNGAN','color'=>'emerald','img'=>'https://via.placeholder.com/360x200/10B981/FFFFFF?text=Air+Bersih'],
+                          ['title'=>'Smart Traffic System','tag'=>'TEKNOLOGI','color'=>'amber','img'=>'https://via.placeholder.com/360x200/F59E0B/FFFFFF?text=Traffic'],
+                        ]; @endphp
+                        @foreach ($highlights as $hl)
+                        <a href="#" class="shrink-0 w-80 snap-start">
+                            <div class="rounded-2xl overflow-hidden border bg-white shadow-sm hover:shadow-md transition">
+                                <div class="relative">
+                                    <img src="{{ $hl['img'] }}" class="w-full h-44 object-cover" alt="{{ $hl['title'] }}">
+                                    <span class="absolute top-3 left-3 text-xs font-bold text-white px-2 py-1 rounded bg-black/40">{{ $hl['tag'] }}</span>
+                                </div>
+                                <div class="p-4">
+                                    <p class="font-semibold text-gray-900 line-clamp-2">{{ $hl['title'] }}</p>
+                                </div>
+                            </div>
+                        </a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
             <div class="flex flex-col md:flex-row justify-between items-center mb-8">
                 <h2 class="text-3xl font-black text-gray-800 mb-4 md:mb-0">Semua Berita</h2>
                 <select class="bg-white border-2 border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-blue-500">
@@ -444,6 +500,13 @@
 </div>
 @endsection
 
+@push('styles')
+<style>
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+@endpush
+
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -505,6 +568,16 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Highlights scroll controls
+    const hlContainer = document.querySelector('#hl-scroll > div');
+    const hlPrev = document.getElementById('hl-prev');
+    const hlNext = document.getElementById('hl-next');
+    if (hlContainer && hlPrev && hlNext) {
+        const step = 320;
+        hlPrev.addEventListener('click', () => hlContainer.scrollBy({ left: -step, behavior: 'smooth' }));
+        hlNext.addEventListener('click', () => hlContainer.scrollBy({ left: step, behavior: 'smooth' }));
+    }
     
     // Add loading animation for cards
     const cards = document.querySelectorAll('article');

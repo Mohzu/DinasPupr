@@ -28,7 +28,7 @@
                 <!-- Desktop Navigation -->
                 <ul class="hidden lg:flex items-center space-x-10 text-sm font-semibold text-gray-700">
                     <li>
-                        <a href="#" 
+                        <a href="{{ route('home') }}" 
                            class="relative py-2 px-1 hover:text-blue-600 transition-all duration-300 group">
                             Beranda
                             <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-blue-700 group-hover:w-full group-hover:left-0 transition-all duration-300 rounded-full"></span>
@@ -57,7 +57,7 @@
                             @click.away="open = false" 
                             class="absolute top-full left-1/2 transform -translate-x-1/2 mt-3 bg-white shadow-xl rounded-xl w-56 py-3 border border-gray-100 backdrop-blur-sm">
                             <li>
-                                <a href="#" class="block px-5 py-3 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 hover:translate-x-1">
+                                 <a href="{{ route('sejarah') }}" class="block px-5 py-3 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 hover:translate-x-1">
                                     <div class="flex items-center space-x-3">
                                         <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
                                         <span>Sejarah</span>
@@ -65,7 +65,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="block px-5 py-3 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 hover:translate-x-1">
+                                <a href="{{ route('strukturorganisasi') }}" class="block px-5 py-3 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 hover:translate-x-1">
                                     <div class="flex items-center space-x-3">
                                         <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
                                         <span>Struktur Organisasi</span>
@@ -73,7 +73,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="block px-5 py-3 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 hover:translate-x-1">
+                                 <a href="{{ route('visimisi') }}" class="block px-5 py-3 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 hover:translate-x-1">
                                     <div class="flex items-center space-x-3">
                                         <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
                                         <span>Visi & Misi</span>
@@ -210,9 +210,9 @@
                                  x-transition:leave-start="opacity-100 max-h-40"
                                  x-transition:leave-end="opacity-0 max-h-0"
                                  class="bg-gray-50 overflow-hidden">
-                                <a href="#" class="block px-10 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">Sejarah</a>
-                                <a href="#" class="block px-10 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">Struktur Organisasi</a>
-                                <a href="#" class="block px-10 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">Visi & Misi</a>
+                                <a href="{{ route('sejarah') }}" class="block px-10 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">Sejarah</a>
+                                <a href="{{ route('strukturorganisasi') }}" class="block px-10 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">Struktur Organisasi</a>
+                                <a href="{{ route('visimisi') }}" class="block px-10 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">Visi & Misi</a>
                             </div>
                         </div>
 
