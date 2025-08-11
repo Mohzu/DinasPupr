@@ -52,7 +52,7 @@
                 <div class="flex flex-wrap justify-center gap-3">
                     <div class="bg-white/90 backdrop-blur-md rounded-xl px-4 py-2 text-gray-800 text-sm font-semibold border border-white/50 shadow-lg">
                         <svg class="w-4 h-4 inline mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" /></svg>
-                        {{ optional($pengumuman->first())->published_at ? optional($pengumuman->first()->published_at)->format('d M Y') : '-' }}
+                        {{ optional($pengumuman->first())->published_at ? optional($pengumuman->first()->published_at)->format('d M Y, H:i') : '-' }}
                     </div>
                     <div class="bg-white/90 backdrop-blur-md rounded-xl px-4 py-2 text-gray-800 text-sm font-semibold border border-white/50 shadow-lg">
                         <svg class="w-4 h-4 inline mr-2 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
@@ -78,10 +78,8 @@
                                 <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             </div>
                         </div>
-                        <div class="flex gap-3">
-                            <select id="category-filter" class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
-                                <option value="">Semua Kategori</option>
-                            </select>
+                        <div class="flex gap-3 items-center">
+                            <label for="sort-filter" class="text-sm text-gray-600">Urutkan:</label>
                             <select id="sort-filter" class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
                                 <option value="terbaru">Terbaru</option>
                                 <option value="terlama">Terlama</option>
@@ -94,7 +92,7 @@
             <div class="max-w-7xl mx-auto">
                 <div class="space-y-6 pengumuman-list fade-in">
                     @forelse ($pengumuman as $item)
-                        <article class="pengumuman-item bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover" data-kategori="" data-tanggal="{{ optional($item->published_at)->format('Y-m-d') }}">
+                        <article class="pengumuman-item bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden card-hover" data-tanggal="{{ optional($item->published_at)->format('Y-m-d H:i:s') }}">
                             <div class="p-8">
                                 <div class="flex items-start justify-between mb-4">
                                     <div class="flex-1">
@@ -105,7 +103,10 @@
                                                     BARU
                                                 </span>
                                             @endif
-                                            <span class="text-sm text-gray-500">{{ optional($item->published_at)->format('d M Y') }}</span>
+                                            <span class="inline-flex items-center gap-2 text-sm text-gray-500">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                                {{ optional($item->published_at)->format('d M Y, H:i') }}
+                                            </span>
                                         </div>
 
                                         <h2 class="pengumuman-judul text-2xl font-bold text-gray-900 mb-3 leading-tight">{{ $item->judul }}</h2>
@@ -173,10 +174,8 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const searchInput = document.getElementById('search-input');
-        const categoryFilter = document.getElementById('category-filter');
         const sortFilter = document.getElementById('sort-filter');
         const pengumumanContainer = document.querySelector('.pengumuman-list');
-        const noResultMessage = document.querySelector('.no-results-message');
         const paginationContainer = document.querySelector('.pagination-container');
 
         let allPengumumanItems = [];
@@ -187,29 +186,22 @@
             const initialItems = pengumumanContainer.querySelectorAll('.pengumuman-item');
             allPengumumanItems = Array.from(initialItems).map(item => {
                 const judul = item.querySelector('.pengumuman-judul').textContent.trim();
-                const kategori = item.getAttribute('data-kategori') || '';
-                const tanggal = item.getAttribute('data-tanggal') || '';
-                return { element: item, judul: judul, kategori: kategori, tanggal: new Date(tanggal), displayText: judul.toLowerCase() };
+                const tanggalAttr = item.getAttribute('data-tanggal') || '';
+                const tanggal = tanggalAttr ? new Date(tanggalAttr.replace(' ', 'T')) : new Date(0);
+                return { element: item, judul, tanggal, displayText: judul.toLowerCase() };
             });
         }
 
         function updateDisplay() {
             const searchTerm = searchInput.value.toLowerCase().trim();
-            const selectedCategory = categoryFilter.value;
             const sortOrder = sortFilter.value;
 
-            let filteredItems = allPengumumanItems.filter(item => {
-                const matchesSearch = item.displayText.includes(searchTerm);
-                const matchesCategory = selectedCategory === '' || item.kategori === selectedCategory;
-                return matchesSearch && matchesCategory;
-            });
+            let filteredItems = allPengumumanItems.filter(item => item.displayText.includes(searchTerm));
 
             filteredItems.sort((a, b) => {
-                switch (sortOrder) {
-                    case 'terbaru': return b.tanggal - a.tanggal;
-                    case 'terlama': return a.tanggal - b.tanggal;
-                    default: return 0;
-                }
+                if (sortOrder === 'terbaru') return b.tanggal - a.tanggal;
+                if (sortOrder === 'terlama') return a.tanggal - b.tanggal;
+                return 0;
             });
 
             displayResults(filteredItems);
@@ -217,25 +209,27 @@
         }
 
         function displayResults(items) {
-            const all = allPengumumanItems;
-            all.forEach(item => { item.element.style.display = 'none'; });
+            allPengumumanItems.forEach(item => { item.element.style.display = 'none'; });
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = Math.min(startIndex + itemsPerPage, items.length);
-            for (let i = startIndex; i < endIndex; i++) { items[i].element.style.display = ''; }
-            if (items.length === 0 && noResultMessage) { noResultMessage.style.display = 'block'; } else if (noResultMessage) { noResultMessage.style.display = 'none'; }
+            for (let i = startIndex; i < endIndex; i++) items[i].element.style.display = '';
         }
 
         function updatePagination(totalItems) {
             const totalPages = Math.ceil(totalItems / itemsPerPage);
             const paginationLinks = document.getElementById('pagination-links');
-            if (paginationLinks) { paginationLinks.innerHTML = ''; }
+            if (paginationLinks) paginationLinks.innerHTML = '';
+
             const totalItemsEl = document.getElementById('total-items');
             if (totalItemsEl) totalItemsEl.textContent = totalItems;
             const firstItemEl = document.getElementById('first-item');
             const lastItemEl = document.getElementById('last-item');
             if (firstItemEl) firstItemEl.textContent = (totalItems > 0) ? (currentPage - 1) * itemsPerPage + 1 : 0;
             if (lastItemEl) lastItemEl.textContent = Math.min(currentPage * itemsPerPage, totalItems);
-            if (totalPages <= 1) { paginationContainer?.classList.add('hidden'); return; } else { paginationContainer?.classList.remove('hidden'); }
+
+            if (totalPages <= 1) { paginationContainer?.classList.add('hidden'); return; }
+            paginationContainer?.classList.remove('hidden');
+
             const prevButton = document.createElement('button');
             prevButton.className = 'relative inline-flex items-center px-3 py-2 rounded-l-xl border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors';
             prevButton.innerHTML = `<span class="sr-only">Previous</span><svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>`;
@@ -243,6 +237,7 @@
             if (prevButton.disabled) prevButton.className = 'relative inline-flex items-center px-3 py-2 rounded-l-xl border border-gray-300 bg-gray-50 text-sm font-medium text-gray-300 cursor-not-allowed';
             prevButton.onclick = () => { if (currentPage > 1) { currentPage--; updateDisplay(); } };
             paginationLinks.appendChild(prevButton);
+
             for (let i = 1; i <= totalPages; i++) {
                 const pageButton = document.createElement('button');
                 pageButton.textContent = i;
@@ -250,6 +245,7 @@
                 pageButton.onclick = () => { currentPage = i; updateDisplay(); };
                 paginationLinks.appendChild(pageButton);
             }
+
             const nextButton = document.createElement('button');
             nextButton.className = 'relative inline-flex items-center px-3 py-2 rounded-r-xl border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors';
             nextButton.innerHTML = `<span class="sr-only">Next</span><svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>`;
@@ -260,23 +256,7 @@
         }
 
         searchInput?.addEventListener('input', () => { currentPage = 1; updateDisplay(); });
-        categoryFilter?.addEventListener('change', () => { currentPage = 1; updateDisplay(); });
         sortFilter?.addEventListener('change', () => { currentPage = 1; updateDisplay(); });
-
-        const prevMobile = document.getElementById('prev-page-mobile');
-        const nextMobile = document.getElementById('next-page-mobile');
-        prevMobile?.addEventListener('click', () => { if (currentPage > 1) { currentPage--; updateDisplay(); } });
-        nextMobile?.addEventListener('click', () => {
-            const totalItems = allPengumumanItems.filter(item => {
-                const searchTerm = searchInput.value.toLowerCase().trim();
-                const selectedCategory = categoryFilter.value;
-                const matchesSearch = item.displayText.includes(searchTerm);
-                const matchesCategory = selectedCategory === '' || item.kategori === selectedCategory;
-                return matchesSearch && matchesCategory;
-            }).length;
-            const totalPages = Math.ceil(totalItems / itemsPerPage);
-            if (currentPage < totalPages) { currentPage++; updateDisplay(); }
-        });
 
         initPengumumanData();
         updateDisplay();
