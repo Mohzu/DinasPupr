@@ -39,11 +39,7 @@
       </div>
     </div>
 
-    <div class="absolute bottom-0 left-0 right-0">
-      <svg viewBox="0 0 1200 120" class="w-full h-16 fill-gray-50">
-        <path d="M0,60 C150,100 350,0 600,60 C850,120 1050,20 1200,60 L1200,120 L0,120 Z"/>
-      </svg>
-    </div>
+
   </section>
 
   <!-- Main Content -->
@@ -53,10 +49,13 @@
       <div class="rounded-2xl border bg-white/80 backdrop-blur p-6 md:p-8 shadow-sm">
         <div class="flex flex-col lg:flex-row gap-8 items-start">
           <div class="flex-1 w-full">
-            <div class="aspect-[16/9] w-full rounded-xl border bg-gradient-to-br from-slate-50 to-blue-50 grid place-content-center text-gray-500">
-              <div class="text-center">
-                <svg class="mx-auto h-10 w-10 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6"/></svg>
-                <p class="mt-2 text-sm">Pratinjau Struktur (opsional: ganti dengan gambar resmi)</p>
+            <div class="aspect-[16/9] w-full rounded-xl border overflow-hidden bg-white">
+              <img src="{{ asset('img/struktur_organisasi.jpg') }}" alt="Struktur Organisasi" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+              <div class="w-full h-full place-content-center text-gray-400 hidden">
+                <div class="text-center">
+                  <svg class="mx-auto h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6"/></svg>
+                  <p class="mt-2 text-sm">Gambar struktur belum tersedia</p>
+                </div>
               </div>
             </div>
           </div>

@@ -39,11 +39,7 @@
       </div>
     </div>
 
-    <div class="absolute bottom-0 left-0 right-0">
-      <svg viewBox="0 0 1200 120" class="w-full h-16 fill-gray-50">
-        <path d="M0,60 C150,100 350,0 600,60 C850,120 1050,20 1200,60 L1200,120 L0,120 Z"/>
-      </svg>
-    </div>
+
   </section>
 
   <!-- Main Content -->
