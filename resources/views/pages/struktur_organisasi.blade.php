@@ -91,12 +91,12 @@
             @forelse ($leaders as $person)
             <div class="shrink-0 w-64 snap-start">
               <div class="rounded-2xl border bg-white shadow-sm overflow-hidden">
-                <div class="h-40 w-full bg-gray-100 relative">
+                <div class="h-44 lg:h-48 w-full bg-gray-50 grid place-items-center overflow-hidden">
                   @php $foto = $person->foto ? (Str::startsWith($person->foto, ['http://','https://']) ? $person->foto : Storage::disk('public')->url($person->foto)) : null; @endphp
                   @if ($foto)
-                    <img src="{{ $foto }}" alt="{{ $person->nama }}" class="absolute inset-0 w-full h-full object-cover">
+                    <img src="{{ $foto }}" alt="{{ $person->nama }}" class="max-h-full max-w-full object-contain">
                   @else
-                    <div class="absolute inset-0 grid place-content-center text-gray-400">
+                    <div class="text-gray-300">
                       <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-3.31 0-6 2.69-6 6h12c0-3.31-2.69-6-6-6z"/></svg>
                     </div>
                   @endif
