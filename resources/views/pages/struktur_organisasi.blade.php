@@ -73,6 +73,51 @@
         </div>
       </div>
 
+      <!-- Leaders Carousel -->
+      @php $leaders = [
+        ['role' => 'Kepala Dinas', 'name' => 'Nama Kepala Dinas', 'photo' => 'img/pejabat/kepala.jpg'],
+        ['role' => 'Sekretaris Dinas', 'name' => 'Nama Sekretaris', 'photo' => 'img/pejabat/sekretaris.jpg'],
+        ['role' => 'Kepala Bidang Bina Marga', 'name' => 'Nama Kabid Bina Marga', 'photo' => 'img/pejabat/kabid-bina-marga.jpg'],
+        ['role' => 'Kepala Bidang Cipta Karya', 'name' => 'Nama Kabid Cipta Karya', 'photo' => 'img/pejabat/kabid-cipta-karya.jpg'],
+        ['role' => 'Kepala Bidang Sumber Daya Air', 'name' => 'Nama Kabid SDA', 'photo' => 'img/pejabat/kabid-sda.jpg'],
+        ['role' => 'Koordinator Fungsional', 'name' => 'Nama Koordinator', 'photo' => 'img/pejabat/koor-fungsional.jpg'],
+      ]; @endphp
+
+      <div class="mt-10">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-xl font-bold text-gray-900">Pejabat Struktural</h2>
+          <div class="flex gap-2">
+            <button id="leaders-prev" type="button" class="p-2 rounded-lg border bg-white hover:bg-gray-50">
+              <svg class="h-5 w-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button id="leaders-next" type="button" class="p-2 rounded-lg border bg-white hover:bg-gray-50">
+              <svg class="h-5 w-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="leaders-scroll" class="relative">
+          <div class="flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth pb-2">
+            @foreach ($leaders as $person)
+            <div class="shrink-0 w-64 snap-start">
+              <div class="rounded-2xl border bg-white shadow-sm overflow-hidden">
+                <div class="h-40 w-full bg-gray-100 relative">
+                  <img src="{{ asset($person['photo']) }}" alt="{{ $person['name'] }}" class="absolute inset-0 w-full h-full object-cover" onerror="this.style.display='none'">
+                  <div class="absolute inset-0 grid place-content-center text-gray-400">
+                    <svg class="h-10 w-10" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-3.31 0-6 2.69-6 6h12c0-3.31-2.69-6-6-6z"/></svg>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <p class="text-xs uppercase tracking-wide text-blue-700 font-semibold">{{ $person['role'] }}</p>
+                  <p class="mt-1 font-semibold text-gray-900">{{ $person['name'] }}</p>
+                </div>
+              </div>
+            </div>
+            @endforeach
+          </div>
+        </div>
+      </div>
+
       <!-- Divisions -->
       <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         @php $divisions = [
@@ -108,3 +153,24 @@
   </section>
 </div>
 @endsection
+
+@push('styles')
+<style>
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+@endpush
+
+@push('scripts')
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const container = document.querySelector('#leaders-scroll > div');
+    const prevBtn = document.getElementById('leaders-prev');
+    const nextBtn = document.getElementById('leaders-next');
+    if (!container || !prevBtn || !nextBtn) return;
+    const step = 320;
+    prevBtn.addEventListener('click', () => container.scrollBy({ left: -step, behavior: 'smooth' }));
+    nextBtn.addEventListener('click', () => container.scrollBy({ left: step, behavior: 'smooth' }));
+  });
+</script>
+@endpush
