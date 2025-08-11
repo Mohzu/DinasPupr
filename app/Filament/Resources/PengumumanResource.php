@@ -41,6 +41,7 @@ class PengumumanResource extends Resource
                             ->label('Lampiran (opsional)')
                             ->disk('public')
                             ->directory('pengumuman-lampiran')
+                            ->preserveFilenames()
                             ->maxSize(4096)
                             ->columnSpan(6),
 
