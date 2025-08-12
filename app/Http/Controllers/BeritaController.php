@@ -22,6 +22,11 @@ class BeritaController extends Controller
             ->orWhere('id', $slugOrId)
             ->firstOrFail();
 
-        return view('pages.detail-berita', compact('berita'));
+        $related = Berita::where('id', '!=', $berita->id)
+            ->latest()
+            ->take(3)
+            ->get();
+
+        return view('pages.detail-berita', compact('berita', 'related'));
     }
 }

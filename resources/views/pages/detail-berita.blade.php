@@ -58,6 +58,25 @@
                         </div>
                     </div>
                 </div>
+
+                @if(isset($related) && $related->isNotEmpty())
+                <div class="mt-10">
+                    <h2 class="text-xl font-extrabold text-gray-900 mb-4">Berita Terkait</h2>
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        @foreach($related as $item)
+                        <a href="{{ route('berita.show', $item->slug ?? $item->id) }}" class="group block bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition">
+                            @if ($item->gambar)
+                                <img src="{{ asset('storage/'.$item->gambar) }}" alt="{{ $item->judul }}" class="w-full h-36 object-cover">
+                            @endif
+                            <div class="p-4">
+                                <p class="text-xs text-gray-500 mb-1">{{ optional($item->published_at ?? $item->created_at)->translatedFormat('d M Y') }}</p>
+                                <h3 class="text-sm font-semibold text-gray-900 group-hover:text-blue-700 line-clamp-2">{{ $item->judul }}</h3>
+                            </div>
+                        </a>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
             </article>
 
             <aside class="lg:col-span-4 space-y-6">
