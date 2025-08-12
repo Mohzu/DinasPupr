@@ -20,3 +20,7 @@ Route::get('pages/strukturorganisasi', [StrukturOrganisasiController::class, 'in
 Route::get('pages/visimisi', [VisiMisiController::class, 'index'])->name('visimisi');
 
 Route::get('/berita/search', [BeritaController::class, 'search'])->name('berita.search');
+
+// Static pages: contact and pengaduan
+Route::view('pages/kontak', 'pages.kontak')->name('kontak');
+Route::view('pages/pengaduan', 'pages.pengaduan')->name('pengaduan');
