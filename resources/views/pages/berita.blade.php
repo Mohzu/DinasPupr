@@ -3,6 +3,10 @@
 @section('title', 'Berita Terkini - Dinas PUPR Kabupaten Garut')
 @section('description', 'Berita terkini dan informasi terbaru dari Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Garut')
 
+@php
+    use Illuminate\Support\Str;
+@endphp
+
 @section('content')
 <div class="min-h-screen bg-gray-50">
     <!-- Hero Section with Background Image -->
