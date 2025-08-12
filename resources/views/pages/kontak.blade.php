@@ -83,12 +83,8 @@
             <!-- Peta / Lokasi -->
             <div id="lokasi" class="lg:col-span-1">
                 <div class="h-full rounded-3xl border border-gray-100 bg-white p-4 shadow-sm">
-                    <div class="h-72 rounded-2xl bg-gradient-to-br from-blue-100 to-blue-200 grid place-items-center text-blue-700">
-                        <div class="text-center">
-                            <svg class="mx-auto w-10 h-10 mb-2" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c1.657 0 3-1.343 3-3S13.657 5 12 5 9 6.343 9 8s1.343 3 3 3z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.5 10.5C19.5 15.194 12 21 12 21S4.5 15.194 4.5 10.5C4.5 7.462 7.015 5 10.125 5h3.75C16.985 5 19.5 7.462 19.5 10.5z"/></svg>
-                            <p class="font-semibold">Tampilan Peta</p>
-                            <p class="text-sm text-blue-700/70">Sematkan peta Google Maps di sini</p>
-                        </div>
+                    <div class="h-72 rounded-2xl overflow-hidden border border-blue-100 bg-white">
+                        @include('partials.contact-map')
                     </div>
                     <div class="mt-4 text-sm text-gray-600">
                         <p><span class="font-semibold">Koordinat:</span> -7.2, 107.9</p>
