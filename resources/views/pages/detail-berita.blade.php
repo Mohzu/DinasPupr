@@ -10,47 +10,60 @@
 
 @section('content')
 <div class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
-    <!-- Hero -->
-    <section class="relative pt-28 pb-10 overflow-hidden">
+    <!-- Breadcrumb -->
+    <nav class="container mx-auto px-6 pt-24 text-sm" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-2 text-gray-500">
+            <li><a href="{{ route('home') }}" class="hover:text-blue-700">Beranda</a></li>
+            <li>/</li>
+            <li><a href="{{ route('berita') }}" class="hover:text-blue-700">Berita</a></li>
+            <li>/</li>
+            <li class="text-gray-700 line-clamp-1">{{ $berita->judul }}</li>
+        </ol>
+    </nav>
+
+    <!-- Hero Title & Meta -->
+    <section class="relative pb-6 overflow-hidden">
         <div class="absolute -top-12 -right-12 w-72 h-72 bg-blue-200/40 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-10 -left-12 w-96 h-96 bg-indigo-200/40 rounded-full blur-3xl"></div>
         <div class="container mx-auto px-6">
             <div class="bg-white/90 backdrop-blur rounded-3xl shadow-sm border border-blue-100 p-6 md:p-8">
-                <div class="flex items-start justify-between gap-4">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        @if ($berita->kategori)
+                            <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-100 text-xs font-semibold">
+                                {{ strtoupper($berita->kategori) }}
+                            </span>
+                        @endif
+                        <span class="inline-flex items-center gap-2 text-gray-600 text-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            {{ optional($berita->published_at ?? $berita->created_at)->translatedFormat('d M Y, H:i') }}
+                        </span>
+                    </div>
                     <a href="{{ route('berita') }}" class="inline-flex items-center gap-2 text-blue-700 hover:text-blue-800 hover:underline">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                         Kembali
                     </a>
-                    @if ($berita->kategori)
-                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-100 text-xs font-semibold">
-                            {{ strtoupper($berita->kategori) }}
-                        </span>
-                    @endif
                 </div>
-                <h1 class="mt-3 text-3xl md:text-4xl font-extrabold text-gray-900 leading-tight">{{ $berita->judul }}</h1>
-                <div class="mt-3 flex flex-wrap items-center gap-3 text-sm">
-                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-50 text-gray-700 border border-gray-200">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        {{ optional($berita->published_at ?? $berita->created_at)->translatedFormat('d M Y, H:i') }}
-                    </span>
+                <h1 class="mt-3 text-3xl md:text-5xl font-extrabold text-gray-900 leading-tight">{{ $berita->judul }}</h1>
+                <div class="mt-3 flex flex-wrap items-center gap-4 text-sm">
                     @if ($berita->penulis)
-                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gray-50 text-gray-700 border border-gray-200">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A4 4 0 018 16h8a4 4 0 012.879 1.804M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
-                            {{ $berita->penulis }}
-                        </span>
+                        <div class="flex items-center gap-2 text-gray-700">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-600 to-blue-400 text-white grid place-items-center font-bold">{{ strtoupper(Str::substr($berita->penulis, 0, 1)) }}</div>
+                            <span>{{ $berita->penulis }}</span>
+                        </div>
                     @endif
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Content -->
-    <section class="pb-20">
+    <!-- Featured Image + Content -->
+    <section>
         <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
             <article class="lg:col-span-8">
                 <div class="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
                     @if ($berita->gambar)
-                        <img src="{{ Storage::disk('public')->url($berita->gambar) }}" alt="{{ $berita->judul }}" class="w-full h-auto object-cover max-h-[480px]">
+                        <img src="{{ Storage::disk('public')->url($berita->gambar) }}" alt="{{ $berita->judul }}" class="w-full h-auto object-cover max-h-[520px]">
                     @endif
                     <div class="p-6 md:p-10">
                         <div class="prose prose-lg max-w-none prose-headings:font-extrabold prose-p:leading-relaxed prose-a:text-blue-700 prose-img:rounded-xl prose-blockquote:border-blue-500">
@@ -59,6 +72,23 @@
                     </div>
                 </div>
 
+                <!-- Prev / Next Navigation -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    @if(isset($previous))
+                    <a href="{{ route('berita.show', $previous->slug ?? $previous->id) }}" class="group block p-4 rounded-2xl border border-gray-100 bg-white hover:shadow-md transition">
+                        <p class="text-xs text-gray-500 mb-1">Artikel Sebelumnya</p>
+                        <p class="font-semibold text-gray-900 group-hover:text-blue-700 line-clamp-2">{{ $previous->judul }}</p>
+                    </a>
+                    @endif
+                    @if(isset($next))
+                    <a href="{{ route('berita.show', $next->slug ?? $next->id) }}" class="group block p-4 rounded-2xl border border-gray-100 bg-white hover:shadow-md transition md:text-right">
+                        <p class="text-xs text-gray-500 mb-1">Artikel Selanjutnya</p>
+                        <p class="font-semibold text-gray-900 group-hover:text-blue-700 line-clamp-2">{{ $next->judul }}</p>
+                    </a>
+                    @endif
+                </div>
+
+                <!-- Related -->
                 @if(isset($related) && $related->isNotEmpty())
                 <div class="mt-10">
                     <h2 class="text-xl font-extrabold text-gray-900 mb-4">Berita Terkait</h2>

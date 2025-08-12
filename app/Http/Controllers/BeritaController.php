@@ -27,6 +27,9 @@ class BeritaController extends Controller
             ->take(3)
             ->get();
 
-        return view('pages.detail-berita', compact('berita', 'related'));
+        $previous = Berita::where('id', '<', $berita->id)->orderBy('id', 'desc')->first();
+        $next = Berita::where('id', '>', $berita->id)->orderBy('id', 'asc')->first();
+
+        return view('pages.detail-berita', compact('berita', 'related', 'previous', 'next'));
     }
 }
