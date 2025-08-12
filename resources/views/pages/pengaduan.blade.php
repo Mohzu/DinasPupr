@@ -36,11 +36,24 @@
                 </div>
                 <div class="relative">
                     <div class="rounded-3xl border border-amber-100 bg-gradient-to-br from-white to-amber-50 p-6 shadow-xl">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 rounded-2xl bg-amber-500 text-white grid place-items-center shadow"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l.7 2.154a1 1 0 00.95.69h2.262c.969 0 1.371 1.24.588 1.81l-1.831 1.33a1 1 0 00-.364 1.118l.7 2.154c.3.921-.755 1.688-1.54 1.118l-1.831-1.33a1 1 0 00-1.176 0l-1.831 1.33c-.784.57-1.838-.197-1.539-1.118l.7-2.154a1 1 0 00-.364-1.118L6.2 7.581c-.783-.57-.38-1.81.588-1.81h2.262a1 1 0 00.95-.69l.7-2.154z"/></svg></div>
-                            <div>
-                                <p class="text-xs text-gray-500">Kebijakan</p>
-                                <p class="font-semibold text-gray-800">Data Anda aman. Email dikirim via Formspree.</p>
+                        <div class="grid grid-cols-3 gap-4">
+                            <div class="p-4 rounded-xl bg-white/70 backdrop-blur border border-amber-100 text-center">
+                                <div class="w-10 h-10 rounded-xl bg-amber-500 text-white mx-auto grid place-items-center shadow">
+                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                                </div>
+                                <p class="mt-2 text-sm font-semibold text-gray-800">Mudah</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-white/70 backdrop-blur border border-amber-100 text-center">
+                                <div class="w-10 h-10 rounded-xl bg-amber-500 text-white mx-auto grid place-items-center shadow">
+                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01"/></svg>
+                                </div>
+                                <p class="mt-2 text-sm font-semibold text-gray-800">Jelas</p>
+                            </div>
+                            <div class="p-4 rounded-xl bg-white/70 backdrop-blur border border-amber-100 text-center">
+                                <div class="w-10 h-10 rounded-xl bg-amber-500 text-white mx-auto grid place-items-center shadow">
+                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"/></svg>
+                                </div>
+                                <p class="mt-2 text-sm font-semibold text-gray-800">Responsif</p>
                             </div>
                         </div>
                     </div>
@@ -73,15 +86,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon</label>
                         <input type="tel" name="telepon" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="08xxxxxxxxxx">
                     </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-                        <select name="kategori" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500">
-                            <option value="Layanan">Layanan</option>
-                            <option value="Infrastruktur">Infrastruktur</option>
-                            <option value="Perizinan">Perizinan</option>
-                            <option value="Lainnya">Lainnya</option>
-                        </select>
-                    </div>
+                    
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 mb-1">Subjek</label>
                         <input type="text" name="subjek" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Ringkasan pengaduan" required>
