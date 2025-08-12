@@ -104,42 +104,42 @@
             </div>
             
             <div class="grid lg:grid-cols-2 gap-12">
-                <!-- Main Featured Article -->
+                <!-- Main Featured Article (Dynamic) -->
                 <article class="bg-white rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
+                    @if(isset($featured))
                     <div class="relative">
-                        <img src="https://via.placeholder.com/600x350/4F46E5/FFFFFF?text=Jalan+Tol+Garut-Bandung" alt="Berita Utama" class="w-full h-80 object-cover">
+                        @if ($featured->gambar)
+                            <img src="{{ asset('storage/' . $featured->gambar) }}" alt="{{ $featured->judul }}" class="w-full h-80 object-cover">
+                        @else
+                            <img src="https://via.placeholder.com/600x350/4F46E5/FFFFFF?text=Berita+Utama" alt="{{ $featured->judul }}" class="w-full h-80 object-cover">
+                        @endif
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
-                        
-                        <!-- Breaking Badge -->
-                        <div class="absolute top-6 left-6">
-                            <span class="bg-red-500 text-white px-4 py-2 rounded-full text-sm font-bold animate-pulse">
-                                BREAKING NEWS
-                            </span>
-                        </div>
                         
                         <!-- Meta Info -->
                         <div class="absolute bottom-6 left-6 right-6">
                             <div class="flex items-center gap-3 mb-3">
                                 <span class="bg-white bg-opacity-20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
-                                    5 Agustus 2025
+                                    {{ optional($featured->published_at ?? $featured->created_at)->translatedFormat('d M Y') }}
                                 </span>
+                                @if ($featured->kategori)
                                 <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold">
-                                    INFRASTRUKTUR
+                                    {{ strtoupper($featured->kategori) }}
                                 </span>
+                                @endif
                             </div>
                         </div>
                     </div>
                     
                     <div class="p-8">
                         <h3 class="text-2xl font-black text-gray-800 mb-4 leading-tight">
-                            Progres Pembangunan Jalan Tol Garut-Bandung Mencapai 75%
+                            {{ $featured->judul }}
                         </h3>
                         <p class="text-gray-600 text-lg leading-relaxed mb-6">
-                            Dinas PUPR Kabupaten Garut melaporkan bahwa pembangunan jalan tol yang menghubungkan Garut dengan Bandung telah mencapai progres 75%. Pembangunan ini diharapkan dapat meningkatkan konektivitas dan perekonomian daerah.
+                            {{ Str::limit(strip_tags($featured->isi), 180) }}
                         </p>
                         
                         <div class="flex items-center justify-between">
-                            <a href="#" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-bold transition-colors duration-300">
+                            <a href="{{ route('berita.show', $featured->slug ?? $featured->id) }}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-bold transition-colors duration-300">
                                 <span>Baca Selengkapnya</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -160,9 +160,10 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 </article>
 
-                <!-- Recent News Sidebar -->
+                <!-- Recent News Sidebar (Dynamic) -->
                 <div class="space-y-6">
                     <h3 class="text-2xl font-black text-gray-800 mb-6 flex items-center gap-3">
                         <div class="w-1 h-8 bg-gradient-to-b from-purple-600 to-pink-600 rounded-full"></div>
@@ -170,53 +171,33 @@
                     </h3>
                     
                     <!-- Recent News Items -->
-                    <article class="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
-                        <div class="flex gap-4">
-                            <img src="https://via.placeholder.com/120x80/10B981/FFFFFF?text=Jembatan" alt="Berita" class="w-24 h-20 object-cover rounded-xl flex-shrink-0">
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-2">
-                                    <span class="text-sm text-gray-500">4 Agustus 2025</span>
-                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">INFRASTRUKTUR</span>
+                    @if(isset($recent) && $recent->isNotEmpty())
+                        @foreach($recent as $item)
+                        <article class="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
+                            <div class="flex gap-4">
+                                <a href="{{ route('berita.show', $item->slug ?? $item->id) }}" class="block">
+                                    @if ($item->gambar)
+                                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-24 h-20 object-cover rounded-xl flex-shrink-0">
+                                    @else
+                                        <img src="https://via.placeholder.com/120x80/10B981/FFFFFF?text=Berita" alt="{{ $item->judul }}" class="w-24 h-20 object-cover rounded-xl flex-shrink-0">
+                                    @endif
+                                </a>
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-2 mb-2">
+                                        <span class="text-sm text-gray-500">{{ optional($item->published_at ?? $item->created_at)->translatedFormat('d M Y') }}</span>
+                                        @if ($item->kategori)
+                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">{{ strtoupper($item->kategori) }}</span>
+                                        @endif
+                                    </div>
+                                    <a href="{{ route('berita.show', $item->slug ?? $item->id) }}" class="font-bold text-gray-800 text-lg mb-2 hover:text-blue-600 block">
+                                        {{ $item->judul }}
+                                    </a>
+                                    <p class="text-gray-600 text-sm">{{ Str::limit(strip_tags($item->isi), 80) }}</p>
                                 </div>
-                                <h4 class="font-bold text-gray-800 text-lg mb-2 hover:text-blue-600 cursor-pointer">
-                                    Rehabilitasi Jembatan Cimanuk Fase 2 Dimulai
-                                </h4>
-                                <p class="text-gray-600 text-sm">Pekerjaan rehabilitasi jembatan strategis di Sungai Cimanuk memasuki fase kedua...</p>
                             </div>
-                        </div>
-                    </article>
-
-                    <article class="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
-                        <div class="flex gap-4">
-                            <img src="https://via.placeholder.com/120x80/8B5CF6/FFFFFF?text=RTRW" alt="Berita" class="w-24 h-20 object-cover rounded-xl flex-shrink-0">
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-2">
-                                    <span class="text-sm text-gray-500">3 Agustus 2025</span>
-                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-bold">TATA RUANG</span>
-                                </div>
-                                <h4 class="font-bold text-gray-800 text-lg mb-2 hover:text-blue-600 cursor-pointer">
-                                    Revisi RTRW Kabupaten Garut 2025-2045
-                                </h4>
-                                <p class="text-gray-600 text-sm">Masyarakat diundang memberikan masukan dalam proses revisi...</p>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
-                        <div class="flex gap-4">
-                            <img src="https://via.placeholder.com/120x80/F59E0B/FFFFFF?text=Info" alt="Berita" class="w-24 h-20 object-cover rounded-xl flex-shrink-0">
-                            <div class="flex-1">
-                                <div class="flex items-center gap-2 mb-2">
-                                    <span class="text-sm text-gray-500">2 Agustus 2025</span>
-                                    <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-bold">PENGUMUMAN</span>
-                                </div>
-                                <h4 class="font-bold text-gray-800 text-lg mb-2 hover:text-blue-600 cursor-pointer">
-                                    Pengumuman Lelang Proyek Drainase
-                                </h4>
-                                <p class="text-gray-600 text-sm">Dinas PUPR mengumumkan pembukaan lelang untuk proyek pembangunan...</p>
-                            </div>
-                        </div>
-                    </article>
+                        </article>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
