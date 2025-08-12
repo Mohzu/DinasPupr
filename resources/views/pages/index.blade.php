@@ -321,7 +321,7 @@
                                             </div>
 
                                             {{-- CTA Button --}}
-                                            <a href="#" class="inline-flex items-center bg-white/20 backdrop-blur-sm border border-white/30 text-white px-4 py-2 rounded-lg hover:bg-white/30 transition-all duration-300 w-fit transform hover:scale-105">
+                                            <a href="{{ route('berita.show', $berita->slug ?? $berita->id) }}" class="inline-flex items-center bg-white/20 backdrop-blur-sm border border-white/30 text-white px-4 py-2 rounded-lg hover:bg-white/30 transition-all duration-300 w-fit transform hover:scale-105">
                                                 <span class="mr-2">Baca Selengkapnya</span>
                                                 <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -389,7 +389,7 @@
                         <div class="space-y-4">
                             @if(isset($beritas) && $beritas->count() > 5)
                                 @foreach ($beritas->skip(5)->take(4) as $index => $berita)
-                                    <a href="#" class="group block p-4 hover:bg-white/70 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg border border-transparent hover:border-blue-100">
+                                    <a href="{{ route('berita.show', $berita->slug ?? $berita->id) }}" class="group block p-4 hover:bg-white/70 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg border border-transparent hover:border-blue-100">
                                         <h4 class="text-lg font-semibold text-gray-900 leading-tight mb-3 group-hover:text-blue-600 transition-colors duration-300">
                                             {{ $berita->judul }}
                                         </h4>
@@ -408,7 +408,7 @@
                                 @endforeach
                             @elseif(isset($beritas) && $beritas->count() > 1)
                                 @foreach ($beritas->skip(1)->take(4) as $index => $berita)
-                                    <a href="#" class="group block p-4 hover:bg-white/70 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg border border-transparent hover:border-blue-100">
+                                    <a href="{{ route('berita.show', $berita->slug ?? $berita->id) }}" class="group block p-4 hover:bg-white/70 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg border border-transparent hover:border-blue-100">
                                         <h4 class="text-lg font-semibold text-gray-900 leading-tight mb-3 group-hover:text-blue-600 transition-colors duration-300">
                                             {{ $berita->judul }}
                                         </h4>

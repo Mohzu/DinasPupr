@@ -221,7 +221,7 @@
             </div>
         </div>
 
-        <!-- All News Grid -->
+        <!-- All News Grid (Dynamic) -->
         <div class="max-w-7xl mx-auto mb-16">
             <div class="flex flex-col md:flex-row justify-between items-center mb-8">
                 <h2 class="text-3xl font-black text-gray-800 mb-4 md:mb-0">Semua Berita</h2>
@@ -229,190 +229,42 @@
 
             <div class="max-w-7xl mx-auto">
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                <!-- News Card 1 -->
-                <article class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/400x240/3B82F6/FFFFFF?text=Irigasi+Modern" alt="Berita" class="w-full h-48 object-cover">
-                        <div class="absolute top-4 right-4">
-                            <span class="bg-yellow-500 text-white px-3 py-1 rounded-full text-xs font-bold">TRENDING</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-sm text-gray-500">1 Agustus 2025</span>
-                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold">INFRASTRUKTUR</span>
-                        </div>
-                        <h3 class="font-bold text-gray-800 text-xl mb-3 hover:text-blue-600 cursor-pointer">
-                            Modernisasi Sistem Irigasi Tarogong Kidul Rampung
-                        </h3>
-                        <p class="text-gray-600 mb-4">Sistem irigasi modern dengan teknologi terkini telah selesai dibangun...</p>
-                        <a href="#" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-bold">
-                            Baca Selengkapnya
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- News Card 2 -->
-                <article class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/400x240/10B981/FFFFFF?text=SANIMAS" alt="Berita" class="w-full h-48 object-cover">
-                        <div class="absolute top-4 right-4">
-                            <span class="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">NEW</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-sm text-gray-500">31 Juli 2025</span>
-                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">LINGKUNGAN</span>
-                        </div>
-                        <h3 class="font-bold text-gray-800 text-xl mb-3 hover:text-blue-600 cursor-pointer">
-                            Program SANIMAS Tahap III Targetkan 50 Desa
-                        </h3>
-                        <p class="text-gray-600 mb-4">Program Sanitasi Berbasis Masyarakat memasuki tahap ketiga...</p>
-                        <a href="#" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-bold">
-                            Baca Selengkapnya
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- News Card 3 -->
-                <article class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/400x240/F59E0B/FFFFFF?text=Pelatihan" alt="Berita" class="w-full h-48 object-cover">
-                        <div class="absolute top-4 right-4">
-                            <span class="bg-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold">HOT</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-sm text-gray-500">30 Juli 2025</span>
-                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-xs font-bold">KEGIATAN</span>
-                        </div>
-                        <h3 class="font-bold text-gray-800 text-xl mb-3 hover:text-blue-600 cursor-pointer">
-                            Pelatihan Teknis Konstruksi untuk Kontraktor Lokal
-                        </h3>
-                        <p class="text-gray-600 mb-4">Dinas PUPR menyelenggarakan pelatihan untuk meningkatkan kapasitas...</p>
-                        <a href="#" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-bold">
-                            Baca Selengkapnya
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- News Card 4 -->
-                <article class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/400x240/8B5CF6/FFFFFF?text=Smart+City" alt="Berita" class="w-full h-48 object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-sm text-gray-500">29 Juli 2025</span>
-                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs font-bold">TEKNOLOGI</span>
-                        </div>
-                        <h3 class="font-bold text-gray-800 text-xl mb-3 hover:text-blue-600 cursor-pointer">
-                            Implementasi Smart City di Pusat Kota Garut
-                        </h3>
-                        <p class="text-gray-600 mb-4">Konsep kota pintar mulai diterapkan dengan instalasi sensor IoT...</p>
-                        <a href="#" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-bold">
-                            Baca Selengkapnya
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- News Card 5 -->
-                <article class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/400x240/EF4444/FFFFFF?text=Rest+Area" alt="Berita" class="w-full h-48 object-cover">
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-sm text-gray-500">28 Juli 2025</span>
-                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-bold">TRANSPORTASI</span>
-                        </div>
-                        <h3 class="font-bold text-gray-800 text-xl mb-3 hover:text-blue-600 cursor-pointer">
-                            Rencana Pembangunan Rest Area Modern di Tol Garut
-                        </h3>
-                        <p class="text-gray-600 mb-4">Rest area dengan fasilitas lengkap akan dibangun untuk kenyamanan...</p>
-                        <a href="#" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-bold">
-                            Baca Selengkapnya
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- News Card 6 -->
-                <article class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
-                    <div class="relative">
-                        <img src="https://via.placeholder.com/400x240/059669/FFFFFF?text=Green+Building" alt="Berita" class="w-full h-48 object-cover">
-                        <div class="absolute top-4 right-4">
-                            <span class="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-bold">ECO</span>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <div class="flex items-center gap-2 mb-3">
-                            <span class="text-sm text-gray-500">27 Juli 2025</span>
-                            <span class="bg-emerald-100 text-emerald-800 px-2 py-1 rounded-full text-xs font-bold">BERKELANJUTAN</span>
-                        </div>
-                        <h3 class="font-bold text-gray-800 text-xl mb-3 hover:text-blue-600 cursor-pointer">
-                            Gedung Perkantoran Ramah Lingkungan Segera Diresmikan
-                        </h3>
-                        <p class="text-gray-600 mb-4">Bangunan dengan konsep green building akan menjadi landmark baru...</p>
-                        <a href="#" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-bold">
-                            Baca Selengkapnya
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                            </svg>
-                        </a>
-                    </div>
-                </article>
+                    @forelse ($beritas as $berita)
+                        <article class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                            <div class="relative">
+                                @if ($berita->gambar)
+                                    <img src="{{ asset('storage/' . $berita->gambar) }}" alt="{{ $berita->judul }}" class="w-full h-48 object-cover">
+                                @else
+                                    <img src="https://via.placeholder.com/400x240/3B82F6/FFFFFF?text=Berita" alt="{{ $berita->judul }}" class="w-full h-48 object-cover">
+                                @endif
                             </div>
+                            <div class="p-6">
+                                <div class="flex items-center gap-2 mb-3">
+                                    <span class="text-sm text-gray-500">{{ optional($berita->published_at ?? $berita->created_at)->translatedFormat('d M Y') }}</span>
+                                    @if ($berita->kategori)
+                                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold">{{ strtoupper($berita->kategori) }}</span>
+                                    @endif
+                                </div>
+                                <h3 class="font-bold text-gray-800 text-xl mb-3 hover:text-blue-600">
+                                    <a href="{{ route('berita.show', $berita->slug ?? $berita->id) }}">{{ $berita->judul }}</a>
+                                </h3>
+                                <a href="{{ route('berita.show', $berita->slug ?? $berita->id) }}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-bold">
+                                    Baca Selengkapnya
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>
+                                </a>
+                            </div>
+                        </article>
+                    @empty
+                        <div class="col-span-3 text-center text-gray-500">Belum ada berita.</div>
+                    @endforelse
+                </div>
 
                 <!-- Pagination -->
                 <div class="flex justify-center">
-                    <nav class="flex items-center gap-2">
-                    <button class="flex items-center justify-center w-10 h-10 bg-white border border-gray-300 rounded-lg text-gray-400 hover:text-gray-600 transition-colors duration-300" disabled>
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                        </svg>
-                    </button>
-                    
-                    <button class="flex items-center justify-center w-10 h-10 bg-blue-600 text-white rounded-lg font-bold shadow-lg">
-                        1
-                    </button>
-                    
-                    <button class="flex items-center justify-center w-10 h-10 bg-white border border-gray-300 text-gray-700 rounded-lg font-bold hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                        2
-                    </button>
-                    
-                    <button class="flex items-center justify-center w-10 h-10 bg-white border border-gray-300 text-gray-700 rounded-lg font-bold hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                        3
-                    </button>
-                    
-                    <span class="px-3 py-2 text-gray-400">...</span>
-                    
-                    <button class="flex items-center justify-center w-10 h-10 bg-white border border-gray-300 text-gray-700 rounded-lg font-bold hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300">
-                        10
-                    </button>
-                    
-                    <button class="flex items-center justify-center w-10 h-10 bg-white border border-gray-300 rounded-lg text-gray-700 hover:text-gray-900 transition-colors duration-300">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </button>
-                </nav>
+                    {{ $beritas->onEachSide(1)->links() }}
+                </div>
             </div>
         </div>
     </div>
