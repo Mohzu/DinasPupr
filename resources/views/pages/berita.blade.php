@@ -65,64 +65,36 @@
                 </div>
             </div>
         </div>
-        
-        <!-- Wave Effect -->
-        <div class="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 0 1200 120" class="w-full h-16 fill-gray-50">
-                <path d="M0,60 C150,100 350,0 600,60 C850,120 1050,20 1200,60 L1200,120 L0,120 Z"/>
-            </svg>
-        </div>
     </div>
 
     <!-- Main Content -->
-    <div class="container mx-auto px-6 -mt-8 relative z-10">
+    <div class="container mx-auto px-6">
         <!-- Search Section -->
-        <div class="bg-white/95 backdrop-blur-xl rounded-[32px] p-8 mb-12 shadow-2xl border border-white/20">
-            <div class="max-w-2xl mx-auto">
-                <div class="text-center mb-6">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-2">Cari Berita</h3>
-                    <p class="text-gray-600">Temukan informasi terkini yang Anda cari</p>
-                </div>
-                
-                <!-- Modern Search Bar -->
-                <div class="relative group">
-                    <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity duration-300"></div>
-                    <div class="relative bg-white rounded-2xl border-2 border-gray-100 overflow-hidden">
-                        <div class="flex items-center">
-                            <div class="pl-6 pr-4 py-4">
-                                <svg class="w-6 h-6 text-gray-400 group-hover:text-blue-500 transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                                </svg>
+        <section class="py-8">
+            <div class="max-w-7xl mx-auto mb-8">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                    <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
+                        <div class="relative flex-1 max-w-md">
+                            <input id="search-input" type="text" placeholder="Cari berita..." class="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-4">
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             </div>
-                            <input 
-                                type="text" 
-                                placeholder="Ketik kata kunci berita yang ingin dicari..." 
-                                class="flex-1 py-4 text-lg bg-transparent border-none outline-none focus:outline-none placeholder-gray-400 text-gray-700 font-medium"
-                            >
-                            <button class="mr-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-3 rounded-xl font-bold transition-all duration-300 hover:shadow-lg hover:scale-105 transform">
-                                <span class="flex items-center gap-2">
-                                    Cari
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                                    </svg>
-                                </span>
-                            </button>
+                        </div>
+                        <div class="flex gap-3 items-center">
+                            <label for="sort-filter" class="text-sm text-gray-600">Urutkan:</label>
+                            <select id="sort-filter" class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+                                <option value="terbaru">Terbaru</option>
+                                <option value="terlama">Terlama</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <!-- Featured News Section -->
-        <div class="mb-16">
-            <!-- Category pills -->
-            <div class="mb-6 flex flex-wrap items-center gap-3 justify-center">
-                @php $tags = ['Semua','Infrastruktur','Tata Ruang','Lingkungan','Transportasi','Teknologi']; @endphp
-                @foreach ($tags as $idx => $tag)
-                <button class="px-4 py-2 rounded-full text-sm font-semibold border @if($idx===0) bg-blue-600 text-white border-blue-600 @else bg-white text-gray-700 border-gray-200 hover:border-blue-300 hover:text-blue-700 @endif transition">{{ $tag }}</button>
-                @endforeach
-            </div>
-            <div class="text-center mb-12">
+        <div class="max-w-7xl mx-auto mb-16">
+            <div class="text-center mb-8">
                 <h2 class="text-4xl font-black text-gray-800 mb-4">
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
                         Berita Utama
@@ -192,18 +164,6 @@
 
                 <!-- Recent News Sidebar -->
                 <div class="space-y-6">
-                    <div class="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 rounded-2xl p-1 shadow-xl">
-                        <div class="bg-white rounded-2xl p-5">
-                            <h4 class="font-bold text-gray-800 mb-3 flex items-center gap-2">
-                                <svg class="h-5 w-5 text-blue-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m2 0V9a4 4 0 10-8 0v3H4l4 4 4-4h-2"/></svg>
-                                Langganan Update
-                            </h4>
-                            <div class="flex gap-2">
-                                <input type="email" placeholder="Email Anda" class="flex-1 px-3 py-2 border rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                                <button class="px-4 py-2 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700">Kirim</button>
-                            </div>
-                        </div>
-                    </div>
                     <h3 class="text-2xl font-black text-gray-800 mb-6 flex items-center gap-3">
                         <div class="w-1 h-8 bg-gradient-to-b from-purple-600 to-pink-600 rounded-full"></div>
                         Berita Terbaru
@@ -262,54 +222,13 @@
         </div>
 
         <!-- All News Grid -->
-        <div class="mb-16">
-            <!-- Horizontal Highlights Carousel -->
-            <div class="mb-8">
-                <div class="flex items-center justify-between mb-3">
-                    <h3 class="text-xl font-bold text-gray-900">Sorotan</h3>
-                    <div class="flex gap-2">
-                        <button id="hl-prev" class="p-2 rounded-lg border bg-white hover:bg-gray-50">
-                            <svg class="h-5 w-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                        </button>
-                        <button id="hl-next" class="p-2 rounded-lg border bg-white hover:bg-gray-50">
-                            <svg class="h-5 w-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                        </button>
-                    </div>
-                </div>
-                <div id="hl-scroll" class="relative">
-                    <div class="flex gap-5 overflow-x-auto no-scrollbar snap-x snap-mandatory scroll-smooth pb-2">
-                        @php $highlights = [
-                          ['title'=>'Pembangunan Jembatan Baru','tag'=>'INFRASTRUKTUR','color'=>'blue','img'=>'https://via.placeholder.com/360x200/3B82F6/FFFFFF?text=Jembatan'],
-                          ['title'=>'Penataan Kawasan Kota','tag'=>'TATA RUANG','color'=>'purple','img'=>'https://via.placeholder.com/360x200/8B5CF6/FFFFFF?text=Kota'],
-                          ['title'=>'Program Air Bersih','tag'=>'LINGKUNGAN','color'=>'emerald','img'=>'https://via.placeholder.com/360x200/10B981/FFFFFF?text=Air+Bersih'],
-                          ['title'=>'Smart Traffic System','tag'=>'TEKNOLOGI','color'=>'amber','img'=>'https://via.placeholder.com/360x200/F59E0B/FFFFFF?text=Traffic'],
-                        ]; @endphp
-                        @foreach ($highlights as $hl)
-                        <a href="#" class="shrink-0 w-80 snap-start">
-                            <div class="rounded-2xl overflow-hidden border bg-white shadow-sm hover:shadow-md transition">
-                                <div class="relative">
-                                    <img src="{{ $hl['img'] }}" class="w-full h-44 object-cover" alt="{{ $hl['title'] }}">
-                                    <span class="absolute top-3 left-3 text-xs font-bold text-white px-2 py-1 rounded bg-black/40">{{ $hl['tag'] }}</span>
-                                </div>
-                                <div class="p-4">
-                                    <p class="font-semibold text-gray-900 line-clamp-2">{{ $hl['title'] }}</p>
-                                </div>
-                            </div>
-                        </a>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
+        <div class="max-w-7xl mx-auto mb-16">
             <div class="flex flex-col md:flex-row justify-between items-center mb-8">
                 <h2 class="text-3xl font-black text-gray-800 mb-4 md:mb-0">Semua Berita</h2>
-                <select class="bg-white border-2 border-gray-200 rounded-xl px-4 py-3 font-medium focus:outline-none focus:border-blue-500">
-                    <option>Terbaru</option>
-                    <option>Terlama</option>
-                    <option>Terpopuler</option>
-                </select>
             </div>
 
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                 <!-- News Card 1 -->
                 <article class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
                     <div class="relative">
@@ -459,11 +378,11 @@
                         </a>
                     </div>
                 </article>
-            </div>
+                            </div>
 
-            <!-- Pagination -->
-            <div class="flex justify-center">
-                <nav class="flex items-center gap-2">
+                <!-- Pagination -->
+                <div class="flex justify-center">
+                    <nav class="flex items-center gap-2">
                     <button class="flex items-center justify-center w-10 h-10 bg-white border border-gray-300 rounded-lg text-gray-400 hover:text-gray-600 transition-colors duration-300" disabled>
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -511,8 +430,8 @@
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Search functionality
-    const searchInput = document.querySelector('input[type="text"]');
-    const searchButton = document.querySelector('button[class*="bg-gradient-to-r"]');
+    const searchInput = document.querySelector('#search-input');
+    const sortFilter = document.querySelector('#sort-filter');
     let searchTimeout;
     
     if (searchInput) {
@@ -533,10 +452,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    if (searchButton) {
-        searchButton.addEventListener('click', function() {
-            const query = searchInput.value;
-            performSearch(query);
+    if (sortFilter) {
+        sortFilter.addEventListener('change', function() {
+            console.log('Mengurutkan berdasarkan:', this.value);
+            // Implementasi sorting akan ditambahkan di sini
         });
     }
     
@@ -548,17 +467,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Quick search tags
-    const quickTags = document.querySelectorAll('button[class*="bg-blue-50"], button[class*="bg-purple-50"], button[class*="bg-green-50"], button[class*="bg-orange-50"]');
-    
-    quickTags.forEach(tag => {
-        tag.addEventListener('click', function() {
-            const tagText = this.textContent.replace('#', '');
-            searchInput.value = tagText;
-            performSearch(tagText);
-        });
-    });
-    
     // Smooth scroll for pagination
     const paginationButtons = document.querySelectorAll('nav button');
     paginationButtons.forEach(button => {
@@ -568,16 +476,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
-
-    // Highlights scroll controls
-    const hlContainer = document.querySelector('#hl-scroll > div');
-    const hlPrev = document.getElementById('hl-prev');
-    const hlNext = document.getElementById('hl-next');
-    if (hlContainer && hlPrev && hlNext) {
-        const step = 320;
-        hlPrev.addEventListener('click', () => hlContainer.scrollBy({ left: -step, behavior: 'smooth' }));
-        hlNext.addEventListener('click', () => hlContainer.scrollBy({ left: step, behavior: 'smooth' }));
-    }
     
     // Add loading animation for cards
     const cards = document.querySelectorAll('article');
@@ -600,11 +498,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Add search input focus effects
     if (searchInput) {
         searchInput.addEventListener('focus', function() {
-            this.closest('.group').classList.add('ring-4', 'ring-blue-500', 'ring-opacity-20');
+            this.closest('.bg-white').classList.add('ring-4', 'ring-blue-500', 'ring-opacity-20');
         });
         
         searchInput.addEventListener('blur', function() {
-            this.closest('.group').classList.remove('ring-4', 'ring-blue-500', 'ring-opacity-20');
+            this.closest('.bg-white').classList.remove('ring-4', 'ring-blue-500', 'ring-opacity-20');
         });
     }
 });

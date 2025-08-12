@@ -21,10 +21,10 @@ class Pengumuman extends Model
         'published_at',
     ];
 
-    // Tipe data yang harus diperlakukan sebagai tanggal
-    protected $dates = [
-        'published_at',
-        'created_at',
-        'updated_at',
+    // Casts untuk tipe data
+    protected $casts = [
+        'published_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 }

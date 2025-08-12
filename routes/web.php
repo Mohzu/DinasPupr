@@ -11,6 +11,7 @@ use App\Http\Controllers\VisiMisiController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('pages/berita', [BeritaController::class, 'index'])->name('berita');
 Route::get('pages/pengumuman', [PengumumanController::class, 'index'])->name('pengumuman');
+Route::get('pages/pengumuman/{id}', [PengumumanController::class, 'show'])->name('pengumuman.show');
 
 // Profil pages
 Route::get('pages/sejarah', [SejarahController::class, 'index'])->name('sejarah');
