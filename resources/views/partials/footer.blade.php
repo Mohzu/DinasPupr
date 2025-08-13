@@ -92,7 +92,7 @@
                         </div>
                         
                         <p class="text-gray-300 leading-relaxed max-w-md">
-                            Bersama membangun infrastruktur berkualitas dan penataan ruang yang berkelanjutan untuk kemajuan dan kesejahteraan masyarakat Kabupaten Garut.
+                            Terwujudnya Infrastruktur Pekerjaan Umum dan Penataan Ruang yang Berkualitas dalam MendukungKabupaten Garut Bermartabat, Nyaman dan Sejahtera
                         </p>
 
                         <!-- Contact Info -->
@@ -131,11 +131,8 @@
                     <div class="lg:col-span-2 fade-in-up" style="animation-delay: 0.2s;">
                         <h4 class="text-xl font-bold text-white mb-6">Layanan</h4>
                         <ul class="space-y-3">
-                            <li><a href="#" class="text-gray-300 link-hover transition-all duration-300">Infrastruktur Jalan</a></li>
-                            <li><a href="#" class="text-gray-300 link-hover transition-all duration-300">Penataan Ruang</a></li>
-                            <li><a href="#" class="text-gray-300 link-hover transition-all duration-300">Perizinan IMB</a></li>
-                            <li><a href="#" class="text-gray-300 link-hover transition-all duration-300">Pengawasan Bangunan</a></li>
-                            <li><a href="#" class="text-gray-300 link-hover transition-all duration-300">Konsultasi Teknis</a></li>
+                            <li><a href="{{ route('pengaduan') }}" class="text-gray-300 link-hover transition-all duration-300">Pengaduan</a></li>
+                            <li><a href="{{ route('kontak') }}" class="text-gray-300 link-hover transition-all duration-300">Kontak</a></li>
                         </ul>
                     </div>
 
@@ -143,11 +140,11 @@
                     <div class="lg:col-span-2 fade-in-up" style="animation-delay: 0.4s;">
                         <h4 class="text-xl font-bold text-white mb-6">Informasi</h4>
                         <ul class="space-y-3">
-                            <li><a href="#" class="text-gray-300 link-hover transition-all duration-300">Berita Terkini</a></li>
-                            <li><a href="#" class="text-gray-300 link-hover transition-all duration-300">Pengumuman</a></li>
-                            <li><a href="#" class="text-gray-300 link-hover transition-all duration-300">Tender & Lelang</a></li>
-                            <li><a href="#" class="text-gray-300 link-hover transition-all duration-300">Laporan Keuangan</a></li>
-                            <li><a href="#" class="text-gray-300 link-hover transition-all duration-300">Struktur Organisasi</a></li>
+                            <li><a href="{{ route('sejarah') }}" class="text-gray-300 link-hover transition-all duration-300">Sejarah</a></li>
+                            <li><a href="{{ route('strukturorganisasi') }}" class="text-gray-300 link-hover transition-all duration-300">Struktur Organisasi</a></li>
+                            <li><a href="{{ route('visimisi') }}" class="text-gray-300 link-hover transition-all duration-300">Visi Misi</a></li>
+                            <li><a href="{{ route('berita') }}" class="text-gray-300 link-hover transition-all duration-300">Berita Terkini</a></li>
+                            <li><a href="{{ route('pengumuman') }}" class="text-gray-300 link-hover transition-all duration-300">Pengumuman</a></li>
                         </ul>
                     </div>
 

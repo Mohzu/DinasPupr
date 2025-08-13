@@ -15,7 +15,7 @@
         <div class="absolute inset-0 -z-10 h-48 bg-gradient-to-r from-amber-400 via-amber-300 to-yellow-300"></div>
         <div class="container mx-auto px-6">
             <div class="bg-white/90 backdrop-blur rounded-2xl shadow-sm border border-amber-100 p-6 md:p-8">
-                <a href="{{ route('pengumuman') }}" class="inline-flex items-center gap-2 text-amber-700 hover:text-amber-800 hover:underline mb-4">
+                <a href="{{ route('pengumuman') }}" class="inline-flex items-center gap-2 text-blue-700 hover:text-blue-80 hover:underline mb-4">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
                     Kembali ke daftar pengumuman
                 </a>

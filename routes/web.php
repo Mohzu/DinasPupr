@@ -10,6 +10,7 @@ use App\Http\Controllers\VisiMisiController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('pages/berita', [BeritaController::class, 'index'])->name('berita');
+Route::get('pages/berita/{slug}', [BeritaController::class, 'show'])->name('berita.show');
 Route::get('pages/pengumuman', [PengumumanController::class, 'index'])->name('pengumuman');
 Route::get('pages/pengumuman/{id}', [PengumumanController::class, 'show'])->name('pengumuman.show');
 
@@ -19,3 +20,7 @@ Route::get('pages/strukturorganisasi', [StrukturOrganisasiController::class, 'in
 Route::get('pages/visimisi', [VisiMisiController::class, 'index'])->name('visimisi');
 
 Route::get('/berita/search', [BeritaController::class, 'search'])->name('berita.search');
+
+// Static pages: contact and pengaduan
+Route::view('pages/kontak', 'pages.kontak')->name('kontak');
+Route::view('pages/pengaduan', 'pages.pengaduan')->name('pengaduan');

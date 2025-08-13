@@ -176,19 +176,9 @@
         <div class="container mx-auto px-6">
             {{-- Section Header --}}
             <div class="text-center mb-16">
-                <div class="inline-flex items-center bg-blue-50 text-blue-600 px-4 py-2 rounded-full text-sm font-semibold mb-6">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                    </svg>
-                    LAYANAN UNGGULAN
-                </div>
                 <h2 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-6 leading-tight">
                     Membangun <span class="text-blue-600">Infrastruktur</span> Terdepan
                 </h2>
-                <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                    Kami menyediakan layanan terbaik dalam pembangunan infrastruktur dan penataan ruang 
-                    untuk mendukung kemajuan Kabupaten Garut
-                </p>
             </div>
 
             {{-- Services Grid --}}
@@ -203,11 +193,6 @@
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Infrastruktur Jalan</h3>
                     <p class="text-gray-600 mb-6 leading-relaxed">Pembangunan, pemeliharaan, dan rehabilitasi jalan kabupaten untuk meningkatkan konektivitas antar wilayah.</p>
-                    <a href="#" class="flex items-center text-blue-600 font-semibold group-hover:text-blue-700">
-                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </a>
                 </div>
 
                 {{-- Service Card 2 --}}
@@ -220,11 +205,6 @@
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Penataan Ruang</h3>
                     <p class="text-gray-600 mb-6 leading-relaxed">Perencanaan tata ruang wilayah yang terstruktur dan berkelanjutan sesuai dengan kebutuhan masa depan.</p>
-                    <a href="#" class="flex items-center text-green-600 font-semibold group-hover:text-green-700">
-                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </a>
                 </div>
 
                 {{-- Service Card 3 --}}
@@ -237,11 +217,6 @@
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Perizinan IMB</h3>
                     <p class="text-gray-600 mb-6 leading-relaxed">Layanan perizinan mendirikan bangunan dan konsultasi teknis untuk masyarakat dan pengembang.</p>
-                    <a href="#" class="flex items-center text-purple-600 font-semibold group-hover:text-purple-700">
-                        <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                        </svg>
-                    </a>
                 </div>
             </div>
         </div>
@@ -321,7 +296,7 @@
                                             </div>
 
                                             {{-- CTA Button --}}
-                                            <a href="#" class="inline-flex items-center bg-white/20 backdrop-blur-sm border border-white/30 text-white px-4 py-2 rounded-lg hover:bg-white/30 transition-all duration-300 w-fit transform hover:scale-105">
+                                            <a href="{{ route('berita.show', $berita->slug ?? $berita->id) }}" class="inline-flex items-center bg-white/20 backdrop-blur-sm border border-white/30 text-white px-4 py-2 rounded-lg hover:bg-white/30 transition-all duration-300 w-fit transform hover:scale-105">
                                                 <span class="mr-2">Baca Selengkapnya</span>
                                                 <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
@@ -389,7 +364,7 @@
                         <div class="space-y-4">
                             @if(isset($beritas) && $beritas->count() > 5)
                                 @foreach ($beritas->skip(5)->take(4) as $index => $berita)
-                                    <a href="#" class="group block p-4 hover:bg-white/70 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg border border-transparent hover:border-blue-100">
+                                    <a href="{{ route('berita.show', $berita->slug ?? $berita->id) }}" class="group block p-4 hover:bg-white/70 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg border border-transparent hover:border-blue-100">
                                         <h4 class="text-lg font-semibold text-gray-900 leading-tight mb-3 group-hover:text-blue-600 transition-colors duration-300">
                                             {{ $berita->judul }}
                                         </h4>
@@ -408,7 +383,7 @@
                                 @endforeach
                             @elseif(isset($beritas) && $beritas->count() > 1)
                                 @foreach ($beritas->skip(1)->take(4) as $index => $berita)
-                                    <a href="#" class="group block p-4 hover:bg-white/70 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg border border-transparent hover:border-blue-100">
+                                    <a href="{{ route('berita.show', $berita->slug ?? $berita->id) }}" class="group block p-4 hover:bg-white/70 rounded-xl transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg border border-transparent hover:border-blue-100">
                                         <h4 class="text-lg font-semibold text-gray-900 leading-tight mb-3 group-hover:text-blue-600 transition-colors duration-300">
                                             {{ $berita->judul }}
                                         </h4>

@@ -9,13 +9,19 @@ class BeritaController extends Controller
 {
     public function index()
     {
-        // Mengambil berita terbaru dari database
-        // Anda bisa menyesuaikan jumlahnya (misalnya, 5 berita terbaru)
-        // 'latest()' akan mengurutkan berdasarkan created_at DESC
-        // 'get()' akan mengambil semua hasil
-        $beritas = Berita::latest()->take(5)->get(); 
+        $featured = Berita::latest()->first();
+        $recent = Berita::latest()->skip(1)->take(3)->get();
+        $beritas = Berita::latest()->paginate(9);
 
-        // Meneruskan data berita ke view
-        return view('pages.berita', compact('beritas')); // 'beritas' akan tersedia di view
+        return view('pages.berita', compact('featured', 'recent', 'beritas'));
+    }
+
+    public function show(string $slugOrId)
+    {
+        $berita = Berita::where('slug', $slugOrId)
+            ->orWhere('id', $slugOrId)
+            ->firstOrFail();
+
+        return view('pages.detail-berita', compact('berita'));
     }
 }

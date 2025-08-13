@@ -145,7 +145,7 @@
                             @click.away="open = false" 
                             class="absolute top-full left-1/2 transform -translate-x-1/2 mt-3 bg-white shadow-xl rounded-xl w-56 py-3 border border-gray-100 backdrop-blur-sm">
                             <li>
-                                <a href="#" class="block px-5 py-3 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 hover:translate-x-1">
+                                <a href="{{ route('pengaduan') }}" class="block px-5 py-3 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 hover:translate-x-1">
                                     <div class="flex items-center space-x-3">
                                         <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
                                         <span>Pengaduan</span>
@@ -153,7 +153,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#" class="block px-5 py-3 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 hover:translate-x-1">
+                                <a href="{{ route('kontak') }}" class="block px-5 py-3 text-gray-700 hover:text-blue-600 font-medium transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50 hover:to-blue-100 hover:translate-x-1">
                                     <div class="flex items-center space-x-3">
                                         <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
                                         <span>Kontak</span>
@@ -233,8 +233,8 @@
                                  x-transition:leave-start="opacity-100 max-h-40"
                                  x-transition:leave-end="opacity-0 max-h-0"
                                  class="bg-gray-50 overflow-hidden">
-                                <a href="#" class="block px-10 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">Berita Terkini</a>
-                                <a href="#" class="block px-10 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">Pengumuman</a>
+                                <a href="{{ route('berita') }}" class="block px-10 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">Berita Terkini</a>
+                                <a href="{{ route('pengumuman') }}" class="block px-10 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-200">Pengumuman</a>
                             </div>
                         </div>
 

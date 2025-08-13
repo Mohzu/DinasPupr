@@ -119,11 +119,6 @@
                     </svg>
                   </div>
                 @endif
-                
-                <!-- Badge Number -->
-                <div class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm rounded-full w-8 h-8 flex items-center justify-center text-sm font-semibold text-gray-700 shadow-md">
-                  {{ sprintf('%02d', $index + 1) }}
-                </div>
               </div>
               
               <!-- Info Section -->
