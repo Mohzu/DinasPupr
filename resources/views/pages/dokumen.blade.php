@@ -52,74 +52,135 @@
             </form>
         </div>
 
-        <!-- Results info -->
-        <div class="mt-8 flex items-center justify-between">
-            <p class="text-sm text-gray-600">Menampilkan dokumen pilihan. Silakan gunakan pencarian untuk memfilter.</p>
-        </div>
-
-        <!-- Documents Grid (static placeholders; integrate with backend later) -->
+        <!-- Top actions: Year chips and layout -->
         @php
-            $documents = [
-                [
-                    'title' => 'Peraturan Bupati tentang Penataan Ruang 2025',
-                    'category' => 'Regulasi',
-                    'size' => '1.2 MB',
-                    'date' => 'Jan 2025',
-                    'url' => '#',
-                ],
-                [
-                    'title' => 'Pedoman Teknis Pembangunan Jalan Kabupaten',
-                    'category' => 'Pedoman',
-                    'size' => '3.8 MB',
-                    'date' => 'Des 2024',
-                    'url' => '#',
-                ],
-                [
-                    'title' => 'Laporan Kinerja Dinas PUPR 2024',
-                    'category' => 'Laporan',
-                    'size' => '5.1 MB',
-                    'date' => 'Jan 2025',
-                    'url' => '#',
-                ],
-                [
-                    'title' => 'Rencana Kerja (Renja) 2025',
-                    'category' => 'Lainnya',
-                    'size' => '2.4 MB',
-                    'date' => 'Jan 2025',
-                    'url' => '#',
-                ],
-            ];
+            $years = [2025, 2024, 2023, 2022, 2021];
+            $activeYear = request('tahun');
         @endphp
-
-        <div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            @foreach($documents as $doc)
-            <div class="group bg-white rounded-2xl border border-gray-100 shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
-                <div class="p-5">
-                    <div class="flex items-center justify-between">
-                        <span class="inline-flex items-center gap-2 text-xs font-bold px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-100">{{ $doc['category'] }}</span>
-                        <span class="text-xs text-gray-500">{{ $doc['date'] }}</span>
-                    </div>
-                    <h3 class="mt-3 font-bold text-gray-900 line-clamp-2">{{ $doc['title'] }}</h3>
-                    <p class="mt-2 text-sm text-gray-500">PDF • {{ $doc['size'] }}</p>
-                </div>
-                <div class="px-5 pb-5 flex gap-2">
-                    <a href="{{ $doc['url'] }}" class="flex-1 inline-flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded-xl transition-colors">
-                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a1 1 0 011 1v10.59l3.3-3.3a1 1 0 011.4 1.42l-5 5a1 1 0 01-1.4 0l-5-5a1 1 0 011.4-1.42l3.3 3.3V4a1 1 0 011-1z"/></svg>
-                        Unduh
-                    </a>
-                    <button class="px-4 py-2 rounded-xl border border-gray-200 text-gray-700 hover:bg-gray-50 font-semibold">Detail</button>
-                </div>
-            </div>
+        <div class="mt-6 flex flex-wrap items-center gap-2">
+            <span class="text-sm text-gray-600 mr-2">Filter Tahun:</span>
+            <a href="{{ route('dokumen', array_filter(['q' => request('q'), 'kategori' => request('kategori')])) }}" class="px-3 py-1.5 rounded-full text-xs font-semibold border {{ $activeYear ? 'text-gray-600 border-gray-200 hover:bg-gray-50' : 'text-white bg-blue-600 border-blue-600' }}">Semua</a>
+            @foreach($years as $y)
+                <a href="{{ route('dokumen', array_filter(['q' => request('q'), 'kategori' => request('kategori'), 'tahun' => $y])) }}" class="px-3 py-1.5 rounded-full text-xs font-semibold border {{ (string)$activeYear === (string)$y ? 'text-white bg-blue-600 border-blue-600' : 'text-gray-700 border-gray-200 hover:bg-gray-50' }}">{{ $y }}</a>
             @endforeach
         </div>
 
-        <!-- Pagination placeholder -->
-        <div class="mt-10 flex justify-center">
-            <nav class="inline-flex rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                <a href="#" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 border-r border-gray-100">Sebelumnya</a>
-                <a href="#" class="px-4 py-2 text-sm font-semibold text-white bg-blue-600">1</a>
-                <a href="#" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 border-l border-gray-100">Berikutnya</a>
-            </nav>
+        <!-- Two-column layout: anchor sidebar + content -->
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Anchor Sidebar -->
+            <aside class="lg:col-span-3">
+                <div class="sticky top-28 bg-white rounded-2xl border border-gray-100 shadow-md p-4">
+                    <h3 class="text-sm font-bold text-gray-900 mb-3">Kategori</h3>
+                    <nav class="space-y-1 text-sm">
+                        <a href="#perencanaan" class="block px-3 py-2 rounded-lg hover:bg-gray-50 text-gray-700">Dokumen Perencanaan</a>
+                        <a href="#lpj" class="block px-3 py-2 rounded-lg hover:bg-gray-50 text-gray-700">Laporan Pertanggungjawaban</a>
+                        <a href="#produk-hukum" class="block px-3 py-2 rounded-lg hover:bg-gray-50 text-gray-700">Produk Hukum</a>
+                        <a href="#kepegawaian" class="block px-3 py-2 rounded-lg hover:bg-gray-50 text-gray-700">Transparansi Kepegawaian</a>
+                        <a href="#keuangan" class="block px-3 py-2 rounded-lg hover:bg-gray-50 text-gray-700">Transparansi Pengelolaan Keuangan</a>
+                    </nav>
+                </div>
+            </aside>
+
+            <!-- Content -->
+            <section class="lg:col-span-9 space-y-10">
+                @php
+                    $sections = [
+                        [
+                            'id' => 'perencanaan',
+                            'title' => 'Dokumen Perencanaan',
+                            'items' => [
+                                ['judul' => 'RKPD Dinas PUPR 2025', 'tahun' => 2025, 'ukuran' => '2.1 MB', 'url' => '#'],
+                                ['judul' => 'Renstra Dinas PUPR 2024-2025', 'tahun' => 2024, 'ukuran' => '3.6 MB', 'url' => '#'],
+                                ['judul' => 'Renja Dinas PUPR 2024', 'tahun' => 2024, 'ukuran' => '1.9 MB', 'url' => '#'],
+                            ],
+                        ],
+                        [
+                            'id' => 'lpj',
+                            'title' => 'Laporan Pertanggungjawaban',
+                            'items' => [
+                                ['judul' => 'LKPJ Kepala Daerah 2024 (Bidang PUPR)', 'tahun' => 2024, 'ukuran' => '4.2 MB', 'url' => '#'],
+                                ['judul' => 'Laporan Kinerja (LKjIP) 2024', 'tahun' => 2024, 'ukuran' => '5.0 MB', 'url' => '#'],
+                            ],
+                        ],
+                        [
+                            'id' => 'produk-hukum',
+                            'title' => 'Produk Hukum',
+                            'items' => [
+                                ['judul' => 'Perbup Penataan Ruang 2025', 'tahun' => 2025, 'ukuran' => '1.2 MB', 'url' => '#'],
+                                ['judul' => 'Pergub Terkait Jalan Kabupaten', 'tahun' => 2024, 'ukuran' => '980 KB', 'url' => '#'],
+                            ],
+                        ],
+                        [
+                            'id' => 'kepegawaian',
+                            'title' => 'Transparansi Kepegawaian',
+                            'items' => [
+                                ['judul' => 'Daftar Informasi Publik Kepegawaian 2025', 'tahun' => 2025, 'ukuran' => '650 KB', 'url' => '#'],
+                            ],
+                        ],
+                        [
+                            'id' => 'keuangan',
+                            'title' => 'Transparansi Pengelolaan Keuangan Daerah',
+                            'items' => [
+                                ['judul' => 'RKA Dinas PUPR 2025', 'tahun' => 2025, 'ukuran' => '2.9 MB', 'url' => '#'],
+                                ['judul' => 'DPA Dinas PUPR 2024', 'tahun' => 2024, 'ukuran' => '1.7 MB', 'url' => '#'],
+                            ],
+                        ],
+                    ];
+                @endphp
+
+                @foreach($sections as $section)
+                <div id="{{ $section['id'] }}" class="bg-white rounded-2xl border border-gray-100 shadow-md overflow-hidden">
+                    <div class="px-6 py-5 border-b border-gray-100 flex items-center justify-between">
+                        <div>
+                            <h2 class="text-lg md:text-xl font-extrabold text-gray-900">{{ $section['title'] }}</h2>
+                            <p class="text-sm text-gray-500">Daftar dokumen terbaru. Gunakan pencarian atau filter tahun untuk mempersempit hasil.</p>
+                        </div>
+                        <a href="#" class="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-blue-700 hover:text-blue-800">Lihat semua</a>
+                    </div>
+                    <ul class="divide-y divide-gray-100">
+                        @foreach($section['items'] as $item)
+                            @if(!$activeYear || (string)$activeYear === (string)$item['tahun'])
+                            <li class="p-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                                <div class="flex items-start gap-4">
+                                    <div class="mt-1 shrink-0 w-10 h-10 rounded-xl bg-red-50 text-red-600 flex items-center justify-center border border-red-100">
+                                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M6 2h7l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2zm7 7V3.5L18.5 9H13z"/></svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-gray-900">{{ $item['judul'] }}</h3>
+                                        <div class="mt-1 text-xs text-gray-500 flex flex-wrap items-center gap-2">
+                                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-gray-100 text-gray-700 font-medium">Tahun {{ $item['tahun'] }}</span>
+                                            <span>PDF</span>
+                                            <span>•</span>
+                                            <span>{{ $item['ukuran'] }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ $item['url'] }}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-200 text-gray-700 hover:bg-gray-50 font-semibold">
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M14 3h7v7h-2V6.414l-9.293 9.293-1.414-1.414L17.586 5H14V3z"/></svg>
+                                        Lihat
+                                    </a>
+                                    <a href="{{ $item['url'] }}" download class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-semibold">
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a1 1 0 011 1v10.59l3.3-3.3a1 1 0 011.4 1.42l-5 5a1 1 0 01-1.4 0l-5-5a1 1 0 011.4-1.42l3.3 3.3V4a1 1 0 011-1z"/></svg>
+                                        Unduh
+                                    </a>
+                                </div>
+                            </li>
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+                @endforeach
+
+                <!-- Pagination placeholder -->
+                <div class="flex justify-center">
+                    <nav class="inline-flex rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+                        <a href="#" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 border-r border-gray-100">Sebelumnya</a>
+                        <a href="#" class="px-4 py-2 text-sm font-semibold text-white bg-blue-600">1</a>
+                        <a href="#" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 border-l border-gray-100">Berikutnya</a>
+                    </nav>
+                </div>
+            </section>
         </div>
     </div>
 </div>
