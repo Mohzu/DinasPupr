@@ -24,3 +24,5 @@ Route::get('/berita/search', [BeritaController::class, 'search'])->name('berita.
 // Static pages: contact and pengaduan
 Route::view('pages/kontak', 'pages.kontak')->name('kontak');
 Route::view('pages/pengaduan', 'pages.pengaduan')->name('pengaduan');
+// Dokumen page
+Route::view('pages/dokumen', 'pages.dokumen')->name('dokumen');
