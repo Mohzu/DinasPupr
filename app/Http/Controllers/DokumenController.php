@@ -32,6 +32,17 @@ class DokumenController extends Controller
             ->orderByDesc('year')
             ->pluck('year');
 
+        if ($request->ajax()) {
+            return response()->json([
+                'list' => view('pages.partials.dokumen-list', [
+                    'documents' => $documents,
+                ])->render(),
+                'pagination' => view('pages.partials.dokumen-pagination', [
+                    'documents' => $documents,
+                ])->render(),
+            ]);
+        }
+
         return view('pages.dokumen', [
             'documents' => $documents,
             'years' => $years,
