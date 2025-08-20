@@ -90,40 +90,15 @@
                             <h3 class="text-lg font-semibold text-gray-900">Tahun</h3>
                         </div>
                         <nav class="p-0">
-                            <!-- 2025 -->
+                            @forelse($years as $y)
                             <div class="border-b border-gray-100">
-                                <a href="#" class="w-full flex items-center justify-between p-4 text-left hover:bg-blue-50 transition-colors">
-                                    <span class="font-medium text-blue-600">2025</span>
+                                <a href="{{ route('dokumen', array_filter(['year' => $y, 'q' => $search])) }}" class="w-full flex items-center justify-between p-4 text-left hover:bg-blue-50 transition-colors">
+                                    <span class="font-medium {{ (int)($activeYear ?? 0) === (int)$y ? 'text-blue-600' : 'text-gray-700 hover:text-blue-600' }}">{{ $y }}</span>
                                 </a>
                             </div>
-
-                            <!-- 2024 -->
-                            <div class="border-b border-gray-100">
-                                <a href="#" class="w-full flex items-center justify-between p-4 text-left hover:bg-blue-50 transition-colors">
-                                    <span class="font-medium text-gray-700 hover:text-blue-600">2024</span>
-                                </a>
-                            </div>
-
-                            <!-- 2023 -->
-                            <div class="border-b border-gray-100">
-                                <a href="#" class="w-full flex items-center justify-between p-4 text-left hover:bg-blue-50 transition-colors">
-                                    <span class="font-medium text-gray-700 hover:text-blue-600">2023</span>
-                                </a>
-                            </div>
-
-                            <!-- 2022 -->
-                            <div class="border-b border-gray-100">
-                                <a href="#" class="w-full flex items-center justify-between p-4 text-left hover:bg-blue-50 transition-colors">
-                                    <span class="font-medium text-gray-700 hover:text-blue-600">2022</span>
-                                </a>
-                            </div>
-
-                            <!-- 2021 -->
-                            <div class="border-b border-gray-100">
-                                <a href="#" class="w-full flex items-center justify-between p-4 text-left hover:bg-blue-50 transition-colors">
-                                    <span class="font-medium text-gray-700 hover:text-blue-600">2021</span>
-                                </a>
-                            </div>
+                            @empty
+                            <div class="p-4 text-gray-500">Belum ada tahun.</div>
+                            @endforelse
                         </nav>
                     </div>
                 </aside>
@@ -136,73 +111,26 @@
                             <div>
                                 <h2 class="text-2xl font-bold text-blue-700 mb-2">Dokumen</h2>
                             </div>
-                            <div class="flex items-center gap-3">
+                            <form method="GET" action="{{ route('dokumen') }}" class="flex items-center gap-3">
                                 <div class="relative">
-                                    <input type="text" placeholder="Cari di sini" class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 w-64 bg-white/80 backdrop-blur">
+                                    <input name="q" value="{{ $search }}" type="text" placeholder="Cari di sini" class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 w-64 bg-white/80 backdrop-blur">
                                     <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                     </svg>
                                 </div>
-                                <button class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-lg">
+                                @if($activeYear)
+                                    <input type="hidden" name="year" value="{{ $activeYear }}">
+                                @endif
+                                <button type="submit" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-lg">
                                     Cari
                                 </button>
-                            </div>
+                            </form>
                         </div>
                     </div>
 
                     <!-- Document List -->
                     <div class="bg-white/80 backdrop-blur rounded-2xl shadow-md overflow-hidden border border-white/30">
-                        <!-- Document Item 1 -->
-                        <div class="p-6 border-b border-gray-100 hover:bg-blue-50/50 transition-colors">
-                            <div class="flex items-start gap-4">
-                                <!-- PDF Icon -->
-                                <div class="flex-shrink-0 w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center border border-red-100 relative overflow-hidden">
-                                    <svg class="w-8 h-8 text-red-600" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/>
-                                        <path d="M14 2v6h6"/>
-                                        <path d="M12 18v-6"/>
-                                        <path d="M9 15l3 3 3-3"/>
-                                    </svg>
-                                </div>
-                                
-                                <!-- Document Info -->
-                                <div class="flex-1 min-w-0">
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                                        Rencana Kerja Pemerintah Daerah (RKPD) Jabar Tahun 2025
-                                    </h3>
-                                    <p class="text-gray-600 text-sm mb-3">
-                                        Dokumen penjabaran dari RPJMD (Rencana Pembangunan Jangka Menengah Daerah) Provinsi Jawa Barat yang memuat rancangan kerangka ekonomi Daerah, prioritas pembangunan Daerah, serta rencana kerja dan pendanaan untuk jangka waktu 1 (satu) tahun.
-                                    </p>
-                                    <div class="flex items-center gap-4 text-sm text-gray-500">
-                                        <span class="flex items-center gap-1">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                            </svg>
-                                            Tanggal Publikasi: Jumat, 05/07/2024
-                                        </span>
-                                    </div>
-                                </div>
-                                
-                                <!-- Action Buttons -->
-                                <div class="flex-shrink-0 flex items-center gap-3">
-                                    <button onclick="openModal('rkpd-2025')" class="flex items-center gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                        </svg>
-                                        Lihat
-                                    </button>
-                                    <button class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-lg">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                        </svg>
-                                        Unduh
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Document Item 2 -->
+                        @forelse($documents as $doc)
                         <div class="p-6 border-b border-gray-100 hover:bg-blue-50/50 transition-colors">
                             <div class="flex items-start gap-4">
                                 <div class="flex-shrink-0 w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center border border-red-100 relative overflow-hidden">
@@ -214,105 +142,49 @@
                                     </svg>
                                 </div>
                                 <div class="flex-1 min-w-0">
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                                        Renstra Dinas PUPR 2024-2025
-                                    </h3>
-                                    <p class="text-gray-600 text-sm mb-3">
-                                        Rencana Strategis Dinas Pekerjaan Umum dan Penataan Ruang untuk periode 2024-2025.
-                                    </p>
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ $doc->title }}</h3>
+                                    @if($doc->description)
+                                    <p class="text-gray-600 text-sm mb-3">{{ $doc->description }}</p>
+                                    @endif
                                     <div class="flex items-center gap-4 text-sm text-gray-500">
                                         <span class="flex items-center gap-1">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                             </svg>
-                                            Tanggal Publikasi: Senin, 15/04/2024
+                                            Tanggal Publikasi: {{ optional($doc->published_at)->translatedFormat('l, d/m/Y') ?? '-' }}
                                         </span>
-                                    </div>
-                                </div>
-                                <div class="flex-shrink-0 flex items-center gap-3">
-                                    <button onclick="openModal('renstra-2024')" class="flex items-center gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                                        </svg>
-                                        Lihat
-                                    </button>
-                                    <button class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-lg">
-                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-                                        </svg>
-                                        Unduh
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Document Item 3 -->
-                        <div class="p-6 border-b border-gray-100 hover:bg-blue-50/50 transition-colors">
-                            <div class="flex items-start gap-4">
-                                <div class="flex-shrink-0 w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center border border-red-100 relative overflow-hidden">
-                                    <svg class="w-8 h-8 text-red-600" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/>
-                                        <path d="M14 2v6h6"/>
-                                        <path d="M12 18v-6"/>
-                                        <path d="M9 15l3 3 3-3"/>
-                                    </svg>
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <h3 class="text-lg font-semibold text-gray-900 mb-2">
-                                        Renja Dinas PUPR 2024
-                                    </h3>
-                                    <p class="text-gray-600 text-sm mb-3">
-                                        Rencana Kerja Tahunan Dinas Pekerjaan Umum dan Penataan Ruang untuk tahun 2024.
-                                    </p>
-                                    <div class="flex items-center gap-4 text-sm text-gray-500">
                                         <span class="flex items-center gap-1">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v8m-4-4h8"/>
                                             </svg>
-                                            Tanggal Publikasi: Rabu, 20/03/2024
+                                            Tahun: {{ $doc->year }}
                                         </span>
                                     </div>
                                 </div>
                                 <div class="flex-shrink-0 flex items-center gap-3">
-                                    <button onclick="openModal('renja-2024')" class="flex items-center gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors">
+                                    <a href="{{ asset('storage/'.$doc->file_path) }}" target="_blank" rel="noopener" class="flex items-center gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                         </svg>
                                         Lihat
-                                    </button>
-                                    <button class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-lg">
+                                    </a>
+                                    <a href="{{ asset('storage/'.$doc->file_path) }}" download class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-lg">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
                                         Unduh
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
+                        @empty
+                        <div class="p-6 text-center text-gray-500">Tidak ada dokumen.</div>
+                        @endforelse
                     </div>
 
                     <!-- Pagination -->
-                    <div class="flex justify-center mt-8">
-                        <nav class="flex items-center gap-2">
-                            <button class="px-4 py-2 text-gray-500 bg-white/80 backdrop-blur border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 shadow-sm" disabled>
-                                Sebelumnya
-                            </button>
-                            <button class="px-4 py-2 text-white bg-blue-600 border border-blue-600 rounded-lg shadow-lg">
-                                1
-                            </button>
-                            <button class="px-4 py-2 text-gray-700 bg-white/80 backdrop-blur border border-gray-300 rounded-lg hover:bg-blue-50 shadow-sm">
-                                2
-                            </button>
-                            <button class="px-4 py-2 text-gray-700 bg-white/80 backdrop-blur border border-gray-300 rounded-lg hover:bg-blue-50 shadow-sm">
-                                3
-                            </button>
-                            <button class="px-4 py-2 text-gray-700 bg-white/80 backdrop-blur border border-gray-300 rounded-lg hover:bg-blue-50 shadow-sm">
-                                Berikutnya
-                            </button>
-                        </nav>
-                    </div>
+                    <div class="flex justify-center mt-8">{{ $documents->links() }}</div>
                 </main>
             </div>
         </div>
