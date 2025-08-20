@@ -42,49 +42,54 @@
 
   </section>
 
-  <!-- Main Content -->
+  <!-- Main Content (Description-focused) -->
   <section class="container mx-auto px-6 pb-16 -mt-8 relative z-10">
     <div class="bg-white/95 backdrop-blur-xl rounded-[32px] p-8 shadow-2xl border border-white/20">
-      <ol class="relative ms-3 border-s border-blue-100">
-        @php $events = [
-          ['title' => 'Pembentukan Dinas', 'year' => 'Tahun …', 'desc' => 'Dinas PUPR Kabupaten Garut dibentuk untuk melaksanakan urusan pemerintahan bidang pekerjaan umum dan penataan ruang.'],
-          ['title' => 'Penguatan Kelembagaan', 'year' => 'Tahun …', 'desc' => 'Penyesuaian struktur dan nomenklatur sesuai regulasi nasional dan daerah untuk meningkatkan kualitas layanan.'],
-          ['title' => 'Transformasi Layanan', 'year' => 'Tahun …', 'desc' => 'Penerapan inovasi, digitalisasi layanan, serta penguatan kolaborasi dengan pemangku kepentingan.'],
-        ]; @endphp
+      <style>
+        .dropcap:first-letter{float:left;font-weight:800;font-size:3rem;line-height:1;color:#1d4ed8;margin-right:.4rem}
+      </style>
 
-        @foreach ($events as $event)
-        <li class="relative mb-10 ms-6">
-          <span class="absolute -start-3 grid h-6 w-6 place-content-center rounded-full bg-gradient-to-br from-blue-500 to-sky-600 text-white ring-8 ring-white">
-            <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6"/></svg>
-          </span>
-          <div class="p-5 rounded-xl border bg-white/80 backdrop-blur shadow-sm">
-            <div class="flex flex-wrap items-center justify-between gap-2">
-              <h3 class="font-semibold text-gray-900">{{ $event['title'] }}</h3>
-              <time class="text-sm text-blue-700 font-medium">{{ $event['year'] }}</time>
-            </div>
-            <p class="mt-2 text-gray-700">{{ $event['desc'] }}</p>
-          </div>
-        </li>
-        @endforeach
-      </ol>
-
-      <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        @php $highlights = [
-          ['label' => 'Ruas Jalan', 'value' => '1.200+ km'],
-          ['label' => 'Jembatan', 'value' => '300+ unit'],
-          ['label' => 'Sistem Irigasi', 'value' => '150+ lokasi'],
-          ['label' => 'Proyek/Tahun', 'value' => '100+ paket'],
-        ]; @endphp
-        @foreach ($highlights as $h)
-        <div class="p-5 rounded-xl border bg-white/70 backdrop-blur text-center hover:shadow-md transition-shadow">
-          <p class="text-2xl font-extrabold text-blue-700">{{ $h['value'] }}</p>
-          <p class="text-xs uppercase tracking-wide text-gray-600 mt-1">{{ $h['label'] }}</p>
+      <div class="max-w-3xl mx-auto">
+        <div class="flex items-center gap-2 mb-6">
+          <span class="inline-flex h-2 w-2 rounded-full bg-blue-600"></span>
+          <span class="text-xs font-semibold tracking-wider text-blue-700 uppercase">Sejarah Singkat</span>
         </div>
-        @endforeach
-      </div>
 
-      <div class="mt-8 p-6 rounded-2xl border bg-gradient-to-r from-blue-50 to-sky-50">
-        <p class="text-sm text-gray-700">Catatan: Garis waktu di atas merupakan ringkasan. Silakan sesuaikan tahun dan peristiwa sesuai dokumen resmi (Perda/Perbup, SK, dan arsip lainnya).</p>
+        <article class="text-gray-700 leading-relaxed text-[15px] md:text-base">
+          <p class="dropcap">
+            Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Garut dibentuk untuk memastikan terselenggaranya pelayanan publik di bidang pekerjaan umum serta penataan ruang yang berdaya guna, berhasil guna, tertib, dan berkelanjutan. Seiring perkembangan kebijakan nasional dan daerah, peran kelembagaan ini terus diperkuat melalui penyesuaian struktur, peningkatan kompetensi, serta penerapan standar layanan yang adaptif.
+          </p>
+          <p class="mt-4">
+            Dalam perjalanannya, pengelolaan infrastruktur dasar—meliputi jalan, jembatan, irigasi, dan bangunan gedung—dilakukan dengan menekankan prinsip keselamatan, ketahanan, dan keberlanjutan. Sementara pada penataan ruang, upaya pengendalian pemanfaatan ruang dilakukan untuk mendorong tumbuh-kembang wilayah secara seimbang, memperhatikan daya dukung lingkungan, serta mendorong investasi yang inklusif.
+          </p>
+          <p class="mt-4">
+            Transformasi layanan diwujudkan melalui digitalisasi proses, penyederhanaan prosedur, dan kolaborasi multipihak. Dengan demikian, Dinas PUPR Kabupaten Garut terus berkomitmen menghadirkan layanan yang transparan, partisipatif, dan berorientasi pada hasil guna mendukung visi pembangunan daerah.
+          </p>
+        </article>
+
+        <figure class="mt-8 rounded-2xl border bg-gradient-to-br from-blue-50/60 to-sky-50/60 p-6">
+          <div class="flex items-start gap-3">
+            <svg class="w-6 h-6 text-blue-600 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h6v6H7z" opacity=".2"/><path d="M7 3a4 4 0 0 0-4 4v10h8V7a4 4 0 0 0-4-4Zm10 0a4 4 0 0 0-4 4v10h8V7a4 4 0 0 0-4-4Z"/></svg>
+            <blockquote class="text-sm md:text-base italic text-gray-700">
+              Mengedepankan keselamatan, keberlanjutan, dan keteraturan tata ruang sebagai pilar pembangunan infrastruktur yang melayani masyarakat.
+            </blockquote>
+          </div>
+        </figure>
+
+        <div class="mt-8 grid sm:grid-cols-3 gap-4">
+          <div class="p-4 rounded-xl border bg-white/80 backdrop-blur">
+            <p class="text-xs text-gray-500">Fokus Layanan</p>
+            <p class="mt-1 font-semibold text-gray-900">PU & Penataan Ruang</p>
+          </div>
+          <div class="p-4 rounded-xl border bg-white/80 backdrop-blur">
+            <p class="text-xs text-gray-500">Pendekatan</p>
+            <p class="mt-1 font-semibold text-gray-900">Transparan & Partisipatif</p>
+          </div>
+          <div class="p-4 rounded-xl border bg-white/80 backdrop-blur">
+            <p class="text-xs text-gray-500">Arah</p>
+            <p class="mt-1 font-semibold text-gray-900">Berkelanjutan</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
