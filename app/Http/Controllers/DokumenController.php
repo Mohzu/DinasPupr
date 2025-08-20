@@ -39,5 +39,21 @@ class DokumenController extends Controller
             'search' => $search,
         ]);
     }
+
+    public function download(int $id)
+    {
+        $document = Dokumen::findOrFail($id);
+
+        $relativePath = $document->file_path;
+        $absolutePath = storage_path('app/public/' . ltrim($relativePath, '/'));
+
+        if (! file_exists($absolutePath)) {
+            abort(404);
+        }
+
+        $downloadName = basename($relativePath);
+
+        return response()->download($absolutePath, $downloadName);
+    }
 }
 

@@ -27,3 +27,4 @@ Route::view('pages/kontak', 'pages.kontak')->name('kontak');
 Route::view('pages/pengaduan', 'pages.pengaduan')->name('pengaduan');
 
 Route::get('pages/dokumen', [DokumenController::class, 'index'])->name('dokumen');
+Route::get('pages/dokumen/{id}/download', [DokumenController::class, 'download'])->name('dokumen.download');
