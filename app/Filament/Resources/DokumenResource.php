@@ -51,7 +51,8 @@ class DokumenResource extends Resource
                             ->disk('public')
                             ->directory('dokumen')
                             ->acceptedFileTypes(['application/pdf'])
-                            ->maxSize(10240),
+                            ->maxSize(10240)
+                            ->preserveFilenames(),
                     ])->columns(2),
             ]);
     }

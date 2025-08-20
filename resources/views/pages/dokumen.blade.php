@@ -162,14 +162,15 @@
                                         data-title="{{ $doc->title }}"
                                         data-description="{{ $doc->description }}"
                                         data-date="{{ optional($doc->published_at)->locale('id')->translatedFormat('l, d F Y') ?? '-' }}"
-                                        data-url="{{ asset('storage/'.$doc->file_path) }}">
+                                        data-url="{{ asset('storage/'.$doc->file_path) }}"
+                                        data-filename="{{ basename($doc->file_path) }}">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                         </svg>
                                         Lihat
                                     </button>
-                                    <a href="{{ asset('storage/'.$doc->file_path) }}" download class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-lg">
+                                    <a href="{{ asset('storage/'.$doc->file_path) }}" download="{{ basename($doc->file_path) }}" class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-lg">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
@@ -249,6 +250,7 @@ function openModal(triggerEl) {
     const description = triggerEl?.dataset?.description || '';
     const date = triggerEl?.dataset?.date || '-';
     const url = triggerEl?.dataset?.url || '#';
+    const filename = triggerEl?.dataset?.filename || '';
 
     modalBody.innerHTML = `
         <h2 class="text-xl font-bold text-blue-600 mb-4">${title}</h2>
@@ -277,7 +279,11 @@ function openModal(triggerEl) {
         downloadBtn.onclick = function () {
             const a = document.createElement('a');
             a.href = url;
-            a.setAttribute('download', '');
+            if (filename) {
+                a.setAttribute('download', filename);
+            } else {
+                a.setAttribute('download', '');
+            }
             a.target = '_blank';
             document.body.appendChild(a);
             a.click();
