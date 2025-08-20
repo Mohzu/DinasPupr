@@ -34,12 +34,22 @@ class DokumenController extends Controller
 
         if ($request->ajax()) {
             return response()->json([
-                'list' => view('pages.partials.dokumen-list', [
-                    'documents' => $documents,
-                ])->render(),
-                'pagination' => view('pages.partials.dokumen-pagination', [
-                    'documents' => $documents,
-                ])->render(),
+                'data' => $documents->map(function ($d) {
+                    return [
+                        'id' => $d->id,
+                        'title' => $d->title,
+                        'description' => $d->description,
+                        'published_at' => optional($d->published_at)->locale('id')->translatedFormat('l, d F Y'),
+                        'file_url' => asset('storage/'.$d->file_path),
+                        'file_name' => basename($d->file_path),
+                    ];
+                }),
+                'pagination' => [
+                    'current_page' => $documents->currentPage(),
+                    'last_page' => $documents->lastPage(),
+                    'per_page' => $documents->perPage(),
+                    'total' => $documents->total(),
+                ],
             ]);
         }
 
@@ -51,20 +61,6 @@ class DokumenController extends Controller
         ]);
     }
 
-    public function download(int $id)
-    {
-        $document = Dokumen::findOrFail($id);
-
-        $relativePath = $document->file_path;
-        $absolutePath = storage_path('app/public/' . ltrim($relativePath, '/'));
-
-        if (! file_exists($absolutePath)) {
-            abort(404);
-        }
-
-        $downloadName = basename($relativePath);
-
-        return response()->download($absolutePath, $downloadName);
-    }
+    // Download via direct storage URL on the client to preserve filename
 }
 
