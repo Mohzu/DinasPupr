@@ -156,13 +156,19 @@
                                     </div>
                                 </div>
                                 <div class="flex-shrink-0 flex items-center gap-3">
-                                    <a href="{{ asset('storage/'.$doc->file_path) }}" target="_blank" rel="noopener" class="flex items-center gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors">
+                                    <button type="button"
+                                        class="flex items-center gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+                                        onclick="openModal(this)"
+                                        data-title="{{ $doc->title }}"
+                                        data-description="{{ $doc->description }}"
+                                        data-date="{{ optional($doc->published_at)->locale('id')->translatedFormat('l, d F Y') ?? '-' }}"
+                                        data-url="{{ asset('storage/'.$doc->file_path) }}">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
                                         </svg>
                                         Lihat
-                                    </a>
+                                    </button>
                                     <a href="{{ asset('storage/'.$doc->file_path) }}" download class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-lg">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
@@ -233,64 +239,57 @@
 </div>
 
 <script>
-// Modal data
-const modalData = {
-    'rkpd-2025': {
-        title: 'Rencana Kerja Pemerintah Daerah (RKPD) Jabar Tahun 2025',
-        description: 'Dokumen penjabaran dari RPJMD (Rencana Pembangunan Jangka Menengah Daerah) Provinsi Jawa Barat yang memuat rancangan kerangka ekonomi Daerah, prioritas pembangunan Daerah, serta rencana kerja dan pendanaan untuk jangka waktu 1 (satu) tahun yang disusun dengan berpedoman pada Rencana Kerja Pemerintah dan berpedoman pada Rencana Pembangunan Jangka Menengah Daerah.',
-        date: 'Jumat, 05 Juli 2024'
-    },
-    'renstra-2024': {
-        title: 'Renstra Dinas PUPR 2024-2025',
-        description: 'Rencana Strategis Dinas Pekerjaan Umum dan Penataan Ruang untuk periode 2024-2025 yang memuat visi, misi, tujuan, sasaran, strategi, kebijakan, program dan kegiatan pembangunan daerah sesuai dengan tugas dan fungsinya yang disusun dengan berpedoman kepada RPJMD.',
-        date: 'Senin, 15 April 2024'
-    },
-    'renja-2024': {
-        title: 'Renja Dinas PUPR 2024',
-        description: 'Rencana Kerja Tahunan Dinas Pekerjaan Umum dan Penataan Ruang untuk tahun 2024 yang memuat kebijakan, program, dan kegiatan pembangunan baik yang dilaksanakan langsung oleh pemerintah daerah maupun yang ditempuh dengan mendorong partisipasi masyarakat.',
-        date: 'Rabu, 20 Maret 2024'
-    }
-};
-
-function openModal(documentId) {
+function openModal(triggerEl) {
     const modal = document.getElementById('modalBackdrop');
     const modalContent = document.getElementById('modalContent');
     const modalBody = document.getElementById('modalBody');
-    
-    const data = modalData[documentId];
-    
-    if (data) {
-        modalBody.innerHTML = `
-            <h2 class="text-xl font-bold text-blue-600 mb-4">${data.title}</h2>
-            
-            <div class="mb-4">
-                <div class="flex items-start gap-2 mb-2">
-                    <svg class="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
-                    <div>
-                        <h3 class="font-semibold text-gray-900 mb-1">Deskripsi Program</h3>
-                        <p class="text-gray-600 text-sm leading-relaxed">${data.description}</p>
-                    </div>
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    const title = triggerEl?.dataset?.title || '-';
+    const description = triggerEl?.dataset?.description || '';
+    const date = triggerEl?.dataset?.date || '-';
+    const url = triggerEl?.dataset?.url || '#';
+
+    modalBody.innerHTML = `
+        <h2 class="text-xl font-bold text-blue-600 mb-4">${title}</h2>
+        ${description ? `
+        <div class="mb-4">
+            <div class="flex items-start gap-2 mb-2">
+                <svg class="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                <div>
+                    <h3 class="font-semibold text-gray-900 mb-1">Deskripsi</h3>
+                    <p class="text-gray-600 text-sm leading-relaxed">${description}</p>
                 </div>
             </div>
-            
-            <div class="flex items-center gap-2 text-sm text-gray-500">
-                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                </svg>
-                <span class="font-medium">Tanggal Publikasi</span>
-                <span>${data.date}</span>
-            </div>
-        `;
-        
-        // Show modal with animation
-        modal.classList.remove('hidden');
-        setTimeout(() => {
-            modal.classList.add('show');
-            modalContent.classList.add('show');
-        }, 10);
+        </div>` : ''}
+        <div class="flex items-center gap-2 text-sm text-gray-500">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+            </svg>
+            <span class="font-medium">Tanggal Publikasi</span>
+            <span>${date}</span>
+        </div>
+    `;
+
+    if (downloadBtn) {
+        downloadBtn.onclick = function () {
+            const a = document.createElement('a');
+            a.href = url;
+            a.setAttribute('download', '');
+            a.target = '_blank';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        };
     }
+
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+        modal.classList.add('show');
+        modalContent.classList.add('show');
+    }, 10);
 }
 
 function closeModal() {
