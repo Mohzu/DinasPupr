@@ -44,52 +44,85 @@
 
   <!-- Main Content (Description-focused) -->
   <section class="container mx-auto px-6 pb-16 -mt-8 relative z-10">
-    <div class="bg-white/95 backdrop-blur-xl rounded-[32px] p-8 shadow-2xl border border-white/20">
+    <div class="relative overflow-hidden bg-white/90 backdrop-blur-xl rounded-[32px] p-8 shadow-2xl border border-white/20">
+      <div class="pointer-events-none absolute -top-16 -right-24 h-64 w-64 rounded-full bg-gradient-to-br from-blue-200/60 to-sky-200/40 blur-3xl"></div>
+      <div class="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-gradient-to-tr from-amber-200/50 to-orange-200/40 blur-3xl"></div>
+
       <style>
         .dropcap:first-letter{float:left;font-weight:800;font-size:3rem;line-height:1;color:#1d4ed8;margin-right:.4rem}
       </style>
 
-      <div class="max-w-3xl mx-auto">
-        <div class="flex items-center gap-2 mb-6">
-          <span class="inline-flex h-2 w-2 rounded-full bg-blue-600"></span>
-          <span class="text-xs font-semibold tracking-wider text-blue-700 uppercase">Sejarah Singkat</span>
+      <div class="grid lg:grid-cols-12 gap-10">
+        <div class="lg:col-span-8 xl:col-span-8">
+          <div class="flex items-center gap-2 mb-6">
+            <span class="inline-flex h-2 w-2 rounded-full bg-blue-600"></span>
+            <span class="text-xs font-semibold tracking-wider text-blue-700 uppercase">Sejarah Singkat</span>
+          </div>
+
+          <article class="text-gray-700 leading-relaxed text-[15px] md:text-base">
+            <h2 class="text-lg md:text-xl font-bold text-gray-900">Gambaran Umum</h2>
+            <div class="h-1 w-24 bg-gradient-to-r from-blue-600 to-sky-400 rounded-full mt-2 mb-4"></div>
+            <p class="dropcap">
+              Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Garut dibentuk untuk memastikan terselenggaranya pelayanan publik di bidang pekerjaan umum serta penataan ruang yang berdaya guna, berhasil guna, tertib, dan berkelanjutan. Seiring perkembangan kebijakan nasional dan daerah, peran kelembagaan ini terus diperkuat melalui penyesuaian struktur, peningkatan kompetensi, serta penerapan standar layanan yang adaptif.
+            </p>
+
+            <h2 class="mt-8 text-lg md:text-xl font-bold text-gray-900">Perkembangan</h2>
+            <div class="h-1 w-24 bg-gradient-to-r from-blue-600 to-sky-400 rounded-full mt-2 mb-4"></div>
+            <p>
+              Dalam perjalanannya, pengelolaan infrastruktur dasar—meliputi jalan, jembatan, irigasi, dan bangunan gedung—dilakukan dengan menekankan prinsip keselamatan, ketahanan, dan keberlanjutan. Pada penataan ruang, pengendalian pemanfaatan ruang diarahkan untuk menumbuhkan wilayah secara seimbang dengan memperhatikan daya dukung lingkungan serta mendorong investasi yang inklusif.
+            </p>
+
+            <figure class="mt-6 rounded-2xl border bg-gradient-to-br from-blue-50/60 to-sky-50/60 p-6">
+              <div class="flex items-start gap-3">
+                <svg class="w-6 h-6 text-blue-600 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h6v6H7z" opacity=".2"/><path d="M7 3a4 4 0 0 0-4 4v10h8V7a4 4 0 0 0-4-4Zm10 0a4 4 0 0 0-4 4v10h8V7a4 4 0 0 0-4-4Z"/></svg>
+                <blockquote class="text-sm md:text-base italic text-gray-700">
+                  Mengedepankan keselamatan, keberlanjutan, dan keteraturan tata ruang sebagai pilar pembangunan infrastruktur yang melayani masyarakat.
+                </blockquote>
+              </div>
+            </figure>
+
+            <h2 class="mt-8 text-lg md:text-xl font-bold text-gray-900">Arah ke Depan</h2>
+            <div class="h-1 w-24 bg-gradient-to-r from-blue-600 to-sky-400 rounded-full mt-2 mb-4"></div>
+            <p>
+              Transformasi layanan diwujudkan melalui digitalisasi proses, penyederhanaan prosedur, dan kolaborasi multipihak. Dinas PUPR Kabupaten Garut berkomitmen menghadirkan layanan yang transparan, partisipatif, dan berorientasi hasil guna mendukung visi pembangunan daerah.
+            </p>
+          </article>
         </div>
 
-        <article class="text-gray-700 leading-relaxed text-[15px] md:text-base">
-          <p class="dropcap">
-            Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Garut dibentuk untuk memastikan terselenggaranya pelayanan publik di bidang pekerjaan umum serta penataan ruang yang berdaya guna, berhasil guna, tertib, dan berkelanjutan. Seiring perkembangan kebijakan nasional dan daerah, peran kelembagaan ini terus diperkuat melalui penyesuaian struktur, peningkatan kompetensi, serta penerapan standar layanan yang adaptif.
-          </p>
-          <p class="mt-4">
-            Dalam perjalanannya, pengelolaan infrastruktur dasar—meliputi jalan, jembatan, irigasi, dan bangunan gedung—dilakukan dengan menekankan prinsip keselamatan, ketahanan, dan keberlanjutan. Sementara pada penataan ruang, upaya pengendalian pemanfaatan ruang dilakukan untuk mendorong tumbuh-kembang wilayah secara seimbang, memperhatikan daya dukung lingkungan, serta mendorong investasi yang inklusif.
-          </p>
-          <p class="mt-4">
-            Transformasi layanan diwujudkan melalui digitalisasi proses, penyederhanaan prosedur, dan kolaborasi multipihak. Dengan demikian, Dinas PUPR Kabupaten Garut terus berkomitmen menghadirkan layanan yang transparan, partisipatif, dan berorientasi pada hasil guna mendukung visi pembangunan daerah.
-          </p>
-        </article>
+        <aside class="lg:col-span-4 xl:col-span-4">
+          <div class="lg:sticky lg:top-24 space-y-4">
+            <div class="p-5 rounded-2xl border bg-white/80 backdrop-blur shadow-sm">
+              <p class="text-xs font-semibold tracking-wider text-blue-700 uppercase">Fakta Singkat</p>
+              <div class="mt-4 grid grid-cols-2 gap-3">
+                <div class="p-3 rounded-xl border bg-white/70">
+                  <p class="text-[11px] text-gray-500">Fokus</p>
+                  <p class="text-sm font-semibold text-gray-900 mt-0.5">PU & Tata Ruang</p>
+                </div>
+                <div class="p-3 rounded-xl border bg-white/70">
+                  <p class="text-[11px] text-gray-500">Pendekatan</p>
+                  <p class="text-sm font-semibold text-gray-900 mt-0.5">Transparan</p>
+                </div>
+                <div class="p-3 rounded-xl border bg-white/70">
+                  <p class="text-[11px] text-gray-500">Kolaborasi</p>
+                  <p class="text-sm font-semibold text-gray-900 mt-0.5">Multipihak</p>
+                </div>
+                <div class="p-3 rounded-xl border bg-white/70">
+                  <p class="text-[11px] text-gray-500">Arah</p>
+                  <p class="text-sm font-semibold text-gray-900 mt-0.5">Berkelanjutan</p>
+                </div>
+              </div>
+            </div>
 
-        <figure class="mt-8 rounded-2xl border bg-gradient-to-br from-blue-50/60 to-sky-50/60 p-6">
-          <div class="flex items-start gap-3">
-            <svg class="w-6 h-6 text-blue-600 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M7 7h6v6H7z" opacity=".2"/><path d="M7 3a4 4 0 0 0-4 4v10h8V7a4 4 0 0 0-4-4Zm10 0a4 4 0 0 0-4 4v10h8V7a4 4 0 0 0-4-4Z"/></svg>
-            <blockquote class="text-sm md:text-base italic text-gray-700">
-              Mengedepankan keselamatan, keberlanjutan, dan keteraturan tata ruang sebagai pilar pembangunan infrastruktur yang melayani masyarakat.
-            </blockquote>
+            <div class="p-5 rounded-2xl border bg-gradient-to-br from-blue-50 to-sky-50">
+              <p class="text-xs font-semibold tracking-wider text-blue-700 uppercase">Nilai Utama</p>
+              <div class="mt-3 flex flex-wrap gap-2">
+                <span class="px-3 py-1 rounded-full bg-white border text-xs text-gray-700">Keselamatan</span>
+                <span class="px-3 py-1 rounded-full bg-white border text-xs text-gray-700">Keberlanjutan</span>
+                <span class="px-3 py-1 rounded-full bg-white border text-xs text-gray-700">Keteraturan</span>
+              </div>
+            </div>
           </div>
-        </figure>
-
-        <div class="mt-8 grid sm:grid-cols-3 gap-4">
-          <div class="p-4 rounded-xl border bg-white/80 backdrop-blur">
-            <p class="text-xs text-gray-500">Fokus Layanan</p>
-            <p class="mt-1 font-semibold text-gray-900">PU & Penataan Ruang</p>
-          </div>
-          <div class="p-4 rounded-xl border bg-white/80 backdrop-blur">
-            <p class="text-xs text-gray-500">Pendekatan</p>
-            <p class="mt-1 font-semibold text-gray-900">Transparan & Partisipatif</p>
-          </div>
-          <div class="p-4 rounded-xl border bg-white/80 backdrop-blur">
-            <p class="text-xs text-gray-500">Arah</p>
-            <p class="mt-1 font-semibold text-gray-900">Berkelanjutan</p>
-          </div>
-        </div>
+        </aside>
       </div>
     </div>
   </section>
