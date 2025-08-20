@@ -7,6 +7,7 @@ use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\SejarahController;
 use App\Http\Controllers\StrukturOrganisasiController;
 use App\Http\Controllers\VisiMisiController;
+use App\Http\Controllers\DokumenController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('pages/berita', [BeritaController::class, 'index'])->name('berita');
@@ -25,4 +26,4 @@ Route::get('/berita/search', [BeritaController::class, 'search'])->name('berita.
 Route::view('pages/kontak', 'pages.kontak')->name('kontak');
 Route::view('pages/pengaduan', 'pages.pengaduan')->name('pengaduan');
 
-Route::view('pages/dokumen', 'pages.dokumen')->name('dokumen');
+Route::get('pages/dokumen', [DokumenController::class, 'index'])->name('dokumen');
