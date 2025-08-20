@@ -52,7 +52,8 @@ class DokumenResource extends Resource
                             ->directory('dokumen')
                             ->acceptedFileTypes(['application/pdf'])
                             ->maxSize(10240)
-                            ->preserveFilenames(),
+                            ->preserveFilenames()
+                            ->getUploadedFileNameForStorageUsing(fn (\Livewire\Features\SupportFileUploads\TemporaryUploadedFile $file): string => $file->getClientOriginalName()),
                     ])->columns(2),
             ]);
     }
