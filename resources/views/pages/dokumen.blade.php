@@ -314,9 +314,15 @@ function openModal(triggerEl) {
 
     if (downloadBtn) {
         downloadBtn.onclick = function () {
-            if (url && url !== '#') {
-                window.location.href = url;
-            }
+            if (!url || url === '#') return;
+            const a = document.createElement('a');
+            a.href = url;
+            if (filename) a.setAttribute('download', filename);
+            a.rel = 'noopener';
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
         };
     }
 
