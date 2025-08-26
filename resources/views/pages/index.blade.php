@@ -253,7 +253,7 @@
                 {{-- Decorative Elements --}}
                 <div class="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl opacity-50 rotate-12"></div>
                 <div class="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-xl opacity-40 -rotate-12"></div>
-                
+
                 <div class="grid lg:grid-cols-2 gap-12 relative z-10">
                     {{-- Left Side - Main News Slider --}}
                     <div class="relative">
@@ -261,16 +261,16 @@
                             @if(isset($beritas) && $beritas->isNotEmpty())
                                 @foreach($beritas->take(5) as $index => $berita)
                                     <div class="news-slide {{ $index === 0 ? 'active opacity-100' : 'opacity-0 translate-x-full' }} absolute inset-0 transition-all duration-700 ease-in-out" data-slide="{{ $index }}">
-                                        {{-- Background Image --}}
+                                        {{-- Background Image (Diperbarui) --}}
                                         <img src="{{ asset('storage/' . $berita->gambar) }}" 
                                             alt="{{ $berita->judul }}" 
-                                            class="absolute inset-0 w-full h-full object-contain transition-transform duration-700 group-hover:scale-105">
+                                            class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
                                         
                                         {{-- Dark Overlay dengan Gradient --}}
                                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent"></div>
 
-                                        {{-- Content Overlay --}}
-                                        <div class="absolute inset-0 flex flex-col justify-end p-6 lg:p-8">
+                                        {{-- Content Overlay (Diperbarui) --}}
+                                        <div class="absolute inset-x-0 bottom-12 flex flex-col justify-end p-6 lg:p-8">
                                             {{-- Category Badge --}}
                                             <div class="inline-flex items-center bg-blue-600/80 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-xs font-semibold mb-4 w-fit transform hover:scale-105 transition-transform duration-300">
                                                 <div class="w-2 h-2 bg-white rounded-full mr-2 animate-pulse"></div>
@@ -295,7 +295,7 @@
                                                 </div>
                                             </div>
 
-                                            {{-- CTA Button --}}
+                                            {{-- CTA Button (Link sudah benar) --}}
                                             <a href="{{ route('berita.show', $berita->slug ?? $berita->id) }}" class="inline-flex items-center bg-white/20 backdrop-blur-sm border border-white/30 text-white px-4 py-2 rounded-lg hover:bg-white/30 transition-all duration-300 w-fit transform hover:scale-105">
                                                 <span class="mr-2">Baca Selengkapnya</span>
                                                 <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -402,7 +402,6 @@
                                 @endforeach
                             @endif
                         </div>
-
                         {{-- No News Message --}}
                         @if(!isset($beritas) || $beritas->isEmpty())
                             <div class="text-center py-8">

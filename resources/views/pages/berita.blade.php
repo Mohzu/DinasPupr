@@ -58,13 +58,14 @@
                         <svg class="w-5 h-5 inline mr-2 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"/>
                         </svg>
-                        Update: 5 Agustus 2025
+                        Update: {{ \Carbon\Carbon::parse($lastUpdate)->translatedFormat('d F Y') }}
                     </div>
+
                     <div class="bg-white/90 backdrop-blur-md rounded-2xl px-6 py-3 text-gray-800 font-semibold border border-white/50 shadow-lg">
                         <svg class="w-5 h-5 inline mr-2 text-green-600" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
-                        15 Berita Baru
+                        {{ $totalBerita }} Berita Baru
                     </div>
                 </div>
             </div>
@@ -73,28 +74,46 @@
 
     <!-- Main Content -->
     <div class="container mx-auto px-6">
-        <!-- Search Section -->
-        <section class="py-8">
-            <div class="max-w-7xl mx-auto mb-8">
-                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+        <!-- Search & Filter -->
+    <section class="py-8">
+        <div class="max-w-7xl mx-auto mb-8">
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                <form method="GET" action="{{ route('berita') }}">
                     <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
+                        <!-- Search -->
                         <div class="relative flex-1 max-w-md">
-                            <input id="search-input" type="text" placeholder="Cari berita..." class="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+                            <input 
+                                type="text" 
+                                name="q" 
+                                value="{{ request('q') }}" 
+                                placeholder="Cari berita..." 
+                                class="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
                             <div class="absolute inset-y-0 left-0 flex items-center pl-4">
-                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
                             </div>
                         </div>
+
+                        <!-- Filter -->
                         <div class="flex gap-3 items-center">
-                            <label for="sort-filter" class="text-sm text-gray-600">Urutkan:</label>
-                            <select id="sort-filter" class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
-                                <option value="terbaru">Terbaru</option>
-                                <option value="terlama">Terlama</option>
+                            <label for="sort" class="text-sm text-gray-600">Urutkan:</label>
+                            <select 
+                                id="sort" 
+                                name="sort" 
+                                onchange="this.form.submit()"
+                                class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+                                <option value="terbaru" {{ request('sort') == 'terbaru' ? 'selected' : '' }}>Terbaru</option>
+                                <option value="terlama" {{ request('sort') == 'terlama' ? 'selected' : '' }}>Terlama</option>
                             </select>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
-        </section>
+        </div>
+    </section>
+
 
         <!-- Featured News Section -->
         <div class="max-w-7xl mx-auto mb-16">
@@ -113,9 +132,9 @@
                     @if(isset($featured))
                     <div class="relative">
                         @if ($featured->gambar)
-                            <img src="{{ asset('storage/' . $featured->gambar) }}" alt="{{ $featured->judul }}" class="w-full h-80 object-cover">
+                            <img src="{{ asset('storage/' . $featured->gambar) }}" alt="{{ $featured->judul }}" class="w-full h-80 object-fill">
                         @else
-                            <img src="https://via.placeholder.com/600x350/4F46E5/FFFFFF?text=Berita+Utama" alt="{{ $featured->judul }}" class="w-full h-80 object-cover">
+                            <img src="https://via.placeholder.com/600x350/4F46E5/FFFFFF?text=Berita+Utama" alt="{{ $featured->judul }}" class="w-full h-80 object-fill">
                         @endif
                         <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                         
@@ -181,9 +200,9 @@
                             <div class="flex gap-4">
                                 <a href="{{ route('berita.show', $item->slug ?? $item->id) }}" class="block">
                                     @if ($item->gambar)
-                                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-24 h-20 object-cover rounded-xl flex-shrink-0">
+                                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-24 h-20 object-fill rounded-xl flex-shrink-0">
                                     @else
-                                        <img src="https://via.placeholder.com/120x80/10B981/FFFFFF?text=Berita" alt="{{ $item->judul }}" class="w-24 h-20 object-cover rounded-xl flex-shrink-0">
+                                        <img src="https://via.placeholder.com/120x80/10B981/FFFFFF?text=Berita" alt="{{ $item->judul }}" class="w-24 h-20 object-fill rounded-xl flex-shrink-0">
                                     @endif
                                 </a>
                                 <div class="flex-1">
@@ -218,9 +237,9 @@
                         <article class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
                             <div class="relative">
                                 @if ($berita->gambar)
-                                    <img src="{{ asset('storage/' . $berita->gambar) }}" alt="{{ $berita->judul }}" class="w-full h-48 object-cover">
+                                    <img src="{{ asset('storage/' . $berita->gambar) }}" alt="{{ $berita->judul }}" class="w-full h-48 object-fill">
                                 @else
-                                    <img src="https://via.placeholder.com/400x240/3B82F6/FFFFFF?text=Berita" alt="{{ $berita->judul }}" class="w-full h-48 object-cover">
+                                    <img src="https://via.placeholder.com/400x240/3B82F6/FFFFFF?text=Berita" alt="{{ $berita->judul }}" class="w-full h-48 object-fill">
                                 @endif
                             </div>
                             <div class="p-6">
@@ -254,7 +273,7 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection 
 
 @push('styles')
 <style>
