@@ -20,6 +20,16 @@ class BeritaResource extends Resource
     protected static ?string $navigationGroup = 'Konten';
     protected static ?int $navigationSort = 1;
 
+    public static function getPluralLabel(): string
+    {
+        return 'Berita';
+    }
+
+    public static function getLabel(): string
+    {
+        return 'Berita';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -77,8 +87,6 @@ class BeritaResource extends Resource
                     ->square()
                     ->size(50),
 
-                // Kolom Judul saja, tanpa deskripsi.
-                // Gunakan formatStateUsing untuk menghilangkan tag HTML
                 Tables\Columns\TextColumn::make('judul')
                     ->searchable()
                     ->sortable()
@@ -86,7 +94,6 @@ class BeritaResource extends Resource
                     ->label('Judul')
                     ->formatStateUsing(fn ($state) => strip_tags($state)),
 
-                // Kolom Isi (konten berita) dengan tag HTML dihilangkan
                 Tables\Columns\TextColumn::make('isi')
                     ->searchable()
                     ->sortable()
@@ -121,7 +128,16 @@ class BeritaResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('kategori')
-                    ->options(Berita::distinct()->pluck('kategori', 'kategori')->toArray())
+                    ->options(
+                        Berita::query()
+                            ->select('kategori')
+                            ->distinct()
+                            ->pluck('kategori')
+                            ->mapWithKeys(fn ($value) => [
+                                $value ?? 'tanpa_kategori' => $value ?? '(Tanpa Kategori)',
+                            ])
+                            ->toArray()
+                    )
                     ->label('Filter Kategori'),
 
                 Tables\Filters\Filter::make('published_at')
@@ -144,12 +160,15 @@ class BeritaResource extends Resource
                     }),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->label('Edit'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Hapus'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Hapus yang Dipilih'),
                 ]),
             ]);
     }
@@ -162,7 +181,7 @@ class BeritaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBeritas::route('/'),
+            'index' => Pages\ListBerita::route('/'),
             'create' => Pages\CreateBerita::route('/create'),
             'edit' => Pages\EditBerita::route('/{record}/edit'),
         ];

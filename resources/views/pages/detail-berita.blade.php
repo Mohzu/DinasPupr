@@ -28,13 +28,13 @@
     </div>
 
     <!-- Main Content -->
-    <div class="container mx-auto px-6 py-8 mt-10">
-        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <div class="container mx-auto px-4 sm:px-6 py-6 sm:py-8 mt-10">
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 sm:gap-8">
             <!-- Main Article -->
             <div class="lg:col-span-3">
                 <article class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
                     <!-- Article Header -->
-                    <div class="p-6 border-b border-gray-100">
+                    <div class="p-4 sm:p-6 border-b border-gray-100">
                         @if ($berita->kategori)
                             <div class="mb-3">
                                 <span class="inline-block px-3 py-1 text-xs font-semibold text-blue-700 bg-blue-100 rounded-full">
@@ -43,14 +43,14 @@
                             </div>
                         @endif
                         
-                        <h1 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
+                        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-4 leading-tight">
                             {{ $berita->judul }}
                         </h1>
                     </div>
 
                     <!-- Featured Image -->
                     @if ($berita->gambar)
-                    <div class="p-6 pb-0">
+                    <div class="p-4 sm:p-6 pb-0">
                         <div class="relative rounded-lg overflow-hidden">
                             <img src="{{ Storage::disk('public')->url($berita->gambar) }}" 
                                  alt="{{ $berita->judul }}" 
@@ -61,15 +61,15 @@
                     @endif
 
                     <!-- Article Content -->
-                    <div class="p-6">
-                        <div class="prose prose-lg max-w-none prose-headings:text-gray-900 prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-ul:text-gray-700 prose-ol:text-gray-700">
+                    <div class="p-4 sm:p-6">
+                        <div class="prose prose-sm sm:prose-base lg:prose-lg max-w-none prose-headings:text-gray-900 prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-ul:text-gray-700 prose-ol:text-gray-700">
                             {!! $berita->isi !!}
                         </div>
                     </div>
 
                     <!-- Article Footer -->
-                    <div class="px-6 py-4 border-t border-gray-100 bg-gray-50">
-                        <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div class="px-4 sm:px-6 py-4 border-t border-gray-100 bg-gray-50">
+                        <div class="flex flex-col sm:flex-row flex-wrap items-start sm:items-center justify-between gap-4">
                             <div class="text-sm text-gray-600">
                                 <strong>Sumber:</strong> {{ $berita->penulis ?? 'PUPR Garut' }}
                             </div>
@@ -118,9 +118,9 @@
 
             <!-- Sidebar -->
             <aside class="lg:col-span-1">
-                <div class="sticky top-8 space-y-6">
+                <div class="sticky top-8 space-y-4 sm:space-y-6">
                     <!-- Berita Info -->
-                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
                         <h3 class="text-lg font-bold text-gray-900 mb-4">Informasi Berita</h3>
                         <div class="space-y-3 text-sm">
                             @if ($berita->kategori)
@@ -147,7 +147,7 @@
                     </div>
 
                     <!-- Related News or Recent News -->
-                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6">
                         <h3 class="text-lg font-bold text-gray-900 mb-4">Berita Terkait</h3>
                         <div class="space-y-4">
                             <!-- Placeholder for related news - you can add this logic in controller -->

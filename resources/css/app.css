@@ -13,31 +13,33 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
-/* Floating Elements Animation */
-@keyframes float {
-    0%, 100% { 
-        transform: translateY(0px) rotate(0deg); 
-    }
-    50% { 
-        transform: translateY(-10px) rotate(2deg); 
-    }
-}
-
-.animate-float {
-    animation: float 3s ease-in-out infinite;
-}
-
-.animate-fade-in {
-    animation: fadeIn 1s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
 .animate-float:hover {
     animation-play-state: paused;
+}
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    loading: lazy;
+}
+
+.hero-section {
+    min-height: 100vh;
+    contain: layout style paint;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .animate-float,
+    .animate-fade-in,
+    .animate-pulse,
+    .animate-bounce {
+        animation: none;
+    }
 }
 
 /* Responsive adjustments for floating elements */

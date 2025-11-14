@@ -47,6 +47,6 @@ class BeritaController extends Controller
     {
         $berita = Berita::where('slug', $slug)->firstOrFail();
 
-        return view('pages.berita-detail', compact('berita'));
+        return view('pages.detail-berita', compact('berita'));
     }
 }

@@ -1,0 +1,52 @@
+/**
+ * Animasi CSS untuk halaman index Dinas PUPR
+ * Menangani animasi scroll dan transisi
+ */
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Animasi scroll untuk layanan */
+.service-card {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+}
+
+.service-card.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Animasi untuk header layanan */
+.service-header {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.8s ease-out;
+}
+
+.service-header.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Animasi untuk scroll ke atas */
+.service-card:not(.animate) {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.service-header:not(.animate) {
+    opacity: 0;
+    transform: translateY(-20px);
+}
+
+
+
+
+
+
+
+
+

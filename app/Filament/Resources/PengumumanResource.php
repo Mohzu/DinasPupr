@@ -18,6 +18,16 @@ class PengumumanResource extends Resource
     protected static ?string $navigationGroup = 'Konten';
     protected static ?int $navigationSort = 2;
 
+    public static function getPluralLabel(): string
+    {
+        return 'Pengumuman';
+    }
+
+    public static function getLabel(): string
+    {
+        return 'Pengumuman';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -89,12 +99,15 @@ class PengumumanResource extends Resource
             ->filters([
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->label('Edit'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Hapus'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Hapus yang Dipilih'),
                 ]),
             ]);
     }
@@ -107,7 +120,7 @@ class PengumumanResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPengumumen::route('/'),
+            'index' => Pages\ListPengumuman::route('/'),
             'create' => Pages\CreatePengumuman::route('/create'),
             'edit' => Pages\EditPengumuman::route('/{record}/edit'),
         ];

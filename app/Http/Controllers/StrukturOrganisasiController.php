@@ -24,6 +24,8 @@ class StrukturOrganisasiController extends Controller
                 return $leader;
             });
 
-        return view('pages.strukturorganisasi', compact('leaders'));
+        $struktur = \App\Models\StrukturOrganisasi::published()->first();
+
+        return view('pages.strukturorganisasi', compact('leaders', 'struktur'));
     }
 }

@@ -3,6 +3,11 @@
 @section('title', 'Struktur Organisasi - Dinas PUPR Kabupaten Garut')
 @section('description', 'Struktur Organisasi Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Garut')
 
+@php
+    use Illuminate\Support\Str;
+    use Illuminate\Support\Facades\Storage;
+@endphp
+
 @section('content')
 <div class="min-h-screen bg-gray-50">
   <!-- Hero Section - TIDAK DIUBAH -->
@@ -32,52 +37,66 @@
   </section>
 
   <!-- Main Content - ENHANCED -->
-  <section class="container mx-auto px-6 pb-16 -mt-8 relative z-10">
+  <section class="container mx-auto px-4 sm:px-6 pb-16 -mt-8 relative z-10">
     <!-- Enhanced Structure Chart Section -->
-    <div class="bg-white/95 backdrop-blur-xl rounded-[32px] p-8 shadow-2xl border border-white/20 mb-12 mt-16">
-      <div class="text-center mb-8">
-        <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    @if($struktur)
+    <div class="bg-white/95 backdrop-blur-xl rounded-[32px] p-6 sm:p-8 shadow-2xl border border-white/20 mb-8 sm:mb-12 mt-12 sm:mt-16">
+      <div class="text-center mb-6 sm:mb-8">
+        <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
+          <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
           </svg>
           Bagan Organisasi
         </div>
-        <h2 class="text-3xl font-bold text-gray-900 mb-2">Struktur Organisasi</h2>
-        <p class="text-gray-600 max-w-2xl mx-auto">Hierarki dan susunan organisasi Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Garut</p>
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{{ $struktur->title }}</h2>
       </div>
 
-      <!-- Interactive Structure Chart -->
-      <div class="relative group">
+      <!-- Gambar Struktur Organisasi (jika ada) -->
+      @if($struktur->gambar)
+      <div class="relative group mb-6 sm:mb-8">
         <div class="absolute inset-0 bg-gradient-to-r from-blue-400/10 via-purple-400/10 to-emerald-400/10 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-        <div class="rounded-lg border bg-white/90 backdrop-blur p-3 shadow hover:shadow-lg transition-all duration-300">
+        <div class="rounded-lg border bg-white/90 backdrop-blur p-2 sm:p-3 shadow hover:shadow-lg transition-all duration-300">
           <div class="aspect-[20/9] w-full rounded-md border overflow-hidden bg-white relative group">
-            <img src="{{ asset('img/strukturorganisasi.png') }}" alt="Struktur Organisasi" class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-102" onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
-            <div class="w-full h-full place-content-center text-gray-400 hidden">
-              <div class="text-center">
-                <div class="bg-gray-100 rounded-full p-3 w-12 h-12 mx-auto mb-2 flex items-center justify-center">
-                  <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v12m6-6H6"/>
-                  </svg>
-                </div>
-                <p class="text-base font-medium text-gray-600">Gambar struktur belum tersedia</p>
-                <p class="text-xs text-gray-400 mt-1">Mohon tunggu proses upload gambar</p>
-              </div>
-            </div>
+            <img src="{{ Storage::disk('public')->url($struktur->gambar) }}" alt="{{ $struktur->title }}" class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-102">
           </div>
         </div>
       </div>
+      @endif
+
+      <!-- Content dari database -->
+      @if($struktur->content)
+      <div class="prose prose-sm sm:prose-base lg:prose-lg max-w-none prose-headings:text-gray-900 prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-ul:text-gray-700 prose-ol:text-gray-700">
+        {!! $struktur->content !!}
+      </div>
+      @endif
     </div>
+    @else
+    <div class="bg-white/95 backdrop-blur-xl rounded-[32px] p-6 sm:p-8 shadow-2xl border border-white/20 mb-8 sm:mb-12 mt-12 sm:mt-16">
+      <div class="text-center mb-6 sm:mb-8">
+        <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
+          <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+          Bagan Organisasi
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Struktur Organisasi</h2>
+      </div>
+      <div class="text-center p-6 sm:p-8">
+        <p class="text-gray-600">Konten struktur organisasi sedang dalam proses persiapan. Silakan hubungi administrator untuk informasi lebih lanjut.</p>
+      </div>
+    </div>
+    @endif
 
     <!-- Enhanced Leadership Section -->
-    <div class="bg-white/95 backdrop-blur-xl rounded-[32px] p-8 shadow-2xl border border-white/20">
-      <div class="text-center mb-10">
+    <div class="bg-white/95 backdrop-blur-xl rounded-[32px] p-6 sm:p-8 shadow-2xl border border-white/20">
+      <div class="text-center mb-8 sm:mb-10">
         <div class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
           </svg>
           Tim Kepemimpinan
         </div>
-        <h2 class="text-3xl font-bold text-gray-900 mb-2">Pejabat Struktural</h2>
+        <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">Pejabat Struktural</h2>
       </div>
 
       @if($leaders->count() > 0)

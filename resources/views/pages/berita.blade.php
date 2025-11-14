@@ -75,57 +75,47 @@
     <!-- Main Content -->
     <div class="container mx-auto px-6">
         <!-- Search & Filter -->
-    <section class="py-8">
-        <div class="max-w-7xl mx-auto mb-8">
-            <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                <form method="GET" action="{{ route('berita') }}">
-                    <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
-                        <!-- Search -->
-                        <div class="relative flex-1 max-w-md">
-                            <input 
-                                type="text" 
-                                name="q" 
-                                value="{{ request('q') }}" 
-                                placeholder="Cari berita..." 
-                                class="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
-                            <div class="absolute inset-y-0 left-0 flex items-center pl-4">
-                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-                                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                </svg>
+        <section class="py-8">
+            <div class="max-w-7xl mx-auto mb-8">
+                <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                    <form method="GET" action="{{ route('berita') }}">
+                        <div class="flex flex-col lg:flex-row gap-4 items-center justify-between">
+                            <!-- Search -->
+                            <div class="relative flex-1 max-w-md">
+                                <input 
+                                    type="text" 
+                                    name="q" 
+                                    id="search-input"
+                                    value="{{ request('q') }}" 
+                                    placeholder="Cari berita..." 
+                                    class="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+                                <div class="absolute inset-y-0 left-0 flex items-center pl-4">
+                                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <!-- Filter -->
+                            <div class="flex gap-3 items-center">
+                                <label for="sort" class="text-sm text-gray-600">Urutkan:</label>
+                                <select 
+                                    id="sort" 
+                                    name="sort" 
+                                    class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
+                                    <option value="terbaru" {{ request('sort') == 'terbaru' ? 'selected' : '' }}>Terbaru</option>
+                                    <option value="terlama" {{ request('sort') == 'terlama' ? 'selected' : '' }}>Terlama</option>
+                                </select>
                             </div>
                         </div>
-
-                        <!-- Filter -->
-                        <div class="flex gap-3 items-center">
-                            <label for="sort" class="text-sm text-gray-600">Urutkan:</label>
-                            <select 
-                                id="sort" 
-                                name="sort" 
-                                onchange="this.form.submit()"
-                                class="px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200">
-                                <option value="terbaru" {{ request('sort') == 'terbaru' ? 'selected' : '' }}>Terbaru</option>
-                                <option value="terlama" {{ request('sort') == 'terlama' ? 'selected' : '' }}>Terlama</option>
-                            </select>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
-    </section>
-
+        </section>
 
         <!-- Featured News Section -->
-        <div class="max-w-7xl mx-auto mb-16">
-            <div class="text-center mb-8">
-                <h2 class="text-4xl font-black text-gray-800 mb-4">
-                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                        Berita Utama
-                    </span>
-                </h2>
-                <p class="text-xl text-gray-600">Informasi terpenting dan terkini untuk Anda</p>
-            </div>
-            
+        <div class="max-w-7xl mx-auto mb-16">   
             <div class="grid lg:grid-cols-2 gap-12">
                 <!-- Main Featured Article (Dynamic) -->
                 <article class="bg-white rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
@@ -188,9 +178,9 @@
 
                 <!-- Recent News Sidebar (Dynamic) -->
                 <div class="space-y-6">
-                    <h3 class="text-2xl font-black text-gray-800 mb-6 flex items-center gap-3">
-                        <div class="w-1 h-8 bg-gradient-to-b from-purple-600 to-pink-600 rounded-full"></div>
-                        Berita Terbaru
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                        <div class="w-1 h-8 bg-blue-600 rounded-full"></div>
+                        Berita <span class="text-blue-600">Terbaru</span>
                     </h3>
                     
                     <!-- Recent News Items -->
@@ -228,13 +218,15 @@
         <!-- All News Grid (Dynamic) -->
         <div class="max-w-7xl mx-auto mb-16">
             <div class="flex flex-col md:flex-row justify-between items-center mb-8">
-                <h2 class="text-3xl font-black text-gray-800 mb-4 md:mb-0">Semua Berita</h2>
+                <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-0">
+                    Semua <span class="text-blue-600">Berita</span>
+                </h2>
             </div>
 
             <div class="max-w-7xl mx-auto">
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 berita-list">
                     @forelse ($beritas as $berita)
-                        <article class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2">
+                        <article class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 berita-item" data-tanggal="{{ $berita->published_at ?? $berita->created_at }}">
                             <div class="relative">
                                 @if ($berita->gambar)
                                     <img src="{{ asset('storage/' . $berita->gambar) }}" alt="{{ $berita->judul }}" class="w-full h-48 object-fill">
@@ -249,7 +241,7 @@
                                         <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold">{{ strtoupper($berita->kategori) }}</span>
                                     @endif
                                 </div>
-                                <h3 class="font-bold text-gray-800 text-xl mb-3 hover:text-blue-600">
+                                <h3 class="font-bold text-gray-800 text-xl mb-3 hover:text-blue-600 berita-judul">
                                     <a href="{{ route('berita.show', $berita->slug ?? $berita->id) }}">{{ $berita->judul }}</a>
                                 </h3>
                                 <a href="{{ route('berita.show', $berita->slug ?? $berita->id) }}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-bold">
@@ -265,9 +257,36 @@
                     @endforelse
                 </div>
 
-                <!-- Pagination -->
-                <div class="flex justify-center">
-                    {{ $beritas->onEachSide(1)->links() }}
+                <!-- Custom Pagination -->
+                <div class="pagination-container mt-12">
+                    <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6 rounded-xl shadow-sm">
+                        <div class="flex flex-1 justify-between sm:hidden">
+                            <button id="mobile-prev" class="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                Previous
+                            </button>
+                            <button id="mobile-next" class="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                                Next
+                            </button>
+                        </div>
+                        <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+                            <div>
+                                <p class="text-sm text-gray-700">
+                                    Showing
+                                    <span class="font-medium" id="first-item">1</span>
+                                    to
+                                    <span class="font-medium" id="last-item">6</span>
+                                    of
+                                    <span class="font-medium" id="total-items">0</span>
+                                    results
+                                </p>
+                            </div>
+                            <div>
+                                <nav class="isolate inline-flex -space-x-px rounded-xl shadow-sm" id="pagination-links" aria-label="Pagination">
+                                    <!-- Pagination buttons will be inserted here by JavaScript -->
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -285,53 +304,109 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Search functionality
-    const searchInput = document.querySelector('#search-input');
-    const sortFilter = document.querySelector('#sort-filter');
-    let searchTimeout;
-    
-    if (searchInput) {
-        // Real-time search dengan debouncing
-        searchInput.addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                console.log('Mencari:', this.value);
-                // Implementasi pencarian akan ditambahkan di sini
-            }, 300);
-        });
-        
-        // Search on Enter
-        searchInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                performSearch(this.value);
-            }
+    const searchInput = document.querySelector('input[name="q"]');
+    const sortFilter = document.querySelector('select[name="sort"]');
+    const beritaContainer = document.querySelector('.berita-list');
+    const paginationContainer = document.querySelector('.pagination-container');
+
+    let allBeritaItems = [];
+    const itemsPerPage = 6;
+    let currentPage = 1;
+
+    function initBeritaData() {
+        const initialItems = beritaContainer.querySelectorAll('.berita-item');
+        allBeritaItems = Array.from(initialItems).map(item => {
+            const judul = item.querySelector('.berita-judul').textContent.trim();
+            const tanggalAttr = item.getAttribute('data-tanggal') || '';
+            const tanggal = tanggalAttr ? new Date(tanggalAttr.replace(' ', 'T')) : new Date(0);
+            return { element: item, judul, tanggal, displayText: judul.toLowerCase() };
         });
     }
-    
-    if (sortFilter) {
-        sortFilter.addEventListener('change', function() {
-            console.log('Mengurutkan berdasarkan:', this.value);
-            // Implementasi sorting akan ditambahkan di sini
+
+    function updateDisplay() {
+        const searchTerm = searchInput ? searchInput.value.toLowerCase().trim() : '';
+        const sortOrder = sortFilter ? sortFilter.value : 'terbaru';
+
+        let filteredItems = allBeritaItems.filter(item => item.displayText.includes(searchTerm));
+
+        filteredItems.sort((a, b) => {
+            if (sortOrder === 'terbaru') return b.tanggal - a.tanggal;
+            if (sortOrder === 'terlama') return a.tanggal - b.tanggal;
+            return 0;
         });
+
+        displayResults(filteredItems);
+        updatePagination(filteredItems.length);
     }
-    
-    function performSearch(query) {
-        if (query.trim()) {
-            console.log('Melakukan pencarian untuk:', query);
-            // Implementasi pencarian aktual akan ditambahkan di sini
-            // Misalnya: window.location.href = `/search?q=${encodeURIComponent(query)}`;
+
+    function displayResults(items) {
+        allBeritaItems.forEach(item => { item.element.style.display = 'none'; });
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const endIndex = Math.min(startIndex + itemsPerPage, items.length);
+        for (let i = startIndex; i < endIndex; i++) items[i].element.style.display = '';
+    }
+
+    function updatePagination(totalItems) {
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        const paginationLinks = document.getElementById('pagination-links');
+        if (paginationLinks) paginationLinks.innerHTML = '';
+
+        const totalItemsEl = document.getElementById('total-items');
+        if (totalItemsEl) totalItemsEl.textContent = totalItems;
+        const firstItemEl = document.getElementById('first-item');
+        const lastItemEl = document.getElementById('last-item');
+        if (firstItemEl) firstItemEl.textContent = (totalItems > 0) ? (currentPage - 1) * itemsPerPage + 1 : 0;
+        if (lastItemEl) lastItemEl.textContent = Math.min(currentPage * itemsPerPage, totalItems);
+
+        if (totalPages <= 1) { 
+            paginationContainer?.classList.add('hidden'); 
+            return; 
+        }
+        paginationContainer?.classList.remove('hidden');
+
+        const prevButton = document.createElement('button');
+        prevButton.className = 'relative inline-flex items-center px-3 py-2 rounded-l-xl border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors';
+        prevButton.innerHTML = `<span class="sr-only">Previous</span><svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>`;
+        prevButton.disabled = currentPage === 1;
+        if (prevButton.disabled) prevButton.className = 'relative inline-flex items-center px-3 py-2 rounded-l-xl border border-gray-300 bg-gray-50 text-sm font-medium text-gray-300 cursor-not-allowed';
+        prevButton.onclick = () => { if (currentPage > 1) { currentPage--; updateDisplay(); } };
+        paginationLinks.appendChild(prevButton);
+
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement('button');
+            pageButton.textContent = i;
+            pageButton.className = `relative inline-flex items-center px-4 py-2 border text-sm font-medium transition-colors ${i === currentPage ? 'z-10 bg-blue-50 border-blue-500 text-blue-600' : 'bg-white border-gray-300 text-gray-500 hover:bg-gray-50'}`;
+            pageButton.onclick = () => { currentPage = i; updateDisplay(); };
+            paginationLinks.appendChild(pageButton);
+        }
+
+        const nextButton = document.createElement('button');
+        nextButton.className = 'relative inline-flex items-center px-3 py-2 rounded-r-xl border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 transition-colors';
+        nextButton.innerHTML = `<span class="sr-only">Next</span><svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>`;
+        nextButton.disabled = currentPage === totalPages;
+        if (nextButton.disabled) nextButton.className = 'relative inline-flex items-center px-3 py-2 rounded-r-xl border border-gray-300 bg-gray-50 text-sm font-medium text-gray-300 cursor-not-allowed';
+        nextButton.onclick = () => { if (currentPage < totalPages) { currentPage++; updateDisplay(); } };
+        paginationLinks.appendChild(nextButton);
+
+        // Mobile pagination
+        const mobilePrev = document.getElementById('mobile-prev');
+        const mobileNext = document.getElementById('mobile-next');
+        if (mobilePrev) {
+            mobilePrev.disabled = currentPage === 1;
+            mobilePrev.onclick = () => { if (currentPage > 1) { currentPage--; updateDisplay(); } };
+        }
+        if (mobileNext) {
+            mobileNext.disabled = currentPage === totalPages;
+            mobileNext.onclick = () => { if (currentPage < totalPages) { currentPage++; updateDisplay(); } };
         }
     }
-    
-    // Smooth scroll for pagination
-    const paginationButtons = document.querySelectorAll('nav button');
-    paginationButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            if (!this.disabled) {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        });
-    });
+
+    searchInput?.addEventListener('input', () => { currentPage = 1; updateDisplay(); });
+    sortFilter?.addEventListener('change', () => { currentPage = 1; updateDisplay(); });
+
+    // Initialize
+    initBeritaData();
+    updateDisplay();
     
     // Add loading animation for cards
     const cards = document.querySelectorAll('article');

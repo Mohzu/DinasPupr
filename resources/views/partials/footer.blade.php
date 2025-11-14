@@ -71,75 +71,75 @@
         <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
 
         <!-- Main Footer Content -->
-        <div class="relative z-10 pt-24 pb-12">
-            <div class="container mx-auto px-6">
+        <div class="relative z-10 pt-16 sm:pt-24 pb-8 sm:pb-12">
+            <div class="container mx-auto px-4 sm:px-6">
                 <!-- Top Section -->
-                <div class="grid lg:grid-cols-12 gap-12 mb-16">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 sm:gap-12 mb-12 sm:mb-16">
                     <!-- Organization Info -->
-                    <div class="lg:col-span-5 space-y-6 fade-in-up">
-                        <div class="flex items-start space-x-4">
-                            <div class="w-16 h-16 rounded-2xl overflow-hidden flex items-center justify-center float-animation">
+                    <div class="lg:col-span-5 space-y-4 sm:space-y-6 fade-in-up">
+                        <div class="flex items-start space-x-3 sm:space-x-4">
+                            <div class="w-12 h-12 sm:w-16 sm:h-16 rounded-2xl overflow-hidden flex items-center justify-center float-animation flex-shrink-0">
                                 <img src="{{ asset('img/logoPU.png') }}" alt="Logo Dinas PUPR" class="object-contain w-full h-full">
                             </div>
                             <div>
-                                <h3 class="text-2xl font-bold gradient-text mb-2">
+                                <h3 class="text-lg sm:text-xl lg:text-2xl font-bold gradient-text mb-2">
                                     Dinas PUPR Kabupaten Garut
                                 </h3>
-                                <p class="text-blue-100 font-medium">
+                                <p class="text-sm sm:text-base text-blue-100 font-medium">
                                     Dinas Pekerjaan Umum dan Penataan Ruang
                                 </p>
                             </div>
                         </div>
                         
-                        <p class="text-gray-300 leading-relaxed max-w-md">
+                        <p class="text-sm sm:text-base text-gray-300 leading-relaxed max-w-md">
                             Terwujudnya Infrastruktur Pekerjaan Umum dan Penataan Ruang yang Berkualitas dalam MendukungKabupaten Garut Bermartabat, Nyaman dan Sejahtera
                         </p>
 
                         <!-- Contact Info -->
-                        <div class="space-y-3">
-                            <div class="flex items-center space-x-3 text-gray-300">
-                                <div class="w-5 h-5 text-blue-400">
+                        <div class="space-y-2 sm:space-y-3">
+                            <div class="flex items-start space-x-2 sm:space-x-3 text-gray-300">
+                                <div class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 flex-shrink-0 mt-1">
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                     </svg>
                                 </div>
-                                <span>Jl. Raya Samarang No.117, Sukagalih, Kec. Tarogong Kidul, Kabupaten Garut, Jawa Barat 44151</span>
+                                <span class="text-xs sm:text-sm">Jl. Raya Samarang No.117, Sukagalih, Kec. Tarogong Kidul, Kabupaten Garut, Jawa Barat 44151</span>
                             </div>
                             
-                            <div class="flex items-center space-x-3 text-gray-300">
-                                <div class="w-5 h-5 text-blue-400">
+                            <div class="flex items-center space-x-2 sm:space-x-3 text-gray-300">
+                                <div class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 flex-shrink-0">
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
                                     </svg>
                                 </div>
-                                <span>(0262) 233730</span>
+                                <span class="text-xs sm:text-sm">(0262) 233730</span>
                             </div>
                             
-                            <div class="flex items-center space-x-3 text-gray-300">
-                                <div class="w-5 h-5 text-blue-400">
+                            <div class="flex items-center space-x-2 sm:space-x-3 text-gray-300">
+                                <div class="w-4 h-4 sm:w-5 sm:h-5 text-blue-400 flex-shrink-0">
                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                                     </svg>
                                 </div>
-                                <span>pupr@garutkab.go.id</span>
+                                <span class="text-xs sm:text-sm break-all">pupr@garutkab.go.id</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- Quick Links -->
-                    <div class="lg:col-span-2 fade-in-up" style="animation-delay: 0.2s;">
-                        <h4 class="text-xl font-bold text-white mb-6">Layanan</h4>
-                        <ul class="space-y-3">
+                    <div class="md:col-span-1 lg:col-span-2 fade-in-up" style="animation-delay: 0.2s;">
+                        <h4 class="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Layanan</h4>
+                        <ul class="space-y-2 sm:space-y-3">
                             <li><a href="{{ route('pengaduan') }}" class="text-gray-300 link-hover transition-all duration-300">Pengaduan</a></li>
                             <li><a href="{{ route('kontak') }}" class="text-gray-300 link-hover transition-all duration-300">Kontak</a></li>
                         </ul>
                     </div>
 
                     <!-- Information Links -->
-                    <div class="lg:col-span-2 fade-in-up" style="animation-delay: 0.4s;">
-                        <h4 class="text-xl font-bold text-white mb-6">Informasi</h4>
-                        <ul class="space-y-3">
+                    <div class="md:col-span-1 lg:col-span-2 fade-in-up" style="animation-delay: 0.4s;">
+                        <h4 class="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Informasi</h4>
+                        <ul class="space-y-2 sm:space-y-3">
                             <li><a href="{{ route('sejarah') }}" class="text-gray-300 link-hover transition-all duration-300">Sejarah</a></li>
                             <li><a href="{{ route('strukturorganisasi') }}" class="text-gray-300 link-hover transition-all duration-300">Struktur Organisasi</a></li>
                             <li><a href="{{ route('visimisi') }}" class="text-gray-300 link-hover transition-all duration-300">Visi Misi</a></li>
@@ -149,11 +149,11 @@
                     </div>
 
                     <!-- Social Media & Apps -->
-                    <div class="lg:col-span-3 fade-in-up" style="animation-delay: 0.6s;">
-                        <h4 class="text-xl font-bold text-white mb-6">Hubungi Kami</h4>
+                    <div class="md:col-span-2 lg:col-span-3 fade-in-up" style="animation-delay: 0.6s;">
+                        <h4 class="text-lg sm:text-xl font-bold text-white mb-4 sm:mb-6">Hubungi Kami</h4>
                         
                         <!-- Social Media Icons -->
-                    <div class="flex space-x-4 mb-8">
+                    <div class="flex space-x-3 sm:space-x-4 mb-6 sm:mb-8">
                         <!-- Instagram -->
                         <a href="https://www.instagram.com/puprgarutkab.official/" class="w-12 h-12 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center social-hover transition-all duration-300" aria-label="Instagram">
                             <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
@@ -170,12 +170,12 @@
                     </div>
 
                         <!-- Newsletter Signup -->
-                        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-                            <h5 class="text-lg font-semibold text-white mb-3">Newsletter</h5>
-                            <p class="text-sm text-gray-300 mb-4">Dapatkan update terbaru dari kami</p>
-                            <div class="flex space-x-2">
-                                <input type="email" placeholder="Email Anda" class="flex-1 px-4 py-2 rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                <button class="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300">
+                        <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-4 sm:p-6 border border-white/20">
+                            <h5 class="text-base sm:text-lg font-semibold text-white mb-2 sm:mb-3">Newsletter</h5>
+                            <p class="text-xs sm:text-sm text-gray-300 mb-3 sm:mb-4">Dapatkan update terbaru dari kami</p>
+                            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                                <input type="email" placeholder="Email Anda" class="flex-1 px-3 sm:px-4 py-2 text-sm sm:text-base rounded-lg bg-white/20 border border-white/30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <button class="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 text-sm sm:text-base">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
                                     </svg>
@@ -189,12 +189,12 @@
                 <div class="border-t border-white/20 my-8"></div>
 
                 <!-- Bottom Section -->
-                <div class="flex flex-col lg:flex-row justify-between items-center space-y-4 lg:space-y-0">
-                    <div class="flex flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-6">
-                        <p class="text-gray-300 text-sm">
+                <div class="flex flex-col lg:flex-row justify-between items-center space-y-3 sm:space-y-4 lg:space-y-0">
+                    <div class="flex flex-col lg:flex-row items-center space-y-2 lg:space-y-0 lg:space-x-6 text-center lg:text-left">
+                        <p class="text-gray-300 text-xs sm:text-sm">
                             © 2025 Dinas PUPR Kabupaten Garut. Hak Cipta Dilindungi.
                         </p>
-                        <div class="flex space-x-4 text-sm text-gray-400">
+                        <div class="flex flex-wrap justify-center lg:justify-start space-x-3 sm:space-x-4 text-xs sm:text-sm text-gray-400">
                             <a href="#" class="hover:text-white transition-colors duration-300">Kebijakan Privasi</a>
                             <span>•</span>
                             <a href="#" class="hover:text-white transition-colors duration-300">Syarat & Ketentuan</a>

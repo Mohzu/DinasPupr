@@ -32,8 +32,33 @@ class User extends Authenticatable
         ];
     }
 
-    public function news(): HasMany
+    public function berita(): HasMany
     {
-        return $this->hasMany(News::class, 'author_id');
+        return $this->hasMany(Berita::class, 'user_id');
+    }
+
+    public function pengumuman(): HasMany
+    {
+        return $this->hasMany(Pengumuman::class, 'user_id');
+    }
+
+    public function dokumen(): HasMany
+    {
+        return $this->hasMany(Dokumen::class, 'user_id');
+    }
+
+    public function sejarah(): HasMany
+    {
+        return $this->hasMany(Sejarah::class, 'user_id');
+    }
+
+    public function visiMisi(): HasMany
+    {
+        return $this->hasMany(VisiMisi::class, 'user_id');
+    }
+
+    public function strukturOrganisasi(): HasMany
+    {
+        return $this->hasMany(StrukturOrganisasi::class, 'user_id');
     }
 }

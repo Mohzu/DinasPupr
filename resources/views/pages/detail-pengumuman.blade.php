@@ -38,16 +38,16 @@
 
     <!-- Content -->
     <section class="mb-16">
-        <div class="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <article class="lg:col-span-8 bg-white rounded-2xl shadow-sm border border-gray-100 p-6 md:p-10">
+        <div class="container mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+            <article class="lg:col-span-8 bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6 md:p-10">
                 <div class="prose max-w-none prose-headings:font-extrabold prose-p:leading-relaxed prose-a:text-amber-700">
                     {!! $pengumuman->isi !!}
                 </div>
             </article>
 
-            <aside class="lg:col-span-4 space-y-6">
+            <aside class="lg:col-span-4 space-y-4 sm:space-y-6">
                 @if ($pengumuman->lampiran)
-                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                    <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
                         <h2 class="text-base font-semibold text-gray-900 mb-4">Lampiran</h2>
                         <a href="{{ Storage::disk('public')->url($pengumuman->lampiran) }}"
                            download="{{ basename($pengumuman->lampiran) }}"

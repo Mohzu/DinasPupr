@@ -16,8 +16,18 @@ class PejabatStrukturalResource extends Resource
     protected static ?string $model = PejabatStruktural::class;
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
     protected static ?string $navigationLabel = 'Pejabat Struktural';
-    protected static ?string $navigationGroup = 'Profil Instansi';
-    protected static ?int $navigationSort = 2;
+    protected static ?string $navigationGroup = 'Profil';
+    protected static ?int $navigationSort = 4;
+
+    public static function getPluralLabel(): string
+    {
+        return 'Pejabat Struktural';
+    }
+
+    public static function getLabel(): string
+    {
+        return 'Pejabat Struktural';
+    }
 
     public static function form(Form $form): Form
     {
@@ -71,12 +81,15 @@ class PejabatStrukturalResource extends Resource
                 Tables\Filters\TernaryFilter::make('aktif')->label('Status Aktif'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->label('Edit'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Hapus'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Hapus yang Dipilih'),
                 ]),
             ]);
     }
@@ -84,7 +97,7 @@ class PejabatStrukturalResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPejabatStrukturals::route('/'),
+            'index' => Pages\ListPejabatStruktural::route('/'),
             'create' => Pages\CreatePejabatStruktural::route('/create'),
             'edit' => Pages\EditPejabatStruktural::route('/{record}/edit'),
         ];

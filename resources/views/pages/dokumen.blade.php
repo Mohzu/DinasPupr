@@ -80,9 +80,9 @@
     </section>
 
     <!-- Main Content -->
-    <section class="container mx-auto px-4 pb-16 -mt-8 relative z-10">
-        <div class="bg-white/95 backdrop-blur-xl rounded-[32px] p-6 shadow-2xl border border-white/20">
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+    <section class="container mx-auto px-4 sm:px-6 pb-16 -mt-8 relative z-10">
+        <div class="bg-white/95 backdrop-blur-xl rounded-[32px] p-4 sm:p-6 shadow-2xl border border-white/20">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6">
                 <!-- Sidebar -->
                 <aside class="lg:col-span-1">
                     <div class="bg-white/80 backdrop-blur rounded-2xl shadow-md overflow-hidden border border-white/30">
@@ -106,14 +106,14 @@
                 <!-- Content Area -->
                 <main class="lg:col-span-3">
                     <!-- Header dengan Search -->
-                    <div class="bg-white/80 backdrop-blur rounded-2xl shadow-md p-6 mb-6 border border-white/30">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div class="bg-white/80 backdrop-blur rounded-2xl shadow-md p-4 sm:p-6 mb-4 sm:mb-6 border border-white/30">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3 sm:gap-4">
                             <div>
                                 <h2 class="text-2xl font-bold text-blue-700 mb-2">Dokumen</h2>
                             </div>
-                            <form method="GET" action="{{ route('dokumen') }}" class="flex items-center gap-3" onsubmit="return false;">
-                                <div class="relative">
-                                    <input id="searchInput" name="q" value="{{ $search }}" type="text" placeholder="Cari di sini" class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 w-64 bg-white/80 backdrop-blur">
+                            <form method="GET" action="{{ route('dokumen') }}" class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto" onsubmit="return false;">
+                                <div class="relative flex-1 sm:flex-none">
+                                    <input id="searchInput" name="q" value="{{ $search }}" type="text" placeholder="Cari di sini" class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 w-full sm:w-64 bg-white/80 backdrop-blur">
                                     <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                     </svg>
@@ -131,8 +131,8 @@
                     <!-- Document List -->
                     <div id="dokumen-list" class="bg-white/80 backdrop-blur rounded-2xl shadow-md overflow-hidden border border-white/30">
                         @foreach($documents as $doc)
-                        <div class="p-6 border-b border-gray-100 hover:bg-blue-50/50 transition-colors">
-                            <div class="flex items-start gap-4">
+                        <div class="p-4 sm:p-6 border-b border-gray-100 hover:bg-blue-50/50 transition-colors">
+                            <div class="flex flex-col sm:flex-row items-start gap-4">
                                 <div class="flex-shrink-0 w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center border border-red-100 relative overflow-hidden">
                                     <svg class="w-8 h-8 text-red-600" viewBox="0 0 24 24" fill="currentColor">
                                         <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/>
@@ -155,9 +155,9 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div class="flex-shrink-0 flex items-center gap-3">
+                                <div class="flex-shrink-0 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3 w-full sm:w-auto">
                                     <button type="button"
-                                        class="flex items-center gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
+                                        class="flex items-center justify-center gap-2 px-4 py-2 text-blue-600 border border-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
                                         onclick="openModal(this)"
                                         data-title="{{ $doc->title }}"
                                         data-description="{{ $doc->description }}"
@@ -170,7 +170,7 @@
                                         </svg>
                                         Lihat
                                     </button>
-                                    <a href="{{ asset('storage/'.$doc->file_path) }}" download="{{ basename($doc->file_path) }}" class="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-lg">
+                                    <a href="{{ asset('storage/'.$doc->file_path) }}" download="{{ basename($doc->file_path) }}" class="flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors shadow-lg">
                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                                         </svg>
@@ -198,9 +198,9 @@
     <!-- Modal Container -->
     <div class="flex items-center justify-center min-h-screen p-4">
         <!-- Modal Content -->
-        <div id="modalContent" class="bg-white rounded-2xl shadow-2xl modal max-w-2xl w-full mx-auto">
+        <div id="modalContent" class="bg-white rounded-2xl shadow-2xl modal max-w-2xl w-full mx-auto m-4">
             <!-- Modal Header -->
-            <div class="flex items-center justify-between p-6 border-b border-gray-200">
+            <div class="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200">
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
                         <svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 24 24">
@@ -218,14 +218,14 @@
             </div>
 
             <!-- Modal Body -->
-            <div class="p-6">
+            <div class="p-4 sm:p-6">
                 <div id="modalBody">
                     <!-- Content will be dynamically inserted here -->
                 </div>
             </div>
 
             <!-- Modal Footer -->
-            <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-2xl">
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-end gap-3 px-4 sm:px-6 py-4 border-t border-gray-200 bg-gray-50 rounded-b-2xl">
                 <button onclick="closeModal()" class="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
                     Tutup
                 </button>

@@ -18,6 +18,16 @@ class DokumenResource extends Resource
     protected static ?string $navigationGroup = 'Konten';
     protected static ?int $navigationSort = 3;
 
+    public static function getPluralLabel(): string
+    {
+        return 'Dokumen';
+    }
+
+    public static function getLabel(): string
+    {
+        return 'Dokumen';
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -81,12 +91,15 @@ class DokumenResource extends Resource
                     ->label('Tahun'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->label('Edit'),
+                Tables\Actions\DeleteAction::make()
+                    ->label('Hapus'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make()
+                        ->label('Hapus yang Dipilih'),
                 ]),
             ]);
     }
@@ -94,7 +107,7 @@ class DokumenResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListDokumens::route('/'),
+            'index' => Pages\ListDokumen::route('/'),
             'create' => Pages\CreateDokumen::route('/create'),
             'edit' => Pages\EditDokumen::route('/{record}/edit'),
         ];
