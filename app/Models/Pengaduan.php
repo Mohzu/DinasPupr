@@ -6,26 +6,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class PejabatStruktural extends Model
+class Pengaduan extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'nama',
-        'jabatan',
-        'foto',
-        'urutan',
-        'aktif',
+        'email',
+        'telepon',
+        'subjek',
+        'pesan',
+        'status',
         'user_id',
     ];
 
     protected $casts = [
-        'aktif' => 'boolean',
-        'urutan' => 'integer',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     /**
-     * Relasi ke User (pembuat/edit konten)
+     * Relasi ke User (admin yang menangani pengaduan)
      */
     public function user(): BelongsTo
     {

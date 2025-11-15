@@ -74,6 +74,10 @@ class PejabatStrukturalResource extends Resource
                 Tables\Columns\TextColumn::make('jabatan')->searchable()->sortable()->wrap(),
                 Tables\Columns\ToggleColumn::make('aktif')->sortable(),
                 Tables\Columns\TextColumn::make('urutan')->sortable(),
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Dibuat Oleh')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')->dateTime('d M Y H:i')->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('urutan')

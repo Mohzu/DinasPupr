@@ -1,11 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Pengaduan - Dinas PUPR Kabupaten Garut')
-@section('description', 'Sampaikan pengaduan Anda melalui form berikut. Kami menggunakan Formspree untuk pengiriman email yang aman.')
-
-@php
-    $formspreeEndpoint = env('FORMSPREE_ENDPOINT', 'https://formspree.io/f/meoznvdn');
-@endphp
+@section('description', 'Sampaikan pengaduan Anda melalui form berikut.')
 
 @section('content')
 <div class="min-h-screen bg-gradient-to-br from-amber-50 via-white to-yellow-50">
@@ -91,10 +87,8 @@
 
                 <h2 class="text-xl font-extrabold text-gray-900">Form Pengaduan</h2>
 
-                <form id="complaint-form" class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-4">
-                    <input type="hidden" name="_subject" value="Pengaduan Baru dari Website PUPR Garut">
-                    <input type="hidden" name="_language" value="id">
-                    <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off">
+                <form id="complaint-form" action="{{ route('pengaduan.store') }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-4">
+                    @csrf
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
@@ -155,28 +149,38 @@ document.addEventListener('DOMContentLoaded', function() {
         // Ambil data form
         const formData = new FormData(form);
 
-        // Kirim ke Formspree dengan AJAX
-        fetch('{{ $formspreeEndpoint }}', {
+        // Kirim ke controller Laravel dengan AJAX
+        fetch('{{ route('pengaduan.store') }}', {
             method: 'POST',
             body: formData,
             headers: {
+                'X-Requested-With': 'XMLHttpRequest',
                 'Accept': 'application/json'
             }
         })
-        .then(response => {
-            if (response.ok) {
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
                 // Tampilkan pesan sukses
+                const successMessage = document.querySelector('#alert-success p');
+                if (successMessage) {
+                    successMessage.textContent = data.message;
+                }
                 alertSuccess.classList.remove('hidden');
                 // Reset form
                 form.reset();
                 // Scroll ke alert
                 alertSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } else {
-                throw new Error('Network response was not ok');
+                throw new Error(data.message || 'Terjadi kesalahan');
             }
         })
         .catch(error => {
             // Tampilkan pesan error
+            const errorMessage = document.querySelector('#alert-error p');
+            if (errorMessage) {
+                errorMessage.textContent = error.message || 'Terjadi kesalahan saat mengirim pengaduan. Silakan coba lagi.';
+            }
             alertError.classList.remove('hidden');
             // Scroll ke alert
             alertError.scrollIntoView({ behavior: 'smooth', block: 'center' });

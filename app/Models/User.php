@@ -61,4 +61,19 @@ class User extends Authenticatable
     {
         return $this->hasMany(StrukturOrganisasi::class, 'user_id');
     }
+
+    public function pejabatStruktural(): HasMany
+    {
+        return $this->hasMany(PejabatStruktural::class, 'user_id');
+    }
+
+    public function pengaduan(): HasMany
+    {
+        return $this->hasMany(Pengaduan::class, 'user_id');
+    }
+
+    public function kontak(): HasMany
+    {
+        return $this->hasMany(Kontak::class, 'user_id');
+    }
 }

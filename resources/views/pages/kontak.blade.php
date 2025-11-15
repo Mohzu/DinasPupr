@@ -3,10 +3,6 @@
 @section('title', 'Kontak - Dinas PUPR Kabupaten Garut')
 @section('description', 'Hubungi Dinas PUPR Kabupaten Garut melalui informasi kontak dan form yang tersedia.')
 
-@php
-    $formspreeEndpoint = env('FORMSPREE_CONTACT_ENDPOINT', 'https://formspree.io/f/meoznvdn');
-@endphp
-
 @section('content')
 <div class="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
     <!-- Hero -->
@@ -115,10 +111,8 @@
                     <h2 class="text-xl font-extrabold text-gray-900">Form Kontak</h2>
                     <p class="text-gray-500 mb-6">Kirim pertanyaan atau pesan umum Anda. Kami akan membalas melalui email.</p>
                     
-                    <form id="contact-form" class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                        <input type="hidden" name="_subject" value="Pesan Baru dari Website PUPR Garut">
-                        <input type="hidden" name="_language" value="id">
-                        <input type="text" name="_gotcha" class="hidden" tabindex="-1" autocomplete="off">
+                    <form id="contact-form" action="{{ route('kontak.store') }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        @csrf
 
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Nama</label>
@@ -179,28 +173,38 @@ document.addEventListener('DOMContentLoaded', function() {
         // Ambil data form
         const formData = new FormData(form);
 
-        // Kirim ke Formspree dengan AJAX
-        fetch('{{ $formspreeEndpoint }}', {
+        // Kirim ke controller Laravel dengan AJAX
+        fetch('{{ route('kontak.store') }}', {
             method: 'POST',
             body: formData,
             headers: {
+                'X-Requested-With': 'XMLHttpRequest',
                 'Accept': 'application/json'
             }
         })
-        .then(response => {
-            if (response.ok) {
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
                 // Tampilkan pesan sukses
+                const successMessage = document.querySelector('#alert-success p');
+                if (successMessage) {
+                    successMessage.textContent = data.message;
+                }
                 alertSuccess.classList.remove('hidden');
                 // Reset form
                 form.reset();
                 // Scroll ke alert
                 alertSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
             } else {
-                throw new Error('Network response was not ok');
+                throw new Error(data.message || 'Terjadi kesalahan');
             }
         })
         .catch(error => {
             // Tampilkan pesan error
+            const errorMessage = document.querySelector('#alert-error p');
+            if (errorMessage) {
+                errorMessage.textContent = error.message || 'Terjadi kesalahan saat mengirim pesan. Silakan coba lagi.';
+            }
             alertError.classList.remove('hidden');
             // Scroll ke alert
             alertError.scrollIntoView({ behavior: 'smooth', block: 'center' });

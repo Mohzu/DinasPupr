@@ -8,6 +8,8 @@ use App\Http\Controllers\SejarahController;
 use App\Http\Controllers\StrukturOrganisasiController;
 use App\Http\Controllers\VisiMisiController;
 use App\Http\Controllers\DokumenController;
+use App\Http\Controllers\PengaduanController;
+use App\Http\Controllers\KontakController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('pages/berita', [BeritaController::class, 'index'])->name('berita');
@@ -22,8 +24,10 @@ Route::get('pages/visimisi', [VisiMisiController::class, 'index'])->name('visimi
 
 Route::get('/berita/search', [BeritaController::class, 'search'])->name('berita.search');
 
-// Static pages: contact and pengaduan
-Route::view('pages/kontak', 'pages.kontak')->name('kontak');
-Route::view('pages/pengaduan', 'pages.pengaduan')->name('pengaduan');
+// Pengaduan dan Kontak
+Route::get('pages/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan');
+Route::post('pages/pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
+Route::get('pages/kontak', [KontakController::class, 'index'])->name('kontak');
+Route::post('pages/kontak', [KontakController::class, 'store'])->name('kontak.store');
 
 Route::get('pages/dokumen', [DokumenController::class, 'index'])->name('dokumen');
