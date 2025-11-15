@@ -82,4 +82,101 @@ class KontakController extends Controller
             ], 500);
         }
     }
+
+    // ========== API METHODS (Admin) ==========
+
+    /**
+     * API: Get list of kontak for admin
+     */
+    public function apiIndex(Request $request)
+    {
+        $query = Kontak::query();
+
+        // Filter status
+        if ($request->has('status') && $request->status) {
+            $query->where('status', $request->status);
+        }
+
+        // Search
+        if ($request->has('search') && $request->search) {
+            $query->where(function($q) use ($request) {
+                $q->where('nama', 'like', '%' . $request->search . '%')
+                  ->orWhere('email', 'like', '%' . $request->search . '%')
+                  ->orWhere('subjek', 'like', '%' . $request->search . '%')
+                  ->orWhere('pesan', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $kontaks = $query->latest()->paginate(15);
+        $stats = [
+            'total' => Kontak::count(),
+            'baru' => Kontak::where('status', 'baru')->count(),
+            'dibalas' => Kontak::where('status', 'dibalas')->count(),
+            'selesai' => Kontak::where('status', 'selesai')->count(),
+        ];
+
+        return response()->json([
+            'success' => true,
+            'data' => $kontaks->items(),
+            'pagination' => [
+                'current_page' => $kontaks->currentPage(),
+                'last_page' => $kontaks->lastPage(),
+                'per_page' => $kontaks->perPage(),
+                'total' => $kontaks->total(),
+            ],
+            'stats' => $stats,
+        ]);
+    }
+
+    /**
+     * API: Get single kontak
+     */
+    public function apiShow($id)
+    {
+        $kontak = Kontak::findOrFail($id);
+        
+        return response()->json([
+            'success' => true,
+            'data' => $kontak,
+        ]);
+    }
+
+    /**
+     * API: Update kontak
+     */
+    public function apiUpdate(Request $request, $id)
+    {
+        $kontak = Kontak::findOrFail($id);
+
+        $validated = $request->validate([
+            'status' => 'required|in:baru,dibalas,selesai',
+        ]);
+
+        $kontak->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Status kontak berhasil diperbarui.',
+            'data' => $kontak->fresh(),
+        ]);
+    }
+
+    /**
+     * API: Delete kontak
+     */
+    public function apiDestroy(Request $request, $id)
+    {
+        $kontak = Kontak::findOrFail($id);
+        $kontak->delete();
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Kontak berhasil dihapus.',
+            ]);
+        }
+
+        return redirect()->route('admin.kontak.index')
+            ->with('success', 'Kontak berhasil dihapus.');
+    }
 }

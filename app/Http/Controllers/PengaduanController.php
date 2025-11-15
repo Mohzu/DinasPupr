@@ -82,4 +82,101 @@ class PengaduanController extends Controller
             ], 500);
         }
     }
+
+    // ========== API METHODS (Admin) ==========
+
+    /**
+     * API: Get list of pengaduan for admin
+     */
+    public function apiIndex(Request $request)
+    {
+        $query = Pengaduan::query();
+
+        // Filter status
+        if ($request->has('status') && $request->status) {
+            $query->where('status', $request->status);
+        }
+
+        // Search
+        if ($request->has('search') && $request->search) {
+            $query->where(function($q) use ($request) {
+                $q->where('nama', 'like', '%' . $request->search . '%')
+                  ->orWhere('email', 'like', '%' . $request->search . '%')
+                  ->orWhere('subjek', 'like', '%' . $request->search . '%')
+                  ->orWhere('pesan', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $pengaduans = $query->latest()->paginate(15);
+        $stats = [
+            'total' => Pengaduan::count(),
+            'baru' => Pengaduan::where('status', 'baru')->count(),
+            'diproses' => Pengaduan::where('status', 'diproses')->count(),
+            'selesai' => Pengaduan::where('status', 'selesai')->count(),
+        ];
+
+        return response()->json([
+            'success' => true,
+            'data' => $pengaduans->items(),
+            'pagination' => [
+                'current_page' => $pengaduans->currentPage(),
+                'last_page' => $pengaduans->lastPage(),
+                'per_page' => $pengaduans->perPage(),
+                'total' => $pengaduans->total(),
+            ],
+            'stats' => $stats,
+        ]);
+    }
+
+    /**
+     * API: Get single pengaduan
+     */
+    public function apiShow($id)
+    {
+        $pengaduan = Pengaduan::findOrFail($id);
+        
+        return response()->json([
+            'success' => true,
+            'data' => $pengaduan,
+        ]);
+    }
+
+    /**
+     * API: Update pengaduan
+     */
+    public function apiUpdate(Request $request, $id)
+    {
+        $pengaduan = Pengaduan::findOrFail($id);
+
+        $validated = $request->validate([
+            'status' => 'required|in:baru,diproses,selesai',
+        ]);
+
+        $pengaduan->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Status pengaduan berhasil diperbarui.',
+            'data' => $pengaduan->fresh(),
+        ]);
+    }
+
+    /**
+     * API: Delete pengaduan
+     */
+    public function apiDestroy(Request $request, $id)
+    {
+        $pengaduan = Pengaduan::findOrFail($id);
+        $pengaduan->delete();
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Pengaduan berhasil dihapus.',
+            ]);
+        }
+
+        return redirect()->route('admin.pengaduan.index')
+            ->with('success', 'Pengaduan berhasil dihapus.');
+    }
 }

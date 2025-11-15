@@ -22,7 +22,7 @@ return new class extends Migration
         if (!Schema::hasColumn('kontaks', 'user_id')) {
             Schema::table('kontaks', function (Blueprint $table) {
                 $table->foreignId('user_id')->nullable()->after('status')->constrained()->onDelete('set null');
-            });
+        });
         }
     }
 
@@ -44,7 +44,7 @@ return new class extends Migration
             Schema::table('kontaks', function (Blueprint $table) {
                 $table->dropForeign(['user_id']);
                 $table->dropColumn('user_id');
-            });
+        });
         }
     }
 };
