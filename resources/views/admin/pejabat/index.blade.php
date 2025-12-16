@@ -24,22 +24,28 @@
     </div>
 
     <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-        <form method="GET" action="{{ route('admin.pejabat.index') }}" class="flex gap-4">
-            <input type="text" name="search" value="{{ request('search') }}" 
-                   class="flex-1 px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" 
-                   placeholder="Cari nama atau jabatan...">
-            <select name="aktif" class="px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
-                <option value="">Semua Status</option>
-                <option value="1" {{ request('aktif') == '1' ? 'selected' : '' }}>Aktif</option>
-                <option value="0" {{ request('aktif') == '0' ? 'selected' : '' }}>Tidak Aktif</option>
-            </select>
-            <button type="submit" class="px-6 py-2 rounded-xl bg-cyan-600 text-white font-semibold hover:bg-cyan-700 transition-all">Cari</button>
-            <a href="{{ route('admin.pejabat.index') }}" class="px-6 py-2 rounded-xl bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-all">Reset</a>
+        <form method="GET" action="{{ route('admin.pejabat.index') }}" class="admin-filter-form">
+            <div class="flex-1">
+                <input type="text" name="search" value="{{ request('search') }}" 
+                       class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500" 
+                       placeholder="Cari nama atau jabatan...">
+            </div>
+            <div class="w-full md:w-auto">
+                <select name="aktif" class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500">
+                    <option value="">Semua Status</option>
+                    <option value="1" {{ request('aktif') == '1' ? 'selected' : '' }}>Aktif</option>
+                    <option value="0" {{ request('aktif') == '0' ? 'selected' : '' }}>Tidak Aktif</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="px-6 py-2 rounded-xl bg-cyan-600 text-white font-semibold hover:bg-cyan-700 transition-all">Cari</button>
+                <a href="{{ route('admin.pejabat.index') }}" class="px-6 py-2 rounded-xl bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300 transition-all text-center">Reset</a>
+            </div>
         </form>
     </div>
 
     <div class="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
-        <div class="overflow-x-auto">
+        <div class="admin-table-wrapper overflow-x-auto">
             <table class="w-full">
                 <thead class="bg-gradient-to-r from-cyan-50 to-cyan-100">
                     <tr>

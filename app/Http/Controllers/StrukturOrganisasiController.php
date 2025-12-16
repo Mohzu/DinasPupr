@@ -96,11 +96,16 @@ class StrukturOrganisasiController extends Controller
 
         $struktur = StrukturOrganisasi::create($validated);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Struktur Organisasi berhasil ditambahkan.',
-            'data' => $struktur,
-        ], 201);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Struktur Organisasi berhasil ditambahkan.',
+                'data' => $struktur,
+            ], 201);
+        }
+
+        return redirect()->route('admin.struktur.index')
+            ->with('success', 'Struktur Organisasi berhasil ditambahkan.');
     }
 
     /**
@@ -126,11 +131,16 @@ class StrukturOrganisasiController extends Controller
 
         $struktur->update($validated);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Struktur Organisasi berhasil diperbarui.',
-            'data' => $struktur->fresh(),
-        ]);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Struktur Organisasi berhasil diperbarui.',
+                'data' => $struktur->fresh(),
+            ]);
+        }
+
+        return redirect()->route('admin.struktur.index')
+            ->with('success', 'Struktur Organisasi berhasil diperbarui.');
     }
 
     /**

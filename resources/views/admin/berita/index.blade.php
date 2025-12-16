@@ -40,7 +40,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="flex items-end gap-2">
+            <div class="form-actions flex items-end gap-2">
                 <button type="submit" class="flex-1 px-4 py-2.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all shadow-sm">
                     Filter
                 </button>
@@ -53,7 +53,7 @@
 
     <!-- Table -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div class="overflow-x-auto">
+        <div class="admin-table-wrapper overflow-x-auto">
             <table class="w-full">
                 <thead class="bg-gradient-to-r from-blue-50 via-indigo-50 to-blue-50">
                     <tr>

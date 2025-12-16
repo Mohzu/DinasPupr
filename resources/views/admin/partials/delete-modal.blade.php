@@ -15,7 +15,7 @@
                 <h3 class="text-lg font-bold text-gray-900 text-center mb-2" id="modal-title">Konfirmasi Hapus</h3>
                 <p class="text-sm text-gray-500 text-center mb-6" id="modal-message">Apakah Anda yakin ingin menghapus item ini? Tindakan ini tidak dapat dibatalkan.</p>
             </div>
-            <form id="deleteForm" method="POST" class="bg-gray-50 px-6 py-4 flex items-center justify-end gap-3">
+            <form id="deleteForm" method="POST" class="admin-modal-actions bg-gray-50 px-6 py-4">
                 @csrf
                 @method('DELETE')
                 <button type="button" onclick="closeDeleteModal()" 

@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Storage;
 
 class BeritaController extends Controller
 {
+    public function __construct()
+    {
+        // Pastikan hanya admin yang bisa akses method API (store, update, destroy)
+        // Meskipun sudah ada di routes, ini double protection
+        $this->middleware('auth')->only(['apiStore', 'apiUpdate', 'apiDestroy']);
+    }
+
     // ========== FRONTEND METHODS ==========
     
     // Halaman utama daftar berita
@@ -114,7 +121,7 @@ class BeritaController extends Controller
         $validated = $request->validate([
             'judul' => 'required|string|max:200',
             'isi' => 'required|string',
-            'gambar' => 'required|image|max:2048',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'kategori' => 'nullable|string|max:50',
         ]);
 
@@ -161,7 +168,7 @@ class BeritaController extends Controller
         $validated = $request->validate([
             'judul' => 'required|string|max:200',
             'isi' => 'required|string',
-            'gambar' => 'nullable|image|max:2048',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             'kategori' => 'nullable|string|max:50',
         ]);
 

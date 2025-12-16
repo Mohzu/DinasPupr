@@ -91,11 +91,16 @@ class PengumumanController extends Controller
 
         $pengumuman = Pengumuman::create($validated);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Pengumuman berhasil ditambahkan.',
-            'data' => $pengumuman,
-        ], 201);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Pengumuman berhasil ditambahkan.',
+                'data' => $pengumuman,
+            ], 201);
+        }
+
+        return redirect()->route('admin.pengumuman.index')
+            ->with('success', 'Pengumuman berhasil ditambahkan.');
     }
 
     /**
@@ -121,11 +126,16 @@ class PengumumanController extends Controller
 
         $pengumuman->update($validated);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Pengumuman berhasil diperbarui.',
-            'data' => $pengumuman->fresh(),
-        ]);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Pengumuman berhasil diperbarui.',
+                'data' => $pengumuman->fresh(),
+            ]);
+        }
+
+        return redirect()->route('admin.pengumuman.index')
+            ->with('success', 'Pengumuman berhasil diperbarui.');
     }
 
     /**

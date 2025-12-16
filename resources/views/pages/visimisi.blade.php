@@ -68,7 +68,7 @@
 
       <!-- Misi Card -->
       @if($visimisi->misi)
-      <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden text-center">
+      <div class="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden">
         <div class="bg-gradient-to-r from-yellow-400 to-yellow-500 px-6 sm:px-8 py-6">
           <div class="flex items-center justify-center gap-3">
             <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-900">
@@ -79,10 +79,14 @@
           </div>
         </div>
         
-        <div class="p-6 sm:p-8">
-          <div class="prose prose-sm sm:prose-base max-w-none prose-headings:text-gray-900 prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-ul:text-gray-700 prose-ol:text-gray-700">
-            {!! $visimisi->misi !!}
-          </div>
+        <div class="p-6 sm:p-8 text-left">
+          <ol class="list-decimal list-outside pl-5 space-y-2 text-gray-800 text-sm sm:text-base leading-relaxed">
+            @foreach(preg_split('/\r\n|\r|\n/', $visimisi->misi) as $line)
+                @if(trim($line))
+                    <li>{{ preg_replace('/^\d+\.\s*/', '', trim($line)) }}</li>
+                @endif
+            @endforeach
+          </ol>
         </div>
       </div>
       @endif

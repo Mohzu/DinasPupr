@@ -48,6 +48,78 @@
             transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
             transition-duration: 150ms;
         }
+
+        [x-cloak] {
+            display: none !important;
+        }
+
+        .admin-table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .admin-table-wrapper table {
+            min-width: 720px;
+        }
+
+        .admin-filter-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .admin-filter-form > * {
+            flex: 1 1 220px;
+        }
+
+        .admin-filter-form .form-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: stretch;
+        }
+
+        .admin-filter-form .form-actions > * {
+            flex: 1;
+        }
+
+        .admin-modal-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .admin-filter-form {
+                flex-direction: column;
+            }
+
+            .admin-filter-form > * {
+                width: 100%;
+            }
+
+            .admin-filter-form .form-actions {
+                flex-direction: column;
+            }
+
+            .admin-filter-form .form-actions > * {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .admin-table-wrapper table {
+                min-width: 600px;
+            }
+
+            .admin-modal-actions {
+                flex-direction: column;
+            }
+
+            .admin-modal-actions button {
+                width: 100%;
+            }
+        }
         
         /* Table hover effect */
         .table-row-hover:hover {

@@ -77,11 +77,16 @@ class VisiMisiController extends Controller
 
         $visimisi = VisiMisi::create($validated);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Visi & Misi berhasil ditambahkan.',
-            'data' => $visimisi,
-        ], 201);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Visi & Misi berhasil ditambahkan.',
+                'data' => $visimisi,
+            ], 201);
+        }
+
+        return redirect()->route('admin.visimisi.index')
+            ->with('success', 'Visi & Misi berhasil ditambahkan.');
     }
 
     /**
@@ -101,11 +106,16 @@ class VisiMisiController extends Controller
 
         $visimisi->update($validated);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Visi & Misi berhasil diperbarui.',
-            'data' => $visimisi->fresh(),
-        ]);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Visi & Misi berhasil diperbarui.',
+                'data' => $visimisi->fresh(),
+            ]);
+        }
+
+        return redirect()->route('admin.visimisi.index')
+            ->with('success', 'Visi & Misi berhasil diperbarui.');
     }
 
     /**

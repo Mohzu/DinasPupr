@@ -41,29 +41,102 @@
 
     <section class="container mx-auto px-4 sm:px-6 pb-16 -mt-32 relative z-20 max-w-6xl">
         
-        @if($sejarah)
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div class="bg-blue-700 px-6 sm:px-8 py-6 text-center">
-                <h2 class="text-xl sm:text-2xl font-bold text-white">{{ $sejarah->title }}</h2>
+        <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden border border-gray-100">
+            <!-- Header -->
+            <div class="bg-blue-600 px-6 sm:px-8 py-6 text-center">
+                <h2 class="text-xl sm:text-2xl font-bold text-white tracking-wide">Sejarah Perkembangan</h2>
             </div>
 
-            <div class="p-6 sm:p-8 space-y-6 sm:space-y-8">
-                <div class="prose prose-sm sm:prose-base lg:prose-lg max-w-none prose-headings:text-gray-900 prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-ul:text-gray-700 prose-ol:text-gray-700">
-                    {!! $sejarah->content !!}
+            <div class="p-6 sm:p-10 space-y-8">
+                
+                <!-- 1942 -->
+                <div class="flex flex-col md:flex-row gap-6 items-start">
+                    <div class="flex-shrink-0">
+                        <div class="w-16 h-16 md:w-20 md:h-20 bg-[#D97706] rounded-lg flex items-center justify-center shadow-lg transition-transform duration-300">
+                            <span class="text-white font-bold text-xl md:text-2xl">1942</span>
+                        </div>
+                    </div>
+                    <div class="flex-1 bg-[#FFFBEB] rounded-2xl p-6 border border-[#FCD34D] hover:shadow-md transition-shadow">
+                        <h3 class="flex items-center gap-3 text-lg font-bold text-gray-900 mb-3">
+                            <svg class="w-5 h-5 text-[#D97706]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                            Pembentukan Dinas Pekerjaan Umum
+                        </h3>
+                        <p class="text-gray-700 leading-relaxed text-sm md:text-base">
+                            Dinas Pekerjaan Umum (DPU) didirikan oleh Belanda pada tahun 1942 oleh Reguen Shad. 
+                            Pembentukan ini menjadi fondasi awal pembangunan infrastruktur di wilayah Kabupaten Garut.
+                        </p>
+                    </div>
                 </div>
+
+                <!-- 1998 -->
+                <div class="flex flex-col md:flex-row gap-6 items-start">
+                    <div class="flex-shrink-0">
+                        <div class="w-16 h-16 md:w-20 md:h-20 bg-[#15803d] rounded-lg flex items-center justify-center shadow-lg transition-transform duration-300">
+                            <span class="text-white font-bold text-xl md:text-2xl">1998</span>
+                        </div>
+                    </div>
+                    <div class="flex-1 bg-[#F0FDF4] rounded-2xl p-6 border border-[#86EFAC] hover:shadow-md transition-shadow">
+                        <h3 class="flex items-center gap-3 text-lg font-bold text-gray-900 mb-3">
+                            <svg class="w-5 h-5 text-[#15803d]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                            Transformasi Kelembagaan
+                        </h3>
+                        <div class="space-y-3">
+                            <p class="text-gray-700 text-sm md:text-base">
+                                Pada tahun 1998, Dinas Pekerjaan Umum (DPU) bertransformasi menjadi <span class="font-bold text-gray-900">Dinas Bina Marga</span>.
+                            </p>
+                            <p class="text-gray-700 text-sm md:text-base leading-relaxed bg-white/50 p-3 rounded-lg border border-green-100">
+                                Transformasi ini menekankan pentingnya manajemen kepegawaian dan pengembangan Sumber Daya Manusia (SDM) 
+                                dalam mengelola dan memanfaatkan pegawai agar tetap produktif dalam melaksanakan tugas dan tanggung jawab.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2016 -->
+                <div class="flex flex-col md:flex-row gap-6 items-start">
+                    <div class="flex-shrink-0">
+                        <div class="w-16 h-16 md:w-20 md:h-20 bg-[#1D4ED8] rounded-lg flex items-center justify-center shadow-lg transition-transform duration-300">
+                            <span class="text-white font-bold text-xl md:text-2xl">2016</span>
+                        </div>
+                    </div>
+                    <div class="flex-1 bg-[#EFF6FF] rounded-2xl p-6 border border-[#BFDBFE] hover:shadow-md transition-shadow">
+                        <h3 class="flex items-center gap-3 text-lg font-bold text-gray-900 mb-4">
+                            <svg class="w-5 h-5 text-[#1D4ED8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+                            Pembentukan Dinas PUPR
+                        </h3>
+                        
+                        <div class="grid md:grid-cols-1 gap-4">
+                            <!-- Card 1 -->
+                            <div class="bg-white p-4 rounded-xl border border-blue-100 shadow-sm relative overflow-hidden group">
+                                <div class="absolute top-0 left-0 w-1 h-full bg-blue-500 group-hover:w-2 transition-all"></div>
+                                <h4 class="font-bold text-gray-900 mb-2 text-sm flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                    Pembentukan Resmi
+                                    <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">5 Oktober 2016</span>
+                                </h4>
+                                <p class="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                                    Dinas Pekerjaan Umum dan Penataan Ruang resmi dibentuk berdasarkan <strong class="text-gray-800">Peraturan Bupati No. 27</strong> tentang Struktur Organisasi dan Tata Kerja (SOTK). Instansi ini dipimpin oleh <strong class="text-gray-800">Drs. H. UU Saepudin, ST., M.Si.</strong> sebagai Kepala Dinas pertama.
+                                </p>
+                            </div>
+
+                            <!-- Card 2 -->
+                            <div class="bg-white p-4 rounded-xl border border-blue-100 shadow-sm relative overflow-hidden group">
+                                <div class="absolute top-0 left-0 w-1 h-full bg-gray-700 group-hover:w-2 transition-all"></div>
+                                <h4 class="font-bold text-gray-900 mb-2 text-sm flex items-center gap-2">
+                                    <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                                    Landasan Hukum
+                                    <span class="text-[10px] bg-gray-800 text-white px-2 py-0.5 rounded-full">Perda No. 52 Tahun 2016</span>
+                                </h4>
+                                <p class="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                                    Organisasi Dinas PUPR ditetapkan melalui <strong class="text-gray-800">Peraturan Daerah Kabupaten Garut Nomor 52 Tahun 2016</strong>, yang mengatur tugas pokok, fungsi, dan tata kerja.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
-        @else
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div class="bg-blue-700 px-6 sm:px-8 py-6 text-center">
-                <h2 class="text-xl sm:text-2xl font-bold text-white">Sejarah Perkembangan</h2>
-                <p class="text-blue-100 mt-1 text-sm sm:text-base">Konten sedang dalam proses persiapan</p>
-            </div>
-            <div class="p-6 sm:p-8 text-center">
-                <p class="text-gray-600">Data sejarah belum tersedia. Silakan hubungi administrator untuk informasi lebih lanjut.</p>
-            </div>
-        </div>
-        @endif
 
     </section>
 </div>

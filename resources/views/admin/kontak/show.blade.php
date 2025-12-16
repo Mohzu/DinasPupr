@@ -5,7 +5,7 @@
 @section('page-description', 'Lihat detail pesan kontak')
 
 @section('content')
-<div class="max-w-4xl">
+<div class="max-w-4xl mx-auto">
     <div class="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 lg:p-8 space-y-6">
         <!-- Header -->
         <div class="flex items-center justify-between pb-6 border-b border-gray-200">

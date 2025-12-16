@@ -22,22 +22,26 @@
 
     <!-- Filters -->
     <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-        <form method="GET" action="{{ route('admin.pengumuman.index') }}" class="flex gap-3">
-            <input type="text" name="search" value="{{ request('search') }}" 
-                   class="flex-1 px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all outline-none" 
-                   placeholder="Cari judul atau isi...">
-            <button type="submit" class="px-5 py-2.5 rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold hover:from-green-700 hover:to-emerald-700 transition-all shadow-sm">
-                Cari
-            </button>
-            <a href="{{ route('admin.pengumuman.index') }}" class="px-5 py-2.5 rounded-lg bg-gray-100 text-gray-700 font-semibold hover:bg-gray-200 transition-all">
-                Reset
-            </a>
+        <form method="GET" action="{{ route('admin.pengumuman.index') }}" class="admin-filter-form">
+            <div class="flex-1">
+                <input type="text" name="search" value="{{ request('search') }}" 
+                       class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition-all outline-none" 
+                       placeholder="Cari judul atau isi...">
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="px-5 py-2.5 rounded-lg bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold hover:from-green-700 hover:to-emerald-700 transition-all shadow-sm">
+                    Cari
+                </button>
+                <a href="{{ route('admin.pengumuman.index') }}" class="px-5 py-2.5 rounded-lg bg-gray-100 text-gray-700 font-semibold hover:bg-gray-200 transition-all text-center">
+                    Reset
+                </a>
+            </div>
         </form>
     </div>
 
     <!-- Table -->
     <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div class="overflow-x-auto">
+        <div class="admin-table-wrapper overflow-x-auto">
             <table class="w-full">
                 <thead class="bg-gradient-to-r from-green-50 via-emerald-50 to-green-50">
                     <tr>

@@ -358,16 +358,16 @@
                     </button>
 
                     {{-- Cards Container --}}
-                    <div class="overflow-hidden px-16">
+                    <div class="overflow-hidden px-6 sm:px-10 lg:px-16">
                         <div id="newsSliderContainer" class="flex gap-5 transition-transform duration-500">
                             @foreach($beritas->take(8) as $berita)
                                 <div class="flex-shrink-0 w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)] xl:w-[calc(25%-15px)]">
                                     <a href="{{ route('berita.show', $berita->slug ?? $berita->id) }}" class="group block bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300">
                                         {{-- Image --}}
-                                        <div class="relative aspect-[4/3] overflow-hidden bg-gray-100">
+                                        <div class="relative bg-white h-48 sm:h-56 flex items-center justify-center border-b border-gray-100 overflow-hidden">
                                             <img src="{{ asset('storage/' . $berita->gambar) }}" 
                                                 alt="{{ $berita->judul }}" 
-                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                class="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105"
                                                 loading="lazy">
                                         </div>
 

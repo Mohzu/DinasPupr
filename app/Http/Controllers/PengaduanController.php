@@ -51,21 +51,21 @@ class PengaduanController extends Controller
                 'status' => 'baru',
             ]);
 
-            // Kirim email via Formspree 
-            $formspreeEndpoint = env('FORMSPREE_ENDPOINT', 'https://formspree.io/f/meoznvdn');
-            
+            // Kirim email via Laravel Mail
             try {
-                Http::asForm()->post($formspreeEndpoint, [
-                    '_subject' => 'Pengaduan Baru dari Website PUPR Garut',
+                // Ganti email tujuan dengan email admin yang sesuai
+                $adminEmail = env('MAIL_FROM_ADDRESS', 'admin@example.com');
+                
+                \Illuminate\Support\Facades\Mail::to($adminEmail)->send(new \App\Mail\PengaduanMail([
                     'nama' => $validated['nama'],
                     'email' => $validated['email'],
                     'telepon' => $validated['telepon'] ?? '-',
                     'subjek' => $validated['subjek'],
                     'pesan' => $validated['pesan'],
-                ]);
+                ]));
             } catch (\Exception $e) {
-                // Log error tapi tidak gagalkan proses
-                Log::warning('Gagal mengirim email via Formspree: ' . $e->getMessage());
+                // Log error tapi tidak gagalkan proses penyimpanan database
+                Log::warning('Gagal mengirim email: ' . $e->getMessage());
             }
 
             return response()->json([
@@ -154,11 +154,16 @@ class PengaduanController extends Controller
 
         $pengaduan->update($validated);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Status pengaduan berhasil diperbarui.',
-            'data' => $pengaduan->fresh(),
-        ]);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Status pengaduan berhasil diperbarui.',
+                'data' => $pengaduan->fresh(),
+            ]);
+        }
+
+        return redirect()->route('admin.pengaduan.index')
+            ->with('success', 'Status pengaduan berhasil diperbarui.');
     }
 
     /**

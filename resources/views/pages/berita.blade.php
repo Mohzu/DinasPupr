@@ -118,24 +118,28 @@
         <div class="max-w-7xl mx-auto mb-16">   
             <div class="grid lg:grid-cols-2 gap-12">
                 <!-- Main Featured Article (Dynamic) -->
-                <article class="bg-white rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2">
+                <article class="bg-white rounded-3xl overflow-hidden shadow-2xl hover:shadow-3xl transition-all duration-500 hover:-translate-y-2 flex flex-col h-full">
                     @if(isset($featured))
-                    <div class="relative">
+                    <div class="relative bg-gray-900 border-b border-gray-100 flex items-center justify-center h-72 lg:h-[420px] overflow-hidden group">
                         @if ($featured->gambar)
-                            <img src="{{ asset('storage/' . $featured->gambar) }}" alt="{{ $featured->judul }}" class="w-full h-80 object-fill">
+                            <!-- Blurred Background -->
+                            <div class="absolute inset-0 bg-cover bg-center blur-xl scale-110 opacity-60 transition-transform duration-700 group-hover:scale-125" 
+                                 style="background-image: url('{{ asset('storage/' . $featured->gambar) }}')"></div>
+                            <!-- Main Image -->
+                            <img src="{{ asset('storage/' . $featured->gambar) }}" alt="{{ $featured->judul }}" class="relative w-full h-full object-contain z-10 transition-transform duration-700 group-hover:scale-105">
                         @else
-                            <img src="https://via.placeholder.com/600x350/4F46E5/FFFFFF?text=Berita+Utama" alt="{{ $featured->judul }}" class="w-full h-80 object-fill">
+                            <img src="https://via.placeholder.com/600x350/4F46E5/FFFFFF?text=Berita+Utama" alt="{{ $featured->judul }}" class="w-full h-full object-cover">
                         @endif
-                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-20"></div>
                         
                         <!-- Meta Info -->
-                        <div class="absolute bottom-6 left-6 right-6">
+                        <div class="absolute bottom-6 left-6 right-6 z-30">
                             <div class="flex items-center gap-3 mb-3">
-                                <span class="bg-white bg-opacity-20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
+                                <span class="bg-white/20 backdrop-blur-md text-white px-3 py-1 rounded-full text-sm font-medium border border-white/20">
                                     {{ optional($featured->published_at ?? $featured->created_at)->translatedFormat('d M Y') }}
                                 </span>
                                 @if ($featured->kategori)
-                                <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                                <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
                                     {{ strtoupper($featured->kategori) }}
                                 </span>
                                 @endif
@@ -143,34 +147,21 @@
                         </div>
                     </div>
                     
-                    <div class="p-8">
+                    <div class="p-8 flex-1 flex flex-col">
                         <h3 class="text-2xl font-black text-gray-800 mb-4 leading-tight">
                             {{ $featured->judul }}
                         </h3>
-                        <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                        <p class="text-gray-600 text-lg leading-relaxed mb-6 line-clamp-3">
                             {{ Str::limit(strip_tags($featured->isi), 180) }}
                         </p>
                         
-                        <div class="flex items-center justify-between">
+                        <div class="mt-auto flex items-center justify-between pt-6 border-t border-gray-100">
                             <a href="{{ route('berita.show', $featured->slug ?? $featured->id) }}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-bold transition-colors duration-300">
                                 <span>Baca Selengkapnya</span>
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
                                 </svg>
                             </a>
-                            
-                            <div class="flex items-center gap-2">
-                                <button class="p-2 bg-gray-100 hover:bg-red-100 rounded-full transition-colors duration-300">
-                                    <svg class="w-5 h-5 text-gray-500 hover:text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                                    </svg>
-                                </button>
-                                <button class="p-2 bg-gray-100 hover:bg-blue-100 rounded-full transition-colors duration-300">
-                                    <svg class="w-5 h-5 text-gray-500 hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"/>
-                                    </svg>
-                                </button>
-                            </div>
                         </div>
                     </div>
                     @endif
@@ -186,26 +177,27 @@
                     <!-- Recent News Items -->
                     @if(isset($recent) && $recent->isNotEmpty())
                         @foreach($recent as $item)
-                        <article class="bg-white rounded-2xl p-6 shadow-xl hover:shadow-2xl transition-all duration-300">
+                        <article class="bg-white rounded-2xl p-4 shadow-lg hover:shadow-xl transition-all duration-300 group border border-gray-100/50">
                             <div class="flex gap-4">
-                                <a href="{{ route('berita.show', $item->slug ?? $item->id) }}" class="block">
+                                <a href="{{ route('berita.show', $item->slug ?? $item->id) }}" class="block flex-shrink-0 overflow-hidden rounded-xl">
                                     @if ($item->gambar)
-                                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-24 h-20 object-fill rounded-xl flex-shrink-0">
+                                        <img src="{{ asset('storage/' . $item->gambar) }}" alt="{{ $item->judul }}" class="w-24 h-24 object-cover transition-transform duration-500 group-hover:scale-110">
                                     @else
-                                        <img src="https://via.placeholder.com/120x80/10B981/FFFFFF?text=Berita" alt="{{ $item->judul }}" class="w-24 h-20 object-fill rounded-xl flex-shrink-0">
+                                        <img src="https://via.placeholder.com/120x80/10B981/FFFFFF?text=Berita" alt="{{ $item->judul }}" class="w-24 h-24 object-cover transition-transform duration-500 group-hover:scale-110">
                                     @endif
                                 </a>
-                                <div class="flex-1">
-                                    <div class="flex items-center gap-2 mb-2">
-                                        <span class="text-sm text-gray-500">{{ optional($item->published_at ?? $item->created_at)->translatedFormat('d M Y') }}</span>
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-center gap-2 mb-1.5">
+                                        <span class="text-xs font-medium text-gray-400">{{ optional($item->published_at ?? $item->created_at)->translatedFormat('d M Y') }}</span>
                                         @if ($item->kategori)
-                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-bold">{{ strtoupper($item->kategori) }}</span>
+                                        <span class="bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">{{ $item->kategori }}</span>
                                         @endif
                                     </div>
-                                    <a href="{{ route('berita.show', $item->slug ?? $item->id) }}" class="font-bold text-gray-800 text-lg mb-2 hover:text-blue-600 block">
-                                        {{ $item->judul }}
-                                    </a>
-                                    <p class="text-gray-600 text-sm">{{ Str::limit(strip_tags($item->isi), 80) }}</p>
+                                    <h4 class="font-bold text-gray-800 text-base mb-1 hover:text-blue-600 transition-colors line-clamp-2">
+                                        <a href="{{ route('berita.show', $item->slug ?? $item->id) }}">
+                                            {{ $item->judul }}
+                                        </a>
+                                    </h4>
                                 </div>
                             </div>
                         </article>
@@ -226,34 +218,57 @@
             <div class="max-w-7xl mx-auto">
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 berita-list">
                     @forelse ($beritas as $berita)
-                        <article class="bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 berita-item" data-tanggal="{{ $berita->published_at ?? $berita->created_at }}">
-                            <div class="relative">
+                        <article class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 berita-item flex flex-col h-full border border-gray-100" data-tanggal="{{ $berita->published_at ?? $berita->created_at }}">
+                            <div class="relative w-full h-56 bg-gray-900 overflow-hidden group">
                                 @if ($berita->gambar)
-                                    <img src="{{ asset('storage/' . $berita->gambar) }}" alt="{{ $berita->judul }}" class="w-full h-48 object-fill">
+                                    <!-- Blurred Background -->
+                                    <div class="absolute inset-0 bg-cover bg-center blur-md scale-110 opacity-50 transition-transform duration-700 group-hover:scale-125" 
+                                         style="background-image: url('{{ asset('storage/' . $berita->gambar) }}')"></div>
+                                    <!-- Main Image -->
+                                    <img src="{{ asset('storage/' . $berita->gambar) }}" alt="{{ $berita->judul }}" class="relative w-full h-full object-contain z-10 transition-transform duration-700 group-hover:scale-105">
                                 @else
-                                    <img src="https://via.placeholder.com/400x240/3B82F6/FFFFFF?text=Berita" alt="{{ $berita->judul }}" class="w-full h-48 object-fill">
+                                    <img src="https://via.placeholder.com/400x240/3B82F6/FFFFFF?text=Berita" alt="{{ $berita->judul }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                                 @endif
                             </div>
-                            <div class="p-6">
+                            
+                            <div class="p-6 flex-1 flex flex-col">
                                 <div class="flex items-center gap-2 mb-3">
-                                    <span class="text-sm text-gray-500">{{ optional($berita->published_at ?? $berita->created_at)->translatedFormat('d M Y') }}</span>
+                                    <span class="text-xs font-medium text-gray-500 flex items-center gap-1">
+                                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                                        {{ optional($berita->published_at ?? $berita->created_at)->translatedFormat('d M Y') }}
+                                    </span>
                                     @if ($berita->kategori)
-                                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-bold">{{ strtoupper($berita->kategori) }}</span>
+                                        <span class="bg-blue-50 text-blue-600 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">{{ $berita->kategori }}</span>
                                     @endif
                                 </div>
-                                <h3 class="font-bold text-gray-800 text-xl mb-3 hover:text-blue-600 berita-judul">
+                                
+                                <h3 class="font-bold text-gray-900 text-xl mb-3 hover:text-blue-600 transition-colors leading-snug line-clamp-2 berita-judul">
                                     <a href="{{ route('berita.show', $berita->slug ?? $berita->id) }}">{{ $berita->judul }}</a>
                                 </h3>
-                                <a href="{{ route('berita.show', $berita->slug ?? $berita->id) }}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-bold">
-                                    Baca Selengkapnya
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                    </svg>
-                                </a>
+                                
+                                <p class="text-gray-600 text-sm line-clamp-3 mb-4 flex-1">
+                                    {{ Str::limit(strip_tags($berita->isi), 120) }}
+                                </p>
+                                
+                                <div class="mt-auto pt-4 border-t border-gray-100">
+                                    <a href="{{ route('berita.show', $berita->slug ?? $berita->id) }}" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-bold text-sm group-hover:gap-3 transition-all">
+                                        Baca Selengkapnya
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                        </svg>
+                                    </a>
+                                </div>
                             </div>
                         </article>
                     @empty
-                        <div class="col-span-3 text-center text-gray-500">Belum ada berita.</div>
+                        <div class="col-span-3 text-center py-12">
+                            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
+                                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                                </svg>
+                            </div>
+                            <p class="text-lg text-gray-500 font-medium">Belum ada berita tersimpan.</p>
+                        </div>
                     @endforelse
                 </div>
 

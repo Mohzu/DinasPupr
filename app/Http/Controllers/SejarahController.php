@@ -75,11 +75,16 @@ class SejarahController extends Controller
 
         $sejarah = Sejarah::create($validated);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Sejarah berhasil ditambahkan.',
-            'data' => $sejarah,
-        ], 201);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Sejarah berhasil ditambahkan.',
+                'data' => $sejarah,
+            ], 201);
+        }
+
+        return redirect()->route('admin.sejarah.index')
+            ->with('success', 'Sejarah berhasil ditambahkan.');
     }
 
     /**
@@ -97,11 +102,16 @@ class SejarahController extends Controller
 
         $sejarah->update($validated);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Sejarah berhasil diperbarui.',
-            'data' => $sejarah->fresh(),
-        ]);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Sejarah berhasil diperbarui.',
+                'data' => $sejarah->fresh(),
+            ]);
+        }
+
+        return redirect()->route('admin.sejarah.index')
+            ->with('success', 'Sejarah berhasil diperbarui.');
     }
 
     /**

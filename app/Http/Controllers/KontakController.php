@@ -51,21 +51,21 @@ class KontakController extends Controller
                 'status' => 'baru',
             ]);
 
-            // Kirim email via Formspree 
-            $formspreeEndpoint = env('FORMSPREE_CONTACT_ENDPOINT', 'https://formspree.io/f/meoznvdn');
-            
+            // Kirim email via Laravel Mail
             try {
-                Http::asForm()->post($formspreeEndpoint, [
-                    '_subject' => 'Pesan Baru dari Website PUPR Garut',
+                // Ganti email tujuan dengan email admin yang sesuai
+                $adminEmail = env('MAIL_FROM_ADDRESS', 'admin@example.com');
+                
+                \Illuminate\Support\Facades\Mail::to($adminEmail)->send(new \App\Mail\ContactMail([
                     'nama' => $validated['nama'],
                     'email' => $validated['email'],
                     'nomor_telepon' => $validated['nomor_telepon'] ?? '-',
                     'subjek' => $validated['subjek'],
                     'pesan' => $validated['pesan'],
-                ]);
+                ]));
             } catch (\Exception $e) {
-                // Log error tapi tidak gagalkan proses
-                Log::warning('Gagal mengirim email via Formspree: ' . $e->getMessage());
+                // Log error tapi tidak gagalkan proses penyimpanan database
+                Log::warning('Gagal mengirim email: ' . $e->getMessage());
             }
 
             return response()->json([
@@ -154,11 +154,16 @@ class KontakController extends Controller
 
         $kontak->update($validated);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Status kontak berhasil diperbarui.',
-            'data' => $kontak->fresh(),
-        ]);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Status kontak berhasil diperbarui.',
+                'data' => $kontak->fresh(),
+            ]);
+        }
+
+        return redirect()->route('admin.kontak.index')
+            ->with('success', 'Status kontak berhasil diperbarui.');
     }
 
     /**

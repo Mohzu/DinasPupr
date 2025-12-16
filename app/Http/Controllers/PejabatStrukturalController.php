@@ -78,11 +78,16 @@ class PejabatStrukturalController extends Controller
 
         $pejabat = PejabatStruktural::create($validated);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Pejabat Struktural berhasil ditambahkan.',
-            'data' => $pejabat,
-        ], 201);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Pejabat Struktural berhasil ditambahkan.',
+                'data' => $pejabat,
+            ], 201);
+        }
+
+        return redirect()->route('admin.pejabat.index')
+            ->with('success', 'Pejabat Struktural berhasil ditambahkan.');
     }
 
     /**
@@ -111,11 +116,16 @@ class PejabatStrukturalController extends Controller
 
         $pejabat->update($validated);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Pejabat Struktural berhasil diperbarui.',
-            'data' => $pejabat->fresh(),
-        ]);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Pejabat Struktural berhasil diperbarui.',
+                'data' => $pejabat->fresh(),
+            ]);
+        }
+
+        return redirect()->route('admin.pejabat.index')
+            ->with('success', 'Pejabat Struktural berhasil diperbarui.');
     }
 
     /**

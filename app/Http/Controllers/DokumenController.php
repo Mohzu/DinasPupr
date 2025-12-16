@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Storage;
 
 class DokumenController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->only(['apiStore', 'apiUpdate', 'apiDestroy']);
+    }
+
     // ========== FRONTEND METHODS ==========
     
     public function index(Request $request)
@@ -135,11 +140,16 @@ class DokumenController extends Controller
 
         $dokumen = Dokumen::create($validated);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Dokumen berhasil ditambahkan.',
-            'data' => $dokumen,
-        ], 201);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Dokumen berhasil ditambahkan.',
+                'data' => $dokumen,
+            ], 201);
+        }
+
+        return redirect()->route('admin.dokumen.index')
+            ->with('success', 'Dokumen berhasil ditambahkan.');
     }
 
     /**
@@ -166,11 +176,16 @@ class DokumenController extends Controller
 
         $dokumen->update($validated);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Dokumen berhasil diperbarui.',
-            'data' => $dokumen->fresh(),
-        ]);
+        if ($request->expectsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Dokumen berhasil diperbarui.',
+                'data' => $dokumen->fresh(),
+            ]);
+        }
+
+        return redirect()->route('admin.dokumen.index')
+            ->with('success', 'Dokumen berhasil diperbarui.');
     }
 
     /**

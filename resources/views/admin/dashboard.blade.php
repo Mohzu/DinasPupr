@@ -5,7 +5,7 @@
 @section('page-description', 'Ringkasan data dan statistik')
 
 @section('content')
-<div class="space-y-6" x-data="dashboardData()" x-init="loadData()">
+<div class="space-y-6" x-data="dashboardData()" x-init="loadData()" x-cloak>
     <!-- Loading State -->
     <div x-show="loading" class="text-center py-12">
         <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
@@ -15,7 +15,7 @@
     <!-- Content -->
     <div x-show="!loading" class="space-y-6">
         <!-- Statistik Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
             <!-- Berita -->
             <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 shadow-lg border border-blue-200">
                 <div class="flex items-center justify-between">
@@ -79,7 +79,7 @@
         </div>
 
         <!-- Detail Pengaduan & Kontak -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
             <!-- Pengaduan Status -->
             <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
                 <div class="flex items-center justify-between mb-4">
@@ -156,14 +156,14 @@
         </div>
 
         <!-- Data Terbaru -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
             <!-- Pengaduan Terbaru -->
             <div class="bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-xl font-bold text-gray-800">Pengaduan Terbaru</h2>
                     <a href="/admin/pengaduan" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Lihat Semua →</a>
                 </div>
-                <div class="space-y-3">
+                <div class="space-y-3 max-h-[420px] overflow-y-auto pr-1 custom-scrollbar">
                     <template x-for="item in recentPengaduan" :key="item.id">
                         <div class="p-4 rounded-xl border border-gray-200 hover:border-amber-300 hover:bg-amber-50 transition-all duration-200">
                             <div class="flex items-start justify-between">
@@ -193,7 +193,7 @@
                     <h2 class="text-xl font-bold text-gray-800">Kontak Terbaru</h2>
                     <a href="/admin/kontak" class="text-sm text-blue-600 hover:text-blue-700 font-medium">Lihat Semua →</a>
                 </div>
-                <div class="space-y-3">
+                <div class="space-y-3 max-h-[420px] overflow-y-auto pr-1 custom-scrollbar">
                     <template x-for="item in recentKontak" :key="item.id">
                         <div class="p-4 rounded-xl border border-gray-200 hover:border-blue-300 hover:bg-blue-50 transition-all duration-200">
                             <div class="flex items-start justify-between">

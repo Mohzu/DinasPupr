@@ -40,8 +40,14 @@ Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLog
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
 Route::post('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
+// Password Reset Routes
+Route::get('password/reset', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [App\Http\Controllers\Auth\ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}', [App\Http\Controllers\Auth\ResetPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [App\Http\Controllers\Auth\ResetPasswordController::class, 'reset'])->name('password.update');
+
 // ========== ADMIN VIEW ROUTES ==========
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', function() {
         return view('admin.dashboard');
     })->name('dashboard');
@@ -140,7 +146,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
         return view('admin.visimisi.index', compact('visiMisis'));
     })->name('visimisi.index');
     Route::get('/visimisi/create', function() { return view('admin.visimisi.create'); })->name('visimisi.create');
-    Route::get('/visimisi/{id}/edit', function($id) { return view('admin.visimisi.edit', ['visimisi' => \App\Models\VisiMisi::findOrFail($id)]); })->name('visimisi.edit');
+    Route::get('/visimisi/{id}/edit', function($id) { return view('admin.visimisi.edit', ['visiMisi' => \App\Models\VisiMisi::findOrFail($id)]); })->name('visimisi.edit');
     Route::post('/visimisi', [VisiMisiController::class, 'apiStore'])->name('visimisi.store');
     Route::put('/visimisi/{id}', [VisiMisiController::class, 'apiUpdate'])->name('visimisi.update');
     Route::delete('/visimisi/{id}', [VisiMisiController::class, 'apiDestroy'])->name('visimisi.destroy');
@@ -242,7 +248,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 });
 
 // ========== ADMIN API ROUTES ==========
-Route::middleware(['auth'])->prefix('api/admin')->name('api.admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('api/admin')->name('api.admin.')->group(function () {
     // Dashboard
     Route::get('/dashboard', [DashboardController::class, 'apiIndex'])->name('dashboard');
     
