@@ -12,6 +12,9 @@ use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\KontakController;
 use App\Http\Controllers\PejabatStrukturalController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LayananController;
+use App\Http\Controllers\ChatController;
+use App\Http\Controllers\Admin\ChatDashboardController;
 
 // ========== FRONTEND ROUTES ==========
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -35,6 +38,18 @@ Route::post('pages/kontak', [KontakController::class, 'store'])->name('kontak.st
 
 Route::get('pages/dokumen', [DokumenController::class, 'index'])->name('dokumen');
 
+// Layanan Detail
+Route::get('/layanan/{slug}', [LayananController::class, 'show'])->name('layanan.show');
+
+// ========== CHATBOT ROUTES (Public) ==========
+Route::prefix('chat')->name('chat.')->group(function () {
+    Route::post('/start',   [ChatController::class, 'startSession'])->name('start');
+    Route::post('/message', [ChatController::class, 'sendMessage'])->name('message');
+    Route::post('/verify',  [ChatController::class, 'handleVerification'])->name('verify');
+    Route::get('/session/{token}', [ChatController::class, 'getSession'])->name('session');
+});
+
+
 // ========== AUTH ROUTES ==========
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'login']);
@@ -48,6 +63,16 @@ Route::post('password/reset', [App\Http\Controllers\Auth\ResetPasswordController
 
 // ========== ADMIN VIEW ROUTES ==========
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    // Chat Dashboard (Hybrid Live Chat)
+    Route::prefix('chat')->name('chat.')->group(function () {
+        Route::get('/',          [ChatDashboardController::class, 'index'])->name('index');
+        Route::get('/{id}',      [ChatDashboardController::class, 'show'])->name('show');
+        Route::post('/{id}/reply', [ChatDashboardController::class, 'reply'])->name('reply');
+        Route::put('/{id}/close',  [ChatDashboardController::class, 'close'])->name('close');
+        Route::get('/api/active',  [ChatDashboardController::class, 'activeSessionsApi'])->name('active-api');
+    });
+
+    // Dashboard
     Route::get('/dashboard', function() {
         return view('admin.dashboard');
     })->name('dashboard');
@@ -245,6 +270,17 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/kontak/{id}/edit', function($id) { return view('admin.kontak.edit', ['kontak' => \App\Models\Kontak::findOrFail($id)]); })->name('kontak.edit');
     Route::put('/kontak/{id}', [KontakController::class, 'apiUpdate'])->name('kontak.update');
     Route::delete('/kontak/{id}', [KontakController::class, 'apiDestroy'])->name('kontak.destroy');
+    
+    // Layanan
+    Route::get('/layanan', function(\Illuminate\Http\Request $request) {
+        $layanans = \App\Models\Layanan::orderBy('urutan')->get();
+        return view('admin.layanan.index', compact('layanans'));
+    })->name('layanan.index');
+    Route::get('/layanan/create', function() { return view('admin.layanan.create'); })->name('layanan.create');
+    Route::get('/layanan/{id}/edit', function($id) { return view('admin.layanan.edit', ['layanan' => \App\Models\Layanan::findOrFail($id)]); })->name('layanan.edit');
+    Route::post('/layanan', [LayananController::class, 'apiStore'])->name('layanan.store');
+    Route::put('/layanan/{id}', [LayananController::class, 'apiUpdate'])->name('layanan.update');
+    Route::delete('/layanan/{id}', [LayananController::class, 'apiDestroy'])->name('layanan.destroy');
 });
 
 // ========== ADMIN API ROUTES ==========
@@ -312,4 +348,5 @@ Route::middleware(['auth', 'admin'])->prefix('api/admin')->name('api.admin.')->g
     Route::get('/kontak/{id}', [KontakController::class, 'apiShow'])->name('kontak.show');
     Route::put('/kontak/{id}', [KontakController::class, 'apiUpdate'])->name('kontak.update');
     Route::delete('/kontak/{id}', [KontakController::class, 'apiDestroy'])->name('kontak.destroy');
+
 });

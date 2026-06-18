@@ -185,125 +185,37 @@
 
             {{-- Services Grid --}}
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {{-- KRK --}}
-                <a href="https://drive.google.com/drive/folders/1m2T4yI_tFCMzHGWUtvkCjNJLGXu4BcFK" 
-                   class="service-card group block bg-white rounded-2xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-blue-300"
-                   style="color: #3b82f6;">
+                @forelse($layanans as $layanan)
+                <a href="{{ route('layanan.show', $layanan->slug) }}" 
+                   class="service-card group block bg-white rounded-2xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-opacity-60"
+                   style="color: {{ $layanan->warna }}; --hover-border: {{ $layanan->warna }};"
+                   onmouseenter="this.style.borderColor='{{ $layanan->warna }}'" onmouseleave="this.style.borderColor=''">
                     <div class="flex items-start gap-4">
-                        <div class="service-icon-bg w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-blue-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-blue-600 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+                        <div class="service-icon-bg w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors duration-300"
+                             style="background-color: {{ $layanan->warna }}15;"
+                             onmouseenter="this.style.backgroundColor='{{ $layanan->warna }}'" onmouseleave="this.style.backgroundColor='{{ $layanan->warna }}15'">
+                            @if($layanan->ikon)
+                                <div class="w-7 h-7 transition-colors duration-300" style="color: {{ $layanan->warna }};">
+                                    {!! $layanan->ikon !!}
+                                </div>
+                            @else
+                                <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 transition-colors duration-300" style="color: {{ $layanan->warna }};" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/>
+                                </svg>
+                            @endif
                         </div>
                         <div class="flex-1 min-w-0">
-                            <h3 class="text-lg font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300 mb-1">KRK</h3>
-                            <p class="text-sm text-gray-500 group-hover:text-gray-700 transition-colors duration-300">Keterangan Rencana Kabupaten/Kota untuk rencana pemanfaatan ruang</p>
+                            <h3 class="text-lg font-bold text-gray-900 transition-colors duration-300 mb-1" 
+                                onmouseenter="this.style.color='{{ $layanan->warna }}'" onmouseleave="this.style.color=''">{{ $layanan->nama_layanan }}</h3>
+                            <p class="text-sm text-gray-500 group-hover:text-gray-700 transition-colors duration-300">{{ $layanan->deskripsi_singkat }}</p>
                         </div>
                     </div>
                 </a>
-
-                {{-- PKKPR --}}
-                <a href="https://drive.google.com/drive/folders/14RZV3xJbxjJzryO0NPcf3Rmad1ah4BLC" 
-                   class="service-card group block bg-white rounded-2xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-green-300"
-                   style="color: #10b981;">
-                    <div class="flex items-start gap-4">
-                        <div class="service-icon-bg w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-green-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-green-600 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-lg font-bold text-gray-900 group-hover:text-green-600 transition-colors duration-300 mb-1">PKKPR</h3>
-                            <p class="text-sm text-gray-500 group-hover:text-gray-700 transition-colors duration-300">Persetujuan Kesesuaian Kegiatan Pemanfaatan Ruang untuk Kegiatan usaha</p>
-                        </div>
-                    </div>
-                </a>
-
-                {{-- Peil Banjir --}}
-                <a href="https://drive.google.com/drive/folders/1dn48U71kPB-1JL_JGYIvOWSqhhfZ5vRE" 
-                   class="service-card group block bg-white rounded-2xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-cyan-300"
-                   style="color: #06b6d4;">
-                    <div class="flex items-start gap-4">
-                        <div class="service-icon-bg w-14 h-14 bg-cyan-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-cyan-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-cyan-600 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-lg font-bold text-gray-900 group-hover:text-cyan-600 transition-colors duration-300 mb-1">Peil Banjir</h3>
-                            <p class="text-sm text-gray-500 group-hover:text-gray-700 transition-colors duration-300">Rekomendasi Evaluasi Bangunan untuk mengurangi resiko banjir</p>
-                        </div>
-                    </div>
-                </a>
-
-                {{-- Irigasi Teknis --}}
-                <a href="https://drive.google.com/drive/folders/1Z-0gjp2v2s-wKyjObGyzlYCUPymqiXfD" 
-                   class="service-card group block bg-white rounded-2xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-lime-300"
-                   style="color: #84cc16;">
-                    <div class="flex items-start gap-4">
-                        <div class="service-icon-bg w-14 h-14 bg-lime-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-lime-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-lime-600 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8z"/><path d="M12 14a2 2 0 0 0 2-2 2 2 0 0 0-2-2 2 2 0 0 0-2 2 2 2 0 0 0 2 2z"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-lg font-bold text-gray-900 group-hover:text-lime-600 transition-colors duration-300 mb-1">Irigasi Teknis</h3>
-                            <p class="text-sm text-gray-500 group-hover:text-gray-700 transition-colors duration-300">Perizinan pemanfaatan jaringan irigasi teknis</p>
-                        </div>
-                    </div>
-                </a>
-
-                {{-- RUMIJA --}}
-                <a href="https://drive.google.com/drive/folders/1Zx3cuPX7omXcyNiRKSRBN-21jqecimVN" 
-                   class="service-card group block bg-white rounded-2xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-amber-300"
-                   style="color: #f59e0b;">
-                    <div class="flex items-start gap-4">
-                        <div class="service-icon-bg w-14 h-14 bg-amber-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-amber-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-amber-600 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-lg font-bold text-gray-900 group-hover:text-amber-600 transition-colors duration-300 mb-1">RUMIJA</h3>
-                            <p class="text-sm text-gray-500 group-hover:text-gray-700 transition-colors duration-300">Ijin Pemanfaatan Ruang Milik Jalan</p>
-                        </div>
-                    </div>
-                </a>
-
-                {{-- SITEPLAN --}}
-                <a href="https://drive.google.com/drive/folders/1REaUYTiyl86Jt4o2dYqJE5R9PL7Aupc7" 
-                   class="service-card group block bg-white rounded-2xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-purple-300"
-                   style="color: #a855f7;">
-                    <div class="flex items-start gap-4">
-                        <div class="service-icon-bg w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-purple-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-purple-600 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-lg font-bold text-gray-900 group-hover:text-purple-600 transition-colors duration-300 mb-1">SITEPLAN</h3>
-                            <p class="text-sm text-gray-500 group-hover:text-gray-700 transition-colors duration-300">Pengesahan Tata Letak dan Perencanaan Lahan</p>
-                        </div>
-                    </div>
-                </a>
-
-                {{-- PBG --}}
-                <a href="https://drive.google.com/drive/folders/1QA1jokV9HNGwu1Il2ahPhxiNQsI3abAh" 
-                   class="service-card group block bg-white rounded-2xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-indigo-300"
-                   style="color: #6366f1;">
-                    <div class="flex items-start gap-4">
-                        <div class="service-icon-bg w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-indigo-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-indigo-600 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-lg font-bold text-gray-900 group-hover:text-indigo-600 transition-colors duration-300 mb-1">PBG</h3>
-                            <p class="text-sm text-gray-500 group-hover:text-gray-700 transition-colors duration-300">Persetujuan Bangunan Gedung</p>
-                        </div>
-                    </div>
-                </a>
-
-                {{-- SLF --}}
-                <a href="https://drive.google.com/drive/folders/1dWqgXoboIO4MPTg031b3Z6QtX7ImG5Zk" 
-                   class="service-card group block bg-white rounded-2xl p-6 shadow-md hover:shadow-2xl transition-all duration-300 border-2 border-gray-100 hover:border-sky-300"
-                   style="color: #0ea5e9;">
-                    <div class="flex items-start gap-4">
-                        <div class="service-icon-bg w-14 h-14 bg-sky-100 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-sky-500">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-sky-600 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11A7 7 0 0 1 9 1a7 7 0 0 1 0 10zm0 0a7 7 0 0 1 0 10 7 7 0 0 1 0-10z"/><circle cx="9" cy="11" r="1"/><path d="M14 20.5v.5a2 2 0 0 0 4 0v-.5"/><path d="M14 9.5v-.5a2 2 0 0 1 4 0v.5"/><path d="M22 14a2 2 0 0 0-2-2h-.5"/><path d="M22 10a2 2 0 0 1-2 2h-.5"/></svg>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h3 class="text-lg font-bold text-gray-900 group-hover:text-sky-600 transition-colors duration-300 mb-1">SLF</h3>
-                            <p class="text-sm text-gray-500 group-hover:text-gray-700 transition-colors duration-300">Penerbitan Sertifikat Laik Fungsi bangunan gedung</p>
-                        </div>
-                    </div>
-                </a>
+                @empty
+                <div class="sm:col-span-2 lg:col-span-4 text-center py-12">
+                    <p class="text-gray-500">Layanan belum tersedia.</p>
+                </div>
+                @endforelse
             </div>
         </div>
     </section>

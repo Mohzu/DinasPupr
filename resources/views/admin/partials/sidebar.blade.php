@@ -129,6 +129,16 @@
         <div class="pt-6">
             <p class="px-4 text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Layanan</p>
             
+            <a href="{{ route('admin.layanan.index') }}" 
+               class="group flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gradient-to-r hover:from-sky-50 hover:to-blue-50 hover:text-sky-700 transition-all duration-200 {{ request()->routeIs('admin.layanan.*') ? 'bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-lg shadow-sky-500/30' : '' }}">
+                <div class="flex-shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                    </svg>
+                </div>
+                <span class="font-medium">Layanan Publik</span>
+            </a>
+
             <a href="{{ route('admin.pengaduan.index') }}" 
                class="group flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gradient-to-r hover:from-amber-50 hover:to-orange-50 hover:text-amber-700 transition-all duration-200 {{ request()->routeIs('admin.pengaduan.*') ? 'bg-gradient-to-r from-amber-600 to-orange-600 text-white shadow-lg shadow-amber-500/30' : '' }}">
                 <div class="flex-shrink-0 relative">
@@ -158,6 +168,23 @@
                 @endphp
                 @if($kontakBaru > 0)
                     <span class="px-2.5 py-1 text-xs font-bold bg-blue-500 text-white rounded-full shadow-sm">{{ $kontakBaru }}</span>
+                @endif
+            </a>
+
+            {{-- Live Chat --}}
+            <a href="{{ route('admin.chat.index') }}" 
+               class="group flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gradient-to-r hover:from-violet-50 hover:to-purple-50 hover:text-violet-700 transition-all duration-200 {{ request()->routeIs('admin.chat.*') ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-lg shadow-violet-500/30' : '' }}">
+                <div class="flex-shrink-0">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
+                    </svg>
+                </div>
+                <span class="font-medium flex-1">Live Chat SAPA</span>
+                @php
+                    $chatMenungggu = \App\Models\ChatSession::where('status', 'human')->count();
+                @endphp
+                @if($chatMenungggu > 0)
+                    <span class="px-2.5 py-1 text-xs font-bold bg-red-500 text-white rounded-full shadow-sm animate-pulse">{{ $chatMenungggu }}</span>
                 @endif
             </a>
         </div>

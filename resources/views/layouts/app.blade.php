@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Dinas PUPR Kabupaten Garut')</title>
     <meta name="description" content="@yield('description', 'Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Garut')">
 
@@ -31,7 +32,11 @@
     
     <!-- Footer Section -->
     @include('partials.footer')
-    
+
+
+    <!-- SAPA PUPR Garut — Chatbot Widget -->
+    @include('partials.chatbot')
+
     @stack('scripts')
 </body>
 </html>
