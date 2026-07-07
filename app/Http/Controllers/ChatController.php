@@ -3,14 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Models\ChatSession;
-use App\Services\ChatSessionService;
+use App\Models\ChatMessage;
+use App\Models\Layanan;
+use App\Models\Berita;
+use App\Models\Pengumuman;
+use App\Models\Sejarah;
+use App\Models\VisiMisi;
+use App\Models\StrukturOrganisasi;
+use App\Models\PejabatStruktural;
+use App\Events\MessageSent;
+use App\Events\ChatTransferredToAdmin;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class ChatController extends Controller
 {
-    public function __construct(private ChatSessionService $chatService) {}
+    private string $apiKey;
+    private string $apiUrl;
+
+    // Sistem prompt identitas SAPA PUPR Garut
+    private string $systemPrompt = <<<'PROMPT'
+Anda adalah SAPA PUPR Garut — Asisten Virtual resmi yang terintegrasi pada Website Portal Informasi Dinas Pekerjaan Umum dan Penataan Ruang (PUPR) Kabupaten Garut.
+
+IDENTITAS & PERSONALITI:
+- Nama: SAPA PUPR Garut
+- Bahasa: Bahasa Indonesia yang formal, sopan, ramah, dan profesional layaknya representasi resmi instansi pemerintah.
+- Anda hanya boleh menjawab pertanyaan seputar Tupoksi Dinas PUPR Kabupaten Garut.
+
+ATURAN KETAT:
+1. Jangan pernah keluar dari peran Anda sebagai SAPA PUPR Garut.
+2. Jangan memberikan opini pribadi.
+3. Jangan memberikan instruksi pemrograman atau teknis non-PUPR.
+4. Jangan menjawab pertanyaan tentang politik praktis, SARA, atau hal di luar Tupoksi PUPR.
+5. Jangan mengarang informasi. Jika data tidak tersedia dalam konteks yang diberikan, katakan dengan jujur.
+6. Untuk topik sensitif (kepegawaian internal, rahasia instansi), tolak dengan sopan.
+
+STRUKTUR RESPONS WAJIB:
+- Berikan jawaban yang informatif dan ringkas.
+
+JIKA TOPIK DI LUAR TUPOKSI:
+- Tolak dengan sopan.
+
+TUPOKSI DINAS PUPR GARUT meliputi:
+- Pekerjaan umum: jalan, jembatan, irigasi, drainase
+- Penataan ruang dan tata kota
+- Bangunan gedung dan Izin Mendirikan Bangunan (IMB) / PBG
+- Sertifikat Laik Fungsi (SLF)
+- Air bersih dan sanitasi
+- Infrastruktur wilayah Kabupaten Garut
+PROMPT;
+
+    public function __construct()
+    {
+        $this->apiKey = config('services.gemini.api_key', env('GEMINI_API_KEY'));
+        $this->apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+    }
 
     /**
      * Mulai sesi chat baru dari frontend
@@ -29,7 +79,7 @@ class ChatController extends Controller
         }
 
         // Buat sesi baru
-        $session = $this->chatService->createSession(
+        $session = $this->createSession(
             $request->user_name,
             $request->user_email
         );
@@ -40,7 +90,7 @@ class ChatController extends Controller
                       "Silakan sampaikan pertanyaan atau kebutuhan Anda.";
 
         // Proses pesan pertama user langsung
-        $botMsg = $this->chatService->handleUserMessage($session, $request->message);
+        $botMsg = $this->handleUserMessage($session, $request->message);
 
         // Ambil pesan sambutan yang sudah tersimpan
         $allMessages = $session->messages()->orderBy('created_at')->get()->map(fn($m) => [
@@ -48,6 +98,7 @@ class ChatController extends Controller
             'sender_type' => $m->sender_type,
             'message'     => $m->message,
             'created_at'  => $m->created_at->format('H:i'),
+            'timestamp'   => $m->created_at->timestamp * 1000,
         ]);
 
         return response()->json([
@@ -85,25 +136,28 @@ class ChatController extends Controller
 
         // Jika sudah di-handle admin, simpan pesan user dan broadcast
         if ($session->status === 'human') {
-            $userMsg = \App\Models\ChatMessage::create([
+            $userMsg = ChatMessage::create([
                 'chat_session_id' => $session->id,
                 'sender_type'     => 'user',
                 'message'         => $request->message,
                 'is_read'         => false,
             ]);
 
-            broadcast(new \App\Events\MessageSent($session, $userMsg))->toOthers();
+            broadcast(new MessageSent($session, $userMsg))->toOthers();
 
             return response()->json([
                 'success'        => true,
-                'message'        => $userMsg->only(['id', 'sender_type', 'message']),
+                'message'        => array_merge($userMsg->only(['id', 'sender_type', 'message']), [
+                    'created_at' => $userMsg->created_at->format('H:i'),
+                    'timestamp'  => $userMsg->created_at->timestamp * 1000,
+                ]),
                 'session_status' => 'human',
                 'bot_reply'      => null,
             ]);
         }
 
         // Mode bot: proses via AI
-        $botMsg = $this->chatService->handleUserMessage($session, $request->message);
+        $botMsg = $this->handleUserMessage($session, $request->message);
 
         return response()->json([
             'success'        => true,
@@ -113,6 +167,7 @@ class ChatController extends Controller
                 'sender_type' => $botMsg->sender_type,
                 'message'     => $botMsg->message,
                 'created_at'  => $botMsg->created_at->format('H:i'),
+                'timestamp'   => $botMsg->created_at->timestamp * 1000,
             ],
         ]);
     }
@@ -138,7 +193,7 @@ class ChatController extends Controller
             return response()->json(['success' => false, 'message' => 'Sesi tidak valid.'], 404);
         }
 
-        $msg = $this->chatService->handleVerification($session, (bool) $request->satisfied);
+        $msg = $this->processVerification($session, (bool) $request->satisfied);
 
         return response()->json([
             'success'        => true,
@@ -148,6 +203,7 @@ class ChatController extends Controller
                 'sender_type' => $msg->sender_type,
                 'message'     => $msg->message,
                 'created_at'  => $msg->created_at->format('H:i'),
+                'timestamp'   => $msg->created_at->timestamp * 1000,
             ],
         ]);
     }
@@ -172,7 +228,270 @@ class ChatController extends Controller
                 'sender_type' => $m->sender_type,
                 'message'     => $m->message,
                 'created_at'  => $m->created_at->format('H:i'),
+                'timestamp'   => $m->created_at->timestamp * 1000,
             ]),
         ]);
+    }
+
+    // ==========================================================
+    // LOGIKA BISNIS PINDAHAN DARI ChatSessionService
+    // ==========================================================
+
+    /**
+     * Buat sesi chat baru
+     */
+    private function createSession(?string $userName = null, ?string $userEmail = null): ChatSession
+    {
+        return ChatSession::create([
+            'session_token' => ChatSession::generateToken(),
+            'user_name'     => $userName,
+            'user_email'    => $userEmail,
+            'status'        => 'bot',
+        ]);
+    }
+
+    /**
+     * Proses pesan dari user dan generate respons AI
+     */
+    private function handleUserMessage(ChatSession $session, string $userMessage): ChatMessage
+    {
+        // Simpan pesan user
+        $userMsg = $this->saveMessage($session, 'user', $userMessage);
+
+        // Ambil riwayat percakapan untuk konteks AI (max 10 pesan terakhir)
+        $history = $session->messages()
+            ->whereIn('sender_type', ['user', 'bot'])
+            ->latest()
+            ->limit(10)
+            ->get()
+            ->reverse()
+            ->map(fn($m) => ['sender_type' => $m->sender_type, 'message' => $m->message])
+            ->toArray();
+
+        // Generate respons AI
+        $aiResponse = $this->generateResponse($userMessage, $history);
+
+        // Simpan respons bot
+        $botMsg = $this->saveMessage($session, 'bot', $aiResponse);
+
+        // Broadcast pesan ke WebSocket (user tidak perlu polling)
+        broadcast(new MessageSent($session, $botMsg))->toOthers();
+
+        return $botMsg;
+    }
+
+    /**
+     * Handle keputusan verifikasi user: [Ya] atau [Tidak]
+     */
+    private function processVerification(ChatSession $session, bool $satisfied): ChatMessage
+    {
+        if ($satisfied) {
+            // User puas → tutup sesi
+            $session->close();
+
+            $farewell = "Terima kasih atas konfirmasi Anda. Kami senang dapat membantu memberikan informasi yang Anda butuhkan. " .
+                        "Sesi percakapan otomatis ini akan kami akhiri. Semoga hari Anda menyenangkan! 😊";
+
+            return $this->saveMessage($session, 'bot', $farewell);
+        }
+
+        // User tidak puas → transfer ke admin manusia
+        $session->transferToHuman();
+
+        $transferMsg = "Mohon maaf jika informasi dari saya belum menyelesaikan kendala Anda. " .
+                       "Saya akan menghubungkan Anda dengan petugas Dinas PUPR Garut yang sedang bertugas. " .
+                       "Mohon tunggu sebentar, petugas kami akan segera membalas pesan Anda di sini. 🔔";
+
+        $msg = $this->saveMessage($session, 'bot', $transferMsg);
+
+        // Broadcast ke admin dashboard secara real-time
+        broadcast(new ChatTransferredToAdmin($session->fresh()));
+
+        return $msg;
+    }
+
+    /**
+     * Helper: simpan pesan ke database
+     */
+    private function saveMessage(ChatSession $session, string $senderType, string $message): ChatMessage
+    {
+        return ChatMessage::create([
+            'chat_session_id' => $session->id,
+            'sender_type'     => $senderType,
+            'message'         => $message,
+            'is_read'         => $senderType !== 'user', // pesan user belum dibaca by default
+        ]);
+    }
+
+    // ==========================================================
+    // LOGIKA BISNIS PINDAHAN DARI GeminiAiService
+    // ==========================================================
+
+    /**
+     * Generate respons AI berdasarkan pertanyaan user dengan konteks dari database
+     */
+    private function generateResponse(string $userMessage, array $conversationHistory = []): string
+    {
+        try {
+            // Ambil konteks relevan dari database
+            $context = $this->fetchRelevantContext($userMessage);
+
+            // Bangun prompt lengkap
+            $fullPrompt = $this->buildPromptWithContext($userMessage, $context);
+
+            // Bangun riwayat percakapan untuk Gemini
+            $contents = $this->buildContents($conversationHistory, $fullPrompt);
+
+            $response = Http::timeout(30)->post($this->apiUrl . '?key=' . $this->apiKey, [
+                'system_instruction' => [
+                    'parts' => [['text' => $this->systemPrompt]],
+                ],
+                'contents'           => $contents,
+                'generationConfig'   => [
+                    'temperature'     => 0.3,
+                    'maxOutputTokens' => 1024,
+                ],
+            ]);
+
+            if ($response->successful()) {
+                $data = $response->json();
+                return $data['candidates'][0]['content']['parts'][0]['text']
+                    ?? $this->defaultErrorResponse();
+            }
+
+            Log::error('Gemini API Error', [
+                'status'   => $response->status(),
+                'response' => $response->body(),
+            ]);
+
+            return $this->defaultErrorResponse();
+        } catch (\Exception $e) {
+            Log::error('GeminiAiService Exception', ['error' => $e->getMessage()]);
+            return $this->defaultErrorResponse();
+        }
+    }
+
+    /**
+     * Ambil data lengkap dari database untuk dijadikan konteks AI (RAG offline/seluruh database)
+     */
+    private function fetchRelevantContext(string $query): string
+    {
+        $context = '';
+
+        // 1. Profil & Informasi Umum Dinas PUPR
+        $sejarah = Sejarah::published()->first();
+        if ($sejarah) {
+            $context .= "\n=== SEJARAH DINAS PUPR GARUT ===\n";
+            $context .= "{$sejarah->content}\n";
+        }
+
+        $visiMisi = VisiMisi::published()->first();
+        if ($visiMisi) {
+            $context .= "\n=== VISI & MISI DINAS PUPR GARUT ===\n";
+            if ($visiMisi->visi) $context .= "Visi: {$visiMisi->visi}\n";
+            if ($visiMisi->misi) $context .= "Misi:\n{$visiMisi->misi}\n";
+            if ($visiMisi->content) $context .= "Keterangan tambahan: {$visiMisi->content}\n";
+        }
+
+        $struktur = StrukturOrganisasi::published()->first();
+        if ($struktur) {
+            $context .= "\n=== STRUKTUR ORGANISASI ===\n";
+            $context .= "Judul: {$struktur->title}\n";
+            if ($struktur->content) $context .= "Deskripsi: {$struktur->content}\n";
+        }
+
+        $pejabat = PejabatStruktural::where('aktif', true)->orderBy('urutan')->get();
+        if ($pejabat->isNotEmpty()) {
+            $context .= "\n=== DAFTAR PEJABAT STRUKTURAL ===\n";
+            foreach ($pejabat as $p) {
+                $context .= "- Nama: {$p->nama} | Jabatan: {$p->jabatan}\n";
+            }
+        }
+
+        // 2. Daftar Layanan Dinas PUPR
+        $layanans = Layanan::all();
+        if ($layanans->isNotEmpty()) {
+            $context .= "\n=== DAFTAR LAYANAN DINAS PUPR ===\n";
+            foreach ($layanans as $layanan) {
+                $context .= "Layanan: {$layanan->nama_layanan}\n";
+                $context .= "Deskripsi: {$layanan->deskripsi_singkat}\n";
+                if ($layanan->penjelasan_detail) $context .= "Penjelasan: {$layanan->penjelasan_detail}\n";
+                if ($layanan->alur)              $context .= "Alur Prosedur: {$layanan->alur}\n";
+                if ($layanan->persyaratan)       $context .= "Persyaratan: {$layanan->persyaratan}\n";
+                $context .= "---\n";
+            }
+        }
+
+        // 3. Berita & Pengumuman Terbaru
+        $beritas = Berita::published()->latest()->limit(5)->get();
+        if ($beritas->isNotEmpty()) {
+            $context .= "\n=== BERITA & INFORMASI TERKINI ===\n";
+            foreach ($beritas as $berita) {
+                $context .= "Judul: {$berita->judul}\n";
+                $context .= "Isi: " . \Str::limit(strip_tags($berita->isi), 250) . "\n";
+                $context .= "Tanggal: " . $berita->published_at->format('d M Y') . "\n---\n";
+            }
+        }
+
+        $pengumumans = Pengumuman::latest()->limit(5)->get();
+        if ($pengumumans->isNotEmpty()) {
+            $context .= "\n=== PENGUMUMAN RESMI ===\n";
+            foreach ($pengumumans as $p) {
+                $context .= "Judul: {$p->judul}\n";
+                $context .= "Isi: " . \Str::limit(strip_tags($p->isi), 200) . "\n---\n";
+            }
+        }
+
+        return $context ?: "\n[Tidak ada data di database. Jawab berdasarkan pengetahuan umum tentang Dinas PUPR Kabupaten Garut.]\n";
+    }
+
+    /**
+     * Bangun prompt dengan menyertakan konteks database
+     */
+    private function buildPromptWithContext(string $userMessage, string $context): string
+    {
+        return <<<PROMPT
+KONTEKS DATA DARI DATABASE SISTEM:
+{$context}
+
+PERTANYAAN MASYARAKAT:
+{$userMessage}
+
+Jawab berdasarkan konteks data di atas. Jika konteks tidak relevan, jawab berdasarkan pengetahuan umum tentang PUPR.
+PROMPT;
+    }
+
+    /**
+     * Bangun array contents untuk Gemini (termasuk riwayat percakapan)
+     */
+    private function buildContents(array $history, string $currentPrompt): array
+    {
+        $contents = [];
+
+        // Masukkan riwayat percakapan sebelumnya (max 6 pesan terakhir)
+        $recentHistory = array_slice($history, -6);
+        foreach ($recentHistory as $msg) {
+            $role = $msg['sender_type'] === 'user' ? 'user' : 'model';
+            $contents[] = [
+                'role'  => $role,
+                'parts' => [['text' => $msg['message']]],
+            ];
+        }
+
+        // Tambahkan pertanyaan saat ini
+        $contents[] = [
+            'role'  => 'user',
+            'parts' => [['text' => $currentPrompt]],
+        ];
+
+        return $contents;
+    }
+
+    /**
+     * Respons default saat terjadi error
+     */
+    private function defaultErrorResponse(): string
+    {
+        return "Mohon maaf, saat ini saya mengalami gangguan teknis dan tidak dapat memproses pertanyaan Anda.";
     }
 }

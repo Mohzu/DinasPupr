@@ -127,10 +127,16 @@
     // State & Config
     // =============================================
     const CSRF = document.querySelector('meta[name="csrf-token"]')?.content ?? '';
-    let sessionToken = localStorage.getItem('sapa_session_token') ?? null;
+    let sessionToken = sessionStorage.getItem('sapa_session_token') ?? null;
     let sessionStatus = 'bot';
     let isOpen = false;
     let echoInstance = null;
+
+    // Timer configs
+    const VERIFICATION_DELAY = 30000; // 30 seconds (30000 ms)
+    const AUTO_CLOSE_DELAY = 300000; // 5 minutes (300000 ms)
+    let verificationTimer = null;
+    let autoCloseTimer = null;
 
     // =============================================
     // DOM Refs
@@ -149,6 +155,68 @@
     const statusDot     = document.getElementById('sapa-status-dot');
     const newBadge      = document.getElementById('sapa-new-badge');
     const inputArea     = document.getElementById('sapa-input-area');
+
+    // =============================================
+    // Timer Functions
+    // =============================================
+    function resetTimers() {
+        if (verificationTimer) clearTimeout(verificationTimer);
+        if (autoCloseTimer) clearTimeout(autoCloseTimer);
+        verificationTimer = null;
+        autoCloseTimer = null;
+    }
+
+    function scheduleVerification(lastMsgTimestamp) {
+        resetTimers();
+        
+        // Hanya jadwalkan jika status sesi adalah 'bot'
+        if (sessionStatus !== 'bot') return;
+
+        let delay = VERIFICATION_DELAY;
+        if (lastMsgTimestamp) {
+            const elapsed = Date.now() - lastMsgTimestamp;
+            delay = VERIFICATION_DELAY - elapsed;
+        }
+
+        if (delay <= 0) {
+            showVerificationPrompt();
+        } else {
+            verificationTimer = setTimeout(() => {
+                showVerificationPrompt();
+            }, delay);
+        }
+    }
+
+    function showVerificationPrompt() {
+        if (sessionStatus !== 'bot') return;
+        
+        // Cegah double render
+        if (document.getElementById('sapa-verification-bubble')) return;
+
+        const time = formatTime(new Date());
+        const promptText = "Apakah informasi ini sudah cukup membantu? Silakan tekan tombol [Ya] jika kendala Anda selesai, atau [Tidak] jika ingin terhubung ke Admin.";
+        
+        const html = `
+            <div id="sapa-verification-bubble" class="flex items-end gap-2 animate-fade-in">
+                <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">
+                    AI
+                </div>
+                <div class="bg-white text-gray-800 rounded-2xl rounded-bl-none px-4 py-3 shadow-sm max-w-[85%] border border-blue-100">
+                    <div class="text-sm leading-relaxed prose-sm">${formatMarkdown(promptText)}</div>
+                    <span class="text-[10px] block mt-1 text-gray-400 text-right">${time}</span>
+                </div>
+            </div>`;
+        
+        messagesEl.insertAdjacentHTML('beforeend', html);
+        scrollToBottom();
+
+        showVerifyButtons(true);
+
+        // Mulai timer tutup otomatis
+        autoCloseTimer = setTimeout(() => {
+            handleVerify(true); // Tutup sesi secara otomatis jika tidak ada aksi
+        }, AUTO_CLOSE_DELAY);
+    }
 
     // =============================================
     // Toggle Chat
@@ -202,6 +270,7 @@
         const msg = inputEl.value.trim();
         if (!msg) return;
 
+        resetTimers(); // Hentikan timer yang sedang berjalan saat user mengirim pesan baru
         inputEl.value = '';
         inputEl.style.height = 'auto';
         sendBtn.disabled = true;
@@ -234,7 +303,7 @@
             if (data.success) {
                 if (data.session_token) {
                     sessionToken = data.session_token;
-                    localStorage.setItem('sapa_session_token', sessionToken);
+                    sessionStorage.setItem('sapa_session_token', sessionToken);
                     // Subscribe ke Reverb channel
                     subscribeToChannel(sessionToken);
                 }
@@ -244,10 +313,8 @@
 
                 if (data.bot_reply) {
                     appendBubble('bot', data.bot_reply.message, data.bot_reply.created_at);
-                    // Tampilkan tombol verifikasi jika ada trigger kata kunci
-                    if (data.bot_reply.message.includes('[Ya]') || data.bot_reply.message.includes('[Tidak]')) {
-                        showVerifyButtons(true);
-                    }
+                    // Jadwalkan verifikasi setelah bot menjawab
+                    scheduleVerification(data.bot_reply.timestamp);
                 }
 
                 // Jika dari start session, tampilkan semua messages
@@ -255,9 +322,12 @@
                     // Clear default welcome dan tampilkan dari server
                     clearMessages();
                     data.messages.forEach(m => appendBubble(m.sender_type, m.message, m.created_at));
-                    const lastMsg = data.messages[data.messages.length - 1];
-                    if (lastMsg && (lastMsg.message.includes('[Ya]') || lastMsg.message.includes('[Tidak]'))) {
-                        showVerifyButtons(true);
+                    
+                    if (data.messages.length > 0) {
+                        const lastMsg = data.messages[data.messages.length - 1];
+                        if (lastMsg.sender_type === 'bot' && sessionStatus === 'bot') {
+                            scheduleVerification(lastMsg.timestamp);
+                        }
                     }
                 }
             }
@@ -274,6 +344,7 @@
     btnTidak.addEventListener('click', () => handleVerify(false));
 
     async function handleVerify(satisfied) {
+        resetTimers(); // Bersihkan semua timer
         showVerifyButtons(false);
         showTyping(true);
 
@@ -292,8 +363,8 @@
                 appendBubble('bot', data.bot_reply.message, data.bot_reply.created_at);
 
                 if (data.session_status === 'closed') {
-                    // Hapus token session dari localStorage
-                    localStorage.removeItem('sapa_session_token');
+                    // Hapus token session dari sessionStorage
+                    sessionStorage.removeItem('sapa_session_token');
                     sessionToken = null;
                     disableInput('Sesi telah selesai. Mulai percakapan baru?');
                     // Tombol mulai baru
@@ -318,7 +389,7 @@
             const data = await response.json();
             if (data.success) {
                 if (data.session_status === 'closed') {
-                    localStorage.removeItem('sapa_session_token');
+                    sessionStorage.removeItem('sapa_session_token');
                     sessionToken = null;
                     return;
                 }
@@ -327,12 +398,16 @@
                 data.messages.forEach(m => appendBubble(m.sender_type, m.message, m.created_at));
                 updateStatusUI();
                 subscribeToChannel(sessionToken);
-                const lastMsg = data.messages[data.messages.length - 1];
-                if (lastMsg && (lastMsg.message.includes('[Ya]') || lastMsg.message.includes('[Tidak]'))) {
-                    showVerifyButtons(true);
+                
+                // Jadwalkan verifikasi jika pesan terakhir dari bot dan status masih bot
+                if (data.messages && data.messages.length > 0) {
+                    const lastMsg = data.messages[data.messages.length - 1];
+                    if (lastMsg.sender_type === 'bot' && sessionStatus === 'bot') {
+                        scheduleVerification(lastMsg.timestamp);
+                    }
                 }
             } else {
-                localStorage.removeItem('sapa_session_token');
+                sessionStorage.removeItem('sapa_session_token');
                 sessionToken = null;
             }
         } catch (e) {}
@@ -351,8 +426,10 @@
                 if (e.message.sender_type !== 'user') {
                     showTyping(false);
                     appendBubble(e.message.sender_type, e.message.message, e.message.created_at);
-                    if (e.message.message.includes('[Ya]') || e.message.message.includes('[Tidak]')) {
-                        showVerifyButtons(true);
+                    
+                    // Jadwalkan ulang verifikasi jika bot mengirim pesan via ws
+                    if (e.message.sender_type === 'bot' && sessionStatus === 'bot') {
+                        scheduleVerification(Date.now());
                     }
                 }
                 sessionStatus = e.session_status;
@@ -456,7 +533,7 @@
     }
 
     function restartSession() {
-        localStorage.removeItem('sapa_session_token');
+        sessionStorage.removeItem('sapa_session_token');
         sessionToken = null;
         sessionStatus = 'bot';
         echoInstance = null;
@@ -471,6 +548,7 @@
 
     function clearMessages() {
         messagesEl.innerHTML = '';
+        resetTimers();
     }
 
     function scrollToBottom() {
@@ -488,7 +566,7 @@
             .then(r => r.json())
             .then(d => {
                 if (!d.success || d.session_status === 'closed') {
-                    localStorage.removeItem('sapa_session_token');
+                    sessionStorage.removeItem('sapa_session_token');
                     sessionToken = null;
                 }
             }).catch(() => {});

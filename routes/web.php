@@ -14,7 +14,7 @@ use App\Http\Controllers\PejabatStrukturalController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\ChatController;
-use App\Http\Controllers\Admin\ChatDashboardController;
+use App\Http\Controllers\ChatDashboardController;
 
 // ========== FRONTEND ROUTES ==========
 Route::get('/', [HomeController::class, 'index'])->name('home');

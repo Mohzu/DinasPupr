@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\ChatSession;
-use App\Services\ChatSessionService;
+use App\Models\ChatMessage;
+use App\Events\AdminReplied;
+use App\Events\MessageSent;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ChatDashboardController extends Controller
 {
-    public function __construct(private ChatSessionService $chatService) {}
-
     /**
      * Dashboard daftar sesi chat
      * GET /admin/chat
@@ -75,7 +74,11 @@ class ChatDashboardController extends Controller
             $session->update(['admin_id' => auth()->id()]);
         }
 
-        $msg = $this->chatService->handleAdminReply($session, $request->message);
+        // Simpan pesan admin ke database
+        $msg = $this->saveMessage($session, 'admin', $request->message);
+
+        // Broadcast ke user secara real-time
+        broadcast(new AdminReplied($session, $msg));
 
         return response()->json([
             'success' => true,
@@ -98,7 +101,7 @@ class ChatDashboardController extends Controller
         $session->close();
 
         // Broadcast session closed ke user
-        broadcast(new \App\Events\MessageSent($session, \App\Models\ChatMessage::create([
+        broadcast(new MessageSent($session, ChatMessage::create([
             'chat_session_id' => $session->id,
             'sender_type'     => 'admin',
             'message'         => 'Sesi percakapan ini telah ditutup oleh admin. Terima kasih telah menghubungi Dinas PUPR Garut.',
@@ -130,5 +133,18 @@ class ChatDashboardController extends Controller
             ]);
 
         return response()->json(['success' => true, 'sessions' => $sessions]);
+    }
+
+    /**
+     * Helper: simpan pesan ke database
+     */
+    private function saveMessage(ChatSession $session, string $senderType, string $message): ChatMessage
+    {
+        return ChatMessage::create([
+            'chat_session_id' => $session->id,
+            'sender_type'     => $senderType,
+            'message'         => $message,
+            'is_read'         => $senderType !== 'user',
+        ]);
     }
 }
