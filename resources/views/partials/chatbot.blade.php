@@ -14,8 +14,8 @@
 
     {{-- Chat Window --}}
     <div id="sapa-chatbox"
-         class="hidden flex-col w-[360px] max-w-[calc(100vw-2rem)] bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100"
-         style="height: 520px; max-height: calc(100vh - 100px);">
+         class="hidden flex-col bg-white shadow-2xl overflow-hidden border border-gray-100"
+         style="width: 360px; max-width: calc(100vw - 2rem); height: 520px; max-height: calc(100vh - 100px); border-radius: 1rem;">
 
         {{-- Header --}}
         <div class="bg-gradient-to-r from-blue-700 to-blue-500 px-4 py-3 flex items-center gap-3 flex-shrink-0">
@@ -36,9 +36,41 @@
             </button>
         </div>
 
+        @guest
+        {{-- Pre-chat Form --}}
+        <div id="sapa-prechat-form" class="hidden flex-col justify-center p-6 bg-gradient-to-b from-blue-50/70 to-white flex-1 overflow-y-auto">
+            <div class="text-center mb-5">
+                <div class="w-16 h-16 bg-gradient-to-tr from-blue-600 to-blue-500 rounded-3xl mx-auto flex items-center justify-center text-white text-3xl shadow-lg shadow-blue-500/20 mb-3 animate-bounce">
+                    🤖
+                </div>
+                <h3 class="text-lg font-bold text-gray-800">Mulai Percakapan</h3>
+                <p class="text-xs text-gray-500 mt-1 leading-relaxed px-4">
+                    Silakan isi Nama dan Email Anda untuk terhubung dengan asisten virtual <strong>SAPA PUPR Garut</strong>.
+                </p>
+            </div>
+            <form id="sapa-form-start" class="space-y-4">
+                <div>
+                    <label for="sapa-form-name" class="block text-xs font-semibold text-gray-600 mb-1.5">Nama Lengkap <span class="text-red-500">*</span></label>
+                    <input type="text" id="sapa-form-name" required placeholder="Contoh: Budi Santoso"
+                           class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50/50 transition-all">
+                </div>
+                <div>
+                    <label for="sapa-form-email" class="block text-xs font-semibold text-gray-600 mb-1.5">Alamat Email <span class="text-red-500">*</span></label>
+                    <input type="email" id="sapa-form-email" required placeholder="Contoh: budi@gmail.com"
+                           class="w-full px-4 py-2.5 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-gray-50/50 transition-all">
+                </div>
+                <button type="submit" id="sapa-form-submit"
+                        class="w-full py-3 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white text-sm font-bold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg mt-2 flex items-center justify-center gap-2">
+                    <span>Mulai Chat</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                </button>
+            </form>
+        </div>
+        @endguest
+
         {{-- Messages Area --}}
         <div id="sapa-messages"
-             class="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50"
+             class="flex flex-col flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50"
              style="scroll-behavior: smooth;">
 
             {{-- Welcome bubble (static) --}}
@@ -131,6 +163,13 @@
     let sessionStatus = 'bot';
     let isOpen = false;
     let echoInstance = null;
+    // Flag: apakah user sudah pernah memulai sesi (dalam tab ini)
+    // Jika true, chatbox tidak akan kembali ke form nama/email
+    let sessionEverStarted = !!sessionToken || !!sessionStorage.getItem('sapa_guest_name');
+
+    const isGuest = @json(auth()->guest());
+    const authUserName = @json(auth()->user()?->name ?? null);
+    const authUserEmail = @json(auth()->user()?->email ?? null);
 
     // Timer configs
     const VERIFICATION_DELAY = 30000; // 30 seconds (30000 ms)
@@ -155,6 +194,7 @@
     const statusDot     = document.getElementById('sapa-status-dot');
     const newBadge      = document.getElementById('sapa-new-badge');
     const inputArea     = document.getElementById('sapa-input-area');
+    const prechatForm   = document.getElementById('sapa-prechat-form');
 
     // =============================================
     // Timer Functions
@@ -218,6 +258,23 @@
         }, AUTO_CLOSE_DELAY);
     }
 
+    function showChatScreen(active) {
+        if (active) {
+            if (prechatForm) prechatForm.classList.add('hidden');
+            messagesEl.classList.remove('hidden');
+            inputArea.classList.remove('hidden');
+        } else {
+            if (prechatForm) {
+                prechatForm.classList.remove('hidden');
+                prechatForm.classList.add('flex');
+            }
+            messagesEl.classList.add('hidden');
+            inputArea.classList.add('hidden');
+            verifyBtns.classList.add('hidden');
+            typingEl.classList.add('hidden');
+        }
+    }
+
     // =============================================
     // Toggle Chat
     // =============================================
@@ -229,10 +286,17 @@
         document.getElementById('sapa-icon-close').classList.toggle('hidden', !isOpen);
         newBadge.classList.add('hidden');
         if (isOpen) {
-            scrollToBottom();
-            inputEl.focus();
-            // Resume session jika ada
-            if (sessionToken) resumeSession();
+            // Tampilkan form HANYA jika user belum pernah memulai sesi sama sekali di tab ini
+            if (sessionToken || !isGuest || sessionEverStarted) {
+                showChatScreen(true);
+                scrollToBottom();
+                if (sessionToken) {
+                    inputEl.focus();
+                    resumeSession();
+                }
+            } else {
+                showChatScreen(false);
+            }
         }
     });
 
@@ -282,11 +346,16 @@
         try {
             let response;
             if (!sessionToken) {
-                // Sesi baru
+                // Sesi baru (Hanya untuk user yang login, karena guest memakai form prechat)
+                const bodyData = { message: msg };
+                if (!isGuest) {
+                    bodyData.user_name = authUserName;
+                    bodyData.user_email = authUserEmail;
+                }
                 response = await fetch('{{ route("chat.start") }}', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json', 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json'},
-                    body: JSON.stringify({ message: msg }),
+                    body: JSON.stringify(bodyData),
                 });
             } else {
                 // Sesi existing
@@ -363,9 +432,7 @@
                 appendBubble('bot', data.bot_reply.message, data.bot_reply.created_at);
 
                 if (data.session_status === 'closed') {
-                    // Hapus token session dari sessionStorage
-                    sessionStorage.removeItem('sapa_session_token');
-                    sessionToken = null;
+                    // Jangan hapus token dari sessionStorage agar user masih bisa membaca riwayat
                     disableInput('Sesi telah selesai. Mulai percakapan baru?');
                     // Tombol mulai baru
                     showRestartButton();
@@ -388,22 +455,23 @@
             });
             const data = await response.json();
             if (data.success) {
-                if (data.session_status === 'closed') {
-                    sessionStorage.removeItem('sapa_session_token');
-                    sessionToken = null;
-                    return;
-                }
                 sessionStatus = data.session_status;
                 clearMessages();
                 data.messages.forEach(m => appendBubble(m.sender_type, m.message, m.created_at));
                 updateStatusUI();
-                subscribeToChannel(sessionToken);
-                
-                // Jadwalkan verifikasi jika pesan terakhir dari bot dan status masih bot
-                if (data.messages && data.messages.length > 0) {
-                    const lastMsg = data.messages[data.messages.length - 1];
-                    if (lastMsg.sender_type === 'bot' && sessionStatus === 'bot') {
-                        scheduleVerification(lastMsg.timestamp);
+
+                if (data.session_status === 'closed') {
+                    disableInput('Sesi telah selesai. Mulai percakapan baru?');
+                    showRestartButton();
+                } else {
+                    subscribeToChannel(sessionToken);
+                    
+                    // Jadwalkan verifikasi jika pesan terakhir dari bot dan status masih bot
+                    if (data.messages && data.messages.length > 0) {
+                        const lastMsg = data.messages[data.messages.length - 1];
+                        if (lastMsg.sender_type === 'bot' && sessionStatus === 'bot') {
+                            scheduleVerification(lastMsg.timestamp);
+                        }
                     }
                 }
             } else {
@@ -543,7 +611,156 @@
         sendBtn.disabled = true;
         showVerifyButtons(false);
         updateStatusUI();
-        appendBubble('bot', 'Selamat datang kembali! Ada yang bisa saya bantu? 😊', formatTime(new Date()));
+
+        if (isGuest) {
+            // Jika nama & email masih tersimpan, langsung mulai sesi baru tanpa tanya lagi
+            const savedName  = sessionStorage.getItem('sapa_guest_name');
+            const savedEmail = sessionStorage.getItem('sapa_guest_email');
+            if (savedName && savedEmail) {
+                showChatScreen(true);
+                autoStartGuestSession(savedName, savedEmail);
+            } else {
+                showChatScreen(false);
+            }
+        } else {
+            showChatScreen(true);
+            appendBubble('bot', 'Selamat datang kembali! Ada yang bisa saya bantu? 😊', formatTime(new Date()));
+        }
+    }
+
+    // Auto-start sesi baru untuk guest yang sudah pernah isi form
+    async function autoStartGuestSession(name, email) {
+        showTyping(true);
+        try {
+            const response = await fetch('{{ route("chat.start") }}', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json' },
+                body: JSON.stringify({ user_name: name, user_email: email }),
+            });
+            const data = await response.json();
+            showTyping(false);
+            if (data.success) {
+                sessionToken = data.session_token;
+                sessionStorage.setItem('sapa_session_token', sessionToken);
+                sessionStatus = data.session_status;
+                echoInstance = null;
+                subscribeToChannel(sessionToken);
+                clearMessages();
+                if (data.messages) {
+                    data.messages.forEach(m => appendBubble(m.sender_type, m.message, m.created_at));
+                    const lastMsg = data.messages[data.messages.length - 1];
+                    if (lastMsg && lastMsg.sender_type === 'bot' && sessionStatus === 'bot') {
+                        scheduleVerification(lastMsg.timestamp);
+                    }
+                }
+                inputEl.disabled = false;
+                inputEl.placeholder = 'Tulis pertanyaan Anda...';
+                sendBtn.disabled = true;
+                updateStatusUI();
+            } else {
+                // Jika gagal, fallback ke form
+                showChatScreen(false);
+            }
+        } catch (e) {
+            showTyping(false);
+            showChatScreen(false);
+        }
+    }
+
+    // Submit handler untuk Pre-chat form (Guest saja)
+    const startForm = document.getElementById('sapa-form-start');
+    if (startForm) {
+        startForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nameInput = document.getElementById('sapa-form-name');
+            const emailInput = document.getElementById('sapa-form-email');
+            const submitBtn = document.getElementById('sapa-form-submit');
+
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+
+            if (!name || !email) return;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Menghubungkan...</span>
+            `;
+
+            try {
+                const response = await fetch('{{ route("chat.start") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': CSRF,
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        user_name: name,
+                        user_email: email
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    sessionToken = data.session_token;
+                    sessionStorage.setItem('sapa_session_token', sessionToken);
+                    sessionStatus = data.session_status;
+
+                    // Simpan nama & email agar tidak ditanya lagi saat mulai percakapan baru
+                    sessionStorage.setItem('sapa_guest_name', name);
+                    sessionStorage.setItem('sapa_guest_email', email);
+
+                    // Tandai bahwa user sudah pernah mulai sesi — jangan tampilkan form lagi
+                    sessionEverStarted = true;
+
+                    // Reset sesi lama jika ada
+                    echoInstance = null;
+                    subscribeToChannel(sessionToken);
+
+                    // Bersihkan form
+                    nameInput.value = '';
+                    emailInput.value = '';
+
+                    // Pastikan input chat aktif kembali (bisa terdisable dari sesi sebelumnya)
+                    inputEl.disabled = false;
+                    inputEl.placeholder = 'Tulis pertanyaan Anda...';
+                    sendBtn.disabled = true;
+                    verifyBtns.classList.add('hidden');
+                    typingEl.classList.add('hidden');
+
+                    // Transisi ke chat screen
+                    showChatScreen(true);
+                    clearMessages();
+
+                    // Render semua pesan (termasuk welcome message dari server)
+                    if (data.messages) {
+                        data.messages.forEach(m => appendBubble(m.sender_type, m.message, m.created_at));
+                        if (data.messages.length > 0) {
+                            const lastMsg = data.messages[data.messages.length - 1];
+                            if (lastMsg.sender_type === 'bot' && sessionStatus === 'bot') {
+                                scheduleVerification(lastMsg.timestamp);
+                            }
+                        }
+                    }
+                    updateStatusUI();
+                } else {
+                    alert('Gagal memulai sesi chat. Silakan coba lagi.');
+                }
+            } catch (err) {
+                alert('Terjadi kesalahan koneksi. Silakan coba lagi.');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `
+                    <span>Mulai Chat</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                `;
+            }
+        });
     }
 
     function clearMessages() {
@@ -565,12 +782,61 @@
         fetch(`/chat/session/${sessionToken}`, {headers: {'Accept': 'application/json'}})
             .then(r => r.json())
             .then(d => {
-                if (!d.success || d.session_status === 'closed') {
+                if (!d.success) {
                     sessionStorage.removeItem('sapa_session_token');
                     sessionToken = null;
+                    if (isGuest) showChatScreen(false);
                 }
             }).catch(() => {});
     }
+    // =============================================
+    // Mobile Fullscreen
+    // =============================================
+    function applyMobileFullscreen(open) {
+        const isMobile = window.innerWidth < 1024;
+        if (isMobile) {
+            if (open) {
+                chatbox.style.cssText = [
+                    'position: fixed',
+                    'inset: 0',
+                    'width: 100vw',
+                    'height: 100dvh',
+                    'max-width: 100vw',
+                    'max-height: 100dvh',
+                    'border-radius: 0',
+                    'z-index: 9999',
+                    'bottom: 0',
+                    'right: 0',
+                ].join(';');
+                document.body.style.overflow = 'hidden';
+            } else {
+                chatbox.style.cssText = [
+                    'width: 360px',
+                    'max-width: calc(100vw - 2rem)',
+                    'height: 520px',
+                    'max-height: calc(100vh - 100px)',
+                    'border-radius: 1rem',
+                ].join(';');
+                document.body.style.overflow = '';
+            }
+        } else {
+            chatbox.style.cssText = [
+                'width: 360px',
+                'max-width: calc(100vw - 2rem)',
+                'height: 520px',
+                'max-height: calc(100vh - 100px)',
+                'border-radius: 1rem',
+            ].join(';');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Patch toggleBtn and closeBtn to trigger mobile fullscreen
+    const _origToggle = toggleBtn.onclick;
+    toggleBtn.addEventListener('click', () => applyMobileFullscreen(isOpen));
+    closeBtn.addEventListener('click', () => applyMobileFullscreen(false));
+    window.addEventListener('resize', () => applyMobileFullscreen(isOpen));
+
 })();
 </script>
 @endpush

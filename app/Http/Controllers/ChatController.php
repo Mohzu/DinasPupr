@@ -71,7 +71,7 @@ PROMPT;
         $validator = Validator::make($request->all(), [
             'user_name'  => 'nullable|string|max:100',
             'user_email' => 'nullable|email|max:150',
-            'message'    => 'required|string|max:1000',
+            'message'    => 'nullable|string|max:1000',
         ]);
 
         if ($validator->fails()) {
@@ -85,14 +85,20 @@ PROMPT;
         );
 
         // Kirim pesan pembuka selamat datang dari bot
-        $welcomeMsg = "Selamat datang di layanan **SAPA PUPR Garut**! 👋\n\n" .
+        $welcomeName = $request->user_name ?: 'Pengunjung';
+        $welcomeMsg = "Selamat datang di layanan **SAPA PUPR Garut**, **{$welcomeName}**! 👋\n\n" .
                       "Saya siap membantu Anda dengan informasi seputar Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Garut. " .
                       "Silakan sampaikan pertanyaan atau kebutuhan Anda.";
 
-        // Proses pesan pertama user langsung
-        $botMsg = $this->handleUserMessage($session, $request->message);
+        // Simpan pesan sambutan ke database
+        $this->saveMessage($session, 'bot', $welcomeMsg);
 
-        // Ambil pesan sambutan yang sudah tersimpan
+        // Proses pesan pertama user langsung jika ada
+        if ($request->filled('message')) {
+            $this->handleUserMessage($session, $request->message);
+        }
+
+        // Ambil semua pesan yang sudah tersimpan
         $allMessages = $session->messages()->orderBy('created_at')->get()->map(fn($m) => [
             'id'          => $m->id,
             'sender_type' => $m->sender_type,
@@ -234,7 +240,7 @@ PROMPT;
     }
 
     // ==========================================================
-    // LOGIKA BISNIS PINDAHAN DARI ChatSessionService
+    // LOGIKA BISNIS Session
     // ==========================================================
 
     /**
@@ -324,7 +330,7 @@ PROMPT;
     }
 
     // ==========================================================
-    // LOGIKA BISNIS PINDAHAN DARI GeminiAiService
+    // LOGIKA BISNIS GeminiAi
     // ==========================================================
 
     /**

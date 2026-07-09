@@ -13,12 +13,12 @@ return new class extends Migration
     {
         // Tambahkan user_id ke tabel berita
         Schema::table('berita', function (Blueprint $table) {
-            $table->foreignId('user_id')->nullable()->after('penulis')->constrained()->onDelete('set null');
+            $table->foreignUuid('user_id')->nullable()->after('penulis')->constrained()->onDelete('set null');
         });
 
         // Tambahkan user_id ke tabel pengumuman
         Schema::table('pengumuman', function (Blueprint $table) {
-            $table->foreignId('user_id')->nullable()->after('penulis')->constrained()->onDelete('set null');
+            $table->foreignUuid('user_id')->nullable()->after('penulis')->constrained()->onDelete('set null');
         });
     }
 

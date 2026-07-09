@@ -8,7 +8,7 @@ class CreateBeritaTable extends Migration
     public function up()
     {
         Schema::create('berita', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('judul', 200);
             $table->string('slug', 200)->unique()->nullable();
             $table->text('isi')->nullable();

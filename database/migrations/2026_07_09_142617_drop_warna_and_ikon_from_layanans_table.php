@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sejarahs', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->string('title');
-            $table->longText('content');
-            $table->enum('status', ['draft', 'published'])->default('draft');
-            $table->timestamps();
+        Schema::table('layanans', function (Blueprint $table) {
+            $table->dropColumn(['warna', 'ikon']);
         });
     }
 
@@ -25,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sejarahs');
+        Schema::table('layanans', function (Blueprint $table) {
+            $table->string('warna')->default('#3b82f6');
+            $table->text('ikon')->nullable();
+        });
     }
 };

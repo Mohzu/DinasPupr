@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('pejabat_strukturals', function (Blueprint $table) {
-            $table->foreignId('user_id')->nullable()->after('aktif')->constrained()->onDelete('set null');
+            $table->foreignUuid('user_id')->nullable()->after('aktif')->constrained()->onDelete('set null');
         });
     }
 

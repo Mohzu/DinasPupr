@@ -9,8 +9,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('chat_messages', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('chat_session_id')->constrained('chat_sessions')->cascadeOnDelete();
+            $table->uuid('id')->primary();
+            $table->foreignUuid('chat_session_id')->constrained('chat_sessions')->cascadeOnDelete();
             $table->enum('sender_type', ['user', 'bot', 'admin']); // siapa pengirim
             $table->text('message');                                 // isi pesan
             $table->boolean('is_read')->default(false);             // sudah dibaca admin?

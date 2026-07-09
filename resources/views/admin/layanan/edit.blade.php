@@ -62,33 +62,11 @@
                           placeholder="Tulis setiap persyaratan di baris baru">{{ old('persyaratan', $layanan->persyaratan) }}</textarea>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- Warna -->
-                <div>
-                    <label for="warna" class="block text-sm font-semibold text-gray-700 mb-2">Warna Tema <span class="text-red-500">*</span></label>
-                    <div class="flex items-center gap-3">
-                        <input type="color" name="warna" id="warna" value="{{ old('warna', $layanan->warna) }}"
-                               class="w-12 h-10 rounded-lg border border-gray-200 cursor-pointer">
-                        <input type="text" id="warna_text" value="{{ old('warna', $layanan->warna) }}" readonly
-                               class="flex-1 px-4 py-2.5 rounded-lg border border-gray-200 bg-gray-50 text-gray-600 font-mono text-sm outline-none">
-                    </div>
-                </div>
-
-                <!-- Urutan -->
-                <div>
-                    <label for="urutan" class="block text-sm font-semibold text-gray-700 mb-2">Urutan Tampil</label>
-                    <input type="number" name="urutan" id="urutan" value="{{ old('urutan', $layanan->urutan) }}" min="0"
-                           class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none">
-                </div>
-            </div>
-
-            <!-- Ikon SVG -->
+            <!-- Urutan Tampil -->
             <div>
-                <label for="ikon" class="block text-sm font-semibold text-gray-700 mb-2">Ikon (SVG Tag)</label>
-                <textarea name="ikon" id="ikon" rows="3"
-                          class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none resize-y font-mono text-sm"
-                          placeholder='<svg xmlns="http://www.w3.org/2000/svg" ...>...</svg>'>{{ old('ikon', $layanan->ikon) }}</textarea>
-                <p class="mt-1 text-xs text-gray-400">Paste kode SVG untuk ikon layanan. Kosongkan untuk menggunakan ikon default.</p>
+                <label for="urutan" class="block text-sm font-semibold text-gray-700 mb-2">Urutan Tampil</label>
+                <input type="number" name="urutan" id="urutan" value="{{ old('urutan', $layanan->urutan) }}" min="0"
+                       class="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all outline-none">
             </div>
 
             <!-- File Dokumen -->
@@ -96,7 +74,7 @@
                 <label for="file_dokumen" class="block text-sm font-semibold text-gray-700 mb-2">File Dokumen</label>
                 @if($layanan->file_dokumen)
                     <div class="mb-3 flex items-center gap-3 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                        <svg class="w-5 h-5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+                        <svg class="w-5 h-5 text-blue-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
                         <span class="text-sm text-blue-700 font-medium flex-1">{{ basename($layanan->file_dokumen) }}</span>
                         <a href="{{ asset('storage/' . $layanan->file_dokumen) }}" target="_blank" class="text-xs text-blue-600 hover:underline">Lihat</a>
                         <label class="flex items-center gap-1 text-xs text-red-600 cursor-pointer">
@@ -129,12 +107,4 @@
         </form>
     </div>
 </div>
-
-@push('scripts')
-<script>
-    document.getElementById('warna').addEventListener('input', function() {
-        document.getElementById('warna_text').value = this.value;
-    });
-</script>
-@endpush
 @endsection

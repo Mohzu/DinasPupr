@@ -8,7 +8,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('pejabat_strukturals', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('nama');
             $table->string('jabatan');
             $table->string('foto')->nullable(); // path relative to storage/public or public/img

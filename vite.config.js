@@ -6,7 +6,9 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
+                'resources/css/index-animations.css',
                 'resources/js/app.js',
+                'resources/js/index-animations.js',
                 'resources/js/news-slider.js',
             ],
             refresh: true,

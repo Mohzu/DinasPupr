@@ -14,14 +14,14 @@ return new class extends Migration
         // Tambahkan user_id ke tabel pengaduans
         if (!Schema::hasColumn('pengaduans', 'user_id')) {
             Schema::table('pengaduans', function (Blueprint $table) {
-                $table->foreignId('user_id')->nullable()->after('status')->constrained()->onDelete('set null');
+                $table->foreignUuid('user_id')->nullable()->after('status')->constrained()->onDelete('set null');
             });
         }
 
         // Tambahkan user_id ke tabel kontaks
         if (!Schema::hasColumn('kontaks', 'user_id')) {
             Schema::table('kontaks', function (Blueprint $table) {
-                $table->foreignId('user_id')->nullable()->after('status')->constrained()->onDelete('set null');
+                $table->foreignUuid('user_id')->nullable()->after('status')->constrained()->onDelete('set null');
         });
         }
     }

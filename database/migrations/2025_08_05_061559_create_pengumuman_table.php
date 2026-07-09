@@ -8,7 +8,7 @@ class CreatePengumumanTable extends Migration
     public function up()
     {
         Schema::create('pengumuman', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('judul', 200);
             $table->text('isi')->nullable();
             $table->string('lampiran', 150)->nullable();

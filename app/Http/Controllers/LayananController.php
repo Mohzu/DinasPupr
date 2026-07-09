@@ -33,8 +33,6 @@ class LayananController extends Controller
             'alur' => 'nullable|string',
             'persyaratan' => 'nullable|string',
             'file_dokumen' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:10240',
-            'ikon' => 'nullable|string',
-            'warna' => 'required|string|max:50',
             'urutan' => 'nullable|integer|min:0',
         ]);
 
@@ -45,6 +43,7 @@ class LayananController extends Controller
         }
 
         $validated['urutan'] = $validated['urutan'] ?? 0;
+        $validated['user_id'] = auth()->id();
 
         Layanan::create($validated);
 
@@ -66,8 +65,6 @@ class LayananController extends Controller
             'alur' => 'nullable|string',
             'persyaratan' => 'nullable|string',
             'file_dokumen' => 'nullable|file|mimes:pdf,doc,docx,xls,xlsx|max:10240',
-            'ikon' => 'nullable|string',
-            'warna' => 'required|string|max:50',
             'urutan' => 'nullable|integer|min:0',
         ]);
 

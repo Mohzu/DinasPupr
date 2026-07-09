@@ -25,7 +25,6 @@
                         <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Urutan</th>
                         <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Layanan</th>
                         <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Deskripsi</th>
-                        <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Warna</th>
                         <th class="px-6 py-4 text-left text-xs font-bold text-gray-700 uppercase tracking-wider">Dokumen</th>
                         <th class="px-6 py-4 text-right text-xs font-bold text-gray-700 uppercase tracking-wider">Aksi</th>
                     </tr>
@@ -41,12 +40,6 @@
                             </td>
                             <td class="px-6 py-4">
                                 <p class="text-sm text-gray-600">{{ Str::limit($layanan->deskripsi_singkat, 60) }}</p>
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-6 h-6 rounded-full border-2 border-white shadow-sm" style="background-color: {{ $layanan->warna }};"></div>
-                                    <span class="text-xs text-gray-500 font-mono">{{ $layanan->warna }}</span>
-                                </div>
                             </td>
                             <td class="px-6 py-4">
                                 @if($layanan->file_dokumen)

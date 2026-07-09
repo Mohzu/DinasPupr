@@ -21,7 +21,7 @@
     
     <div class="relative z-10 container mx-auto px-6 h-full flex items-center justify-center text-center">
       <div class="max-w-4xl mx-auto">
-        <div class="inline-flex items-center gap-2 bg-white bg-opacity-95 backdrop-blur-md rounded-full px-4 py-2 text-gray-800 text-sm font-semibold mb-6 border border-white border-opacity-50 shadow-lg">
+        <div class="inline-flex items-center gap-2 bg-white rounded-full px-4 py-2 text-gray-800 text-sm font-semibold mb-6 border border-gray-200 shadow-lg">
           <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
             <path d="M10 2a8 8 0 100 16 8 8 0 000-16z"/>
           </svg>
@@ -33,7 +33,7 @@
           <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-300">Organisasi</span>
         </h1>
         
-        <div class="inline-block bg-black/30 backdrop-blur-sm rounded-2xl px-6 py-3 mb-2">
+        <div class="inline-block bg-black/50 rounded-2xl px-6 py-3 mb-2">
           <p class="text-lg md:text-xl text-white font-semibold">
             Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Garut
           </p>
@@ -47,7 +47,7 @@
     
     <!-- Structure Chart Section -->
     @if($struktur)
-    <div class="bg-white/95 backdrop-blur-xl rounded-[32px] p-6 sm:p-8 shadow-2xl border border-white/20 mb-8 sm:mb-12 mt-12 sm:mt-16">
+    <div class="bg-white rounded-[32px] p-6 sm:p-8 shadow-xl border border-gray-150 mb-8 sm:mb-12 mt-12 sm:mt-16">
       <div class="text-center mb-6 sm:mb-8">
         <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
           <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,10 +60,9 @@
 
       @if($struktur->gambar)
       <div class="relative group mb-6 sm:mb-8">
-        <div class="absolute inset-0 bg-gradient-to-r from-blue-400/10 via-purple-400/10 to-emerald-400/10 rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-        <div class="rounded-lg border bg-white/90 backdrop-blur p-2 sm:p-3 shadow hover:shadow-lg transition-all duration-300">
-          <div class="aspect-[20/9] w-full rounded-md border overflow-hidden bg-white relative">
-            <img src="{{ Storage::disk('public')->url($struktur->gambar) }}" alt="{{ $struktur->title }}" class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-102">
+        <div class="rounded-lg border bg-white p-2 sm:p-3 shadow hover:shadow-lg transition-all duration-300 overflow-x-auto">
+          <div class="min-w-[600px] sm:min-w-[800px] md:min-w-0 md:w-full aspect-[20/9] rounded-md border overflow-hidden bg-white relative">
+            <img src="{{ Storage::disk('public')->url($struktur->gambar) }}" alt="{{ $struktur->title }}" class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-102" loading="lazy">
           </div>
         </div>
       </div>
@@ -76,7 +75,7 @@
       @endif
     </div>
     @else
-    <div class="bg-white/95 backdrop-blur-xl rounded-[32px] p-6 sm:p-8 shadow-2xl border border-white/20 mb-8 sm:mb-12 mt-12 sm:mt-16">
+    <div class="bg-white rounded-[32px] p-6 sm:p-8 shadow-xl border border-gray-150 mb-8 sm:mb-12 mt-12 sm:mt-16">
       <div class="text-center mb-6 sm:mb-8">
         <div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-semibold mb-3 sm:mb-4">
           <svg class="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -93,7 +92,7 @@
     @endif
 
     <!-- Leadership Section -->
-    <div class="bg-white/95 backdrop-blur-xl rounded-[32px] p-6 sm:p-8 shadow-2xl border border-white/20">
+    <div class="bg-white rounded-[32px] p-6 sm:p-8 shadow-xl border border-gray-150">
       <div class="text-center mb-8 sm:mb-10">
         <div class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-100 to-blue-100 text-purple-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -254,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Calculate visible cards
   const getVisibleCards = () => {
     const containerWidth = container.offsetWidth - 112;
-    return Math.floor(containerWidth / step);
+    return Math.max(1, Math.floor(containerWidth / step));
   };
 
   let visibleCards = getVisibleCards();
@@ -322,23 +321,19 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.key === 'ArrowRight') goNext();
   });
 
-  // Touch swipe
-  let touchStartX = 0;
-  let touchEndX = 0;
-
-  container.addEventListener('touchstart', (e) => {
-    touchStartX = e.changedTouches[0].screenX;
-  });
-
-  container.addEventListener('touchend', (e) => {
-    touchEndX = e.changedTouches[0].screenX;
-    const swipeThreshold = 50;
-    
-    if (touchEndX < touchStartX - swipeThreshold) {
-      goNext();
-    } else if (touchEndX > touchStartX + swipeThreshold) {
-      goPrev();
-    }
+  // Sync index and indicators on native scroll (momentum/swipe)
+  let scrollTimeout;
+  container.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const scrollLeft = container.scrollLeft;
+      const newIndex = Math.min(maxIndex, Math.max(0, Math.round(scrollLeft / step)));
+      if (newIndex !== currentIndex) {
+        currentIndex = newIndex;
+        updateButtons();
+        updateIndicators();
+      }
+    }, 100);
   });
 
   // Responsive

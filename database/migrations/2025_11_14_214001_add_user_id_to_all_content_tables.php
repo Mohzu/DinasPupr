@@ -14,28 +14,28 @@ return new class extends Migration
         // Tambahkan user_id ke tabel dokumens jika belum ada
         if (!Schema::hasColumn('dokumens', 'user_id')) {
             Schema::table('dokumens', function (Blueprint $table) {
-                $table->foreignId('user_id')->nullable()->after('published_at')->constrained()->onDelete('set null');
+                $table->foreignUuid('user_id')->nullable()->after('published_at')->constrained()->onDelete('set null');
             });
         }
 
         // Tambahkan user_id ke tabel sejarahs jika belum ada
         if (!Schema::hasColumn('sejarahs', 'user_id')) {
             Schema::table('sejarahs', function (Blueprint $table) {
-                $table->foreignId('user_id')->nullable()->after('status')->constrained()->onDelete('set null');
+                $table->foreignUuid('user_id')->nullable()->after('status')->constrained()->onDelete('set null');
             });
         }
 
         // Tambahkan user_id ke tabel visi_misis jika belum ada
         if (!Schema::hasColumn('visi_misis', 'user_id')) {
             Schema::table('visi_misis', function (Blueprint $table) {
-                $table->foreignId('user_id')->nullable()->after('status')->constrained()->onDelete('set null');
+                $table->foreignUuid('user_id')->nullable()->after('status')->constrained()->onDelete('set null');
             });
         }
 
         // Tambahkan user_id ke tabel struktur_organisasis jika belum ada
         if (!Schema::hasColumn('struktur_organisasis', 'user_id')) {
             Schema::table('struktur_organisasis', function (Blueprint $table) {
-                $table->foreignId('user_id')->nullable()->after('status')->constrained()->onDelete('set null');
+                $table->foreignUuid('user_id')->nullable()->after('status')->constrained()->onDelete('set null');
             });
         }
     }
