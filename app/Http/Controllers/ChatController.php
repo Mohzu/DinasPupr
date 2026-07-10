@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Log;
 
 class ChatController extends Controller
 {
-    private string $apiKey;
+    private ?string $apiKey;
     private string $apiUrl;
 
     // Sistem prompt identitas SAPA PUPR Garut
@@ -58,7 +58,7 @@ PROMPT;
 
     public function __construct()
     {
-        $this->apiKey = config('services.gemini.api_key', env('GEMINI_API_KEY'));
+        $this->apiKey = config('services.gemini.api_key') ?: null;
         $this->apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
     }
 
@@ -338,6 +338,13 @@ PROMPT;
      */
     private function generateResponse(string $userMessage, array $conversationHistory = []): string
     {
+        // Kalau API key belum diset (mis. baru deploy), jangan crash — kasih pesan ramah.
+        if (empty($this->apiKey)) {
+            Log::warning('Chatbot dipanggil tapi GEMINI_API_KEY belum diset.');
+            return "Mohon maaf, layanan chat otomatis sedang belum aktif. "
+                . "Silakan hubungi Dinas PUPR Kabupaten Garut melalui halaman Kontak untuk bantuan. 🙏";
+        }
+
         try {
             // Ambil konteks relevan dari database
             $context = $this->fetchRelevantContext($userMessage);
