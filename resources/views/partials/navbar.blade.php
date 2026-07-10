@@ -1,10 +1,18 @@
-<header class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-sm shadow-lg border-b border-gray-100">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-5">
+@php
+    $isTransparentNavbar = request()->routeIs('home', 'sejarah', 'strukturorganisasi', 'visimisi', 'berita', 'pengumuman', 'dokumen', 'layanan.show', 'kontak', 'pengaduan');
+@endphp
+
+<header x-data="{ isScrolled: {{ $isTransparentNavbar ? 'false' : 'true' }} }" 
+        @if($isTransparentNavbar)
+            x-init="window.addEventListener('scroll', () => { isScrolled = window.scrollY > 20 })"
+        @endif
+        :class="isScrolled ? 'bg-white/95 backdrop-blur-sm shadow-md border-b border-gray-100 py-3' : 'bg-transparent border-b border-transparent py-4 lg:py-5'"
+        class="fixed w-full top-0 z-50 transition-all duration-300">
+    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center">
             <!-- Logo dan Nama Instansi -->
             <div class="flex items-center space-x-3 lg:space-x-5">
-                <div class="relative flex-shrink-0">
-                    <!-- Ganti dengan logo Anda -->
+                <div class="relative flex-shrink-0 hidden sm:block">
                     <div class="h-10 w-10 lg:h-12 lg:w-12 rounded-lg shadow-md bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
                         <img 
                             src="{{ asset('img/logoPU.png') }}" 
@@ -12,24 +20,24 @@
                             class="h-8 w-8 lg:h-10 lg:w-10 object-contain"
                             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
                         >
-                        <!-- Fallback jika logo tidak ditemukan -->
                         <span class="text-blue-600 font-bold text-sm lg:text-base hidden">PU</span>
                     </div>
                     <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg blur opacity-20"></div>
                 </div>
                 <div class="flex flex-col min-w-0">
-                    <h1 class="text-sm sm:text-base lg:text-xl font-bold text-gray-800 leading-tight tracking-tight truncate">
+                    <h1 :class="isScrolled ? 'text-gray-800' : 'text-white'" class="text-sm sm:text-base lg:text-xl font-bold leading-tight tracking-tight truncate transition-colors duration-300">
                         Dinas Pekerjaan Umum dan Penataan Ruang
                     </h1>
-                    <p class="text-xs lg:text-sm text-gray-700 font-medium mt-0.5 lg:mt-1">Kabupaten Garut</p>
+                    <p :class="isScrolled ? 'text-gray-600' : 'text-slate-200'" class="text-xs lg:text-sm font-medium mt-0.5 lg:mt-1 transition-colors duration-300">Kabupaten Garut</p>
                 </div>
             </div>
 
             <!-- Desktop Navigation -->
-            <ul class="hidden lg:flex items-center space-x-10 text-sm font-semibold text-gray-700">
+            <ul class="hidden lg:flex items-center space-x-10 text-sm font-semibold">
                 <li>
                     <a href="{{ route('home') }}" 
-                       class="relative py-2 px-1 hover:text-blue-600 transition-all duration-300 group">
+                       :class="isScrolled ? 'text-gray-700 hover:text-blue-600' : 'text-white hover:text-amber-400'"
+                       class="relative py-2 px-1 transition-all duration-300 group">
                         Beranda
                         <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-blue-700 group-hover:w-full group-hover:left-0 transition-all duration-300 rounded-full"></span>
                     </a>
@@ -38,7 +46,8 @@
                 <!-- Dropdown Profil -->
                 <li x-data="{ open: false }" class="relative">
                     <button @click="open = !open" 
-                            class="relative py-2 px-1 hover:text-blue-600 focus:outline-none flex items-center space-x-1 transition-all duration-300 group"
+                            :class="isScrolled ? 'text-gray-700 hover:text-blue-600' : 'text-white hover:text-amber-400'"
+                            class="relative py-2 px-1 focus:outline-none flex items-center space-x-1 transition-all duration-300 group"
                             :class="{ 'text-blue-600': open }">
                         <span>Profil</span>
                         <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,7 +95,8 @@
                 <!-- Dropdown Berita -->
                 <li x-data="{ open: false }" class="relative">
                     <button @click="open = !open" 
-                            class="relative py-2 px-1 hover:text-blue-600 focus:outline-none flex items-center space-x-1 transition-all duration-300 group"
+                            :class="isScrolled ? 'text-gray-700 hover:text-blue-600' : 'text-white hover:text-amber-400'"
+                            class="relative py-2 px-1 focus:outline-none flex items-center space-x-1 transition-all duration-300 group"
                             :class="{ 'text-blue-600': open }">
                         <span>Berita</span>
                         <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,7 +136,8 @@
                 <!-- Dropdown Layanan -->
                 <li x-data="{ open: false }" class="relative">
                     <button @click="open = !open" 
-                            class="relative py-2 px-1 hover:text-blue-600 focus:outline-none flex items-center space-x-1 transition-all duration-300 group"
+                            :class="isScrolled ? 'text-gray-700 hover:text-blue-600' : 'text-white hover:text-amber-400'"
+                            class="relative py-2 px-1 focus:outline-none flex items-center space-x-1 transition-all duration-300 group"
                             :class="{ 'text-blue-600': open }">
                         <span>Layanan</span>
                         <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': open }" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,7 +175,8 @@
                 </li>
                 <li>
                     <a href="{{ route('dokumen') }}" 
-                       class="relative py-2 px-1 hover:text-blue-600 transition-all duration-300 group">
+                       :class="isScrolled ? 'text-gray-700 hover:text-blue-600' : 'text-white hover:text-amber-400'"
+                       class="relative py-2 px-1 transition-all duration-300 group">
                         Dokumen
                         <span class="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-blue-700 group-hover:w-full group-hover:left-0 transition-all duration-300 rounded-full"></span>
                     </a>
@@ -174,7 +186,8 @@
             <!-- Mobile Menu Button -->
             <div class="lg:hidden" x-data="{ mobileMenuOpen: false }">
                 <button @click="mobileMenuOpen = !mobileMenuOpen" 
-                        class="inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-all duration-200">
+                        :class="isScrolled ? 'text-gray-700 hover:text-blue-600 hover:bg-gray-100' : 'text-white hover:text-white/10 hover:bg-white/5'"
+                        class="inline-flex items-center justify-center p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500 transition-all duration-200">
                     <span class="sr-only">Open main menu</span>
                     <svg class="h-6 w-6" :class="{ 'hidden': mobileMenuOpen, 'block': !mobileMenuOpen }" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />

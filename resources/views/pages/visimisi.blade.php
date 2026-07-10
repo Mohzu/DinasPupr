@@ -6,7 +6,7 @@
 @section('content')
 <div class="min-h-screen bg-gray-50">
   <!-- Hero Section (TIDAK DIUBAH) -->
-  <section class="relative overflow-hidden mb-8 shadow-2xl mt-20 h-[70vh] min-h-[500px]">
+  <section class="relative overflow-hidden mb-8 shadow-2xl h-[70vh] min-h-[500px]">
     <div class="absolute inset-0">
       <img src="{{ asset('img/DinasPUPR.jpg') }}" alt="Background PUPR Garut" class="w-full h-full object-cover object-center">
       <div class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/70"></div>

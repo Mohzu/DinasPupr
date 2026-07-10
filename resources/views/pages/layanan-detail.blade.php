@@ -7,7 +7,7 @@
 <div class="min-h-screen bg-gray-50">
 
   {{-- ============ HERO SECTION ============ --}}
-  <section class="relative overflow-hidden shadow-2xl mt-20 h-[60vh] min-h-[420px]">
+  <section class="relative overflow-hidden shadow-2xl h-[60vh] min-h-[420px]">
     {{-- Animated Gradient Background --}}
     <div class="absolute inset-0 hero-gradient" style="--accent: {{ $layanan->warna }};"></div>
 

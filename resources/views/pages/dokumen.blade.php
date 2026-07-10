@@ -28,21 +28,8 @@
 </style>
 
 <div class="min-h-screen bg-gray-50">
-    <!-- Breadcrumb -->
-    <div class="bg-white border-b border-gray-200">
-        <div class="container mx-auto px-6 py-4">
-            <nav class="flex items-center gap-2 text-sm">
-                <a href="{{ route('home') }}" class="text-blue-600 hover:text-blue-700">Beranda</a>
-                <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
-                </svg>
-                <span class="text-gray-700 font-medium">Arsip dan Dokumen</span>
-            </nav>
-        </div>
-    </div>
-
     <!-- Hero Section -->
-    <section class="relative overflow-hidden mb-8 shadow-2xl mt-8 h-[70vh] min-h-[500px]">
+    <section class="relative overflow-hidden mb-8 shadow-2xl h-[70vh] min-h-[500px]">
         <div class="absolute inset-0">
             <img src="{{ asset('img/DinasPUPR.jpg') }}" alt="Background PUPR Garut" class="w-full h-full object-cover object-center">
             <div class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/70"></div>
@@ -78,6 +65,17 @@
             </div>
         </div>
     </section>
+
+    <!-- Breadcrumb -->
+    <div class="container mx-auto px-6 py-2 mb-6">
+        <nav class="flex items-center gap-2 text-sm">
+            <a href="{{ route('home') }}" class="text-blue-600 hover:text-blue-700">Beranda</a>
+            <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"/>
+            </svg>
+            <span class="text-gray-700 font-medium">Arsip dan Dokumen</span>
+        </nav>
+    </div>
 
     <!-- Main Content -->
     <section class="container mx-auto px-4 sm:px-6 pb-16 -mt-8 relative z-10">

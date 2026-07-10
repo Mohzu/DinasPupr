@@ -9,7 +9,7 @@
 @endphp
 
 @section('content')
-<div class="min-h-screen bg-gray-50">
+<div class="min-h-screen bg-gray-50 pt-20">
     <!-- Breadcrumb -->
     <div class="bg-white border-b border-gray-200">
         <div class="container mx-auto px-6 py-4">

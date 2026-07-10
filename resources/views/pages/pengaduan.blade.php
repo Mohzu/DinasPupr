@@ -1,127 +1,134 @@
 @extends('layouts.app')
 
 @section('title', 'Pengaduan - Dinas PUPR Kabupaten Garut')
-@section('description', 'Sampaikan pengaduan Anda melalui form berikut.')
+@section('description', 'Sampaikan aspirasi dan pengaduan Anda secara online.')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-amber-50 via-white to-yellow-50">
-    <!-- Hero -->
-    <section class="relative pt-28 pb-16 overflow-hidden">
-        <div class="absolute -top-10 -right-10 w-80 h-80 bg-amber-200/50 rounded-full blur-3xl"></div>
-        <div class="absolute -bottom-10 -left-12 w-96 h-96 bg-orange-200/40 rounded-full blur-3xl"></div>
-        <div class="container mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-10 items-center">
-                <div>
-                    <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 text-amber-700 text-xs font-semibold border border-amber-100">Layanan Aspirasi</span>
-                    <h1 class="mt-4 text-4xl md:text-5xl font-extrabold tracking-tight text-gray-900">Form Pengaduan Masyarakat</h1>
-                    <p class="mt-4 text-lg text-gray-600 max-w-2xl">Sampaikan keluhan, laporan, atau masukan terkait layanan kami. Laporan Anda akan kami tindaklanjuti.</p>
-                    <div class="mt-6 grid sm:grid-cols-3 gap-3">
-                        <div class="p-4 rounded-2xl bg-white/70 backdrop-blur border border-amber-100">
-                            <p class="text-xs text-gray-500">Langkah 1</p>
-                            <p class="font-semibold text-gray-800">Isi Data Diri</p>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-white/70 backdrop-blur border border-amber-100">
-                            <p class="text-xs text-gray-500">Langkah 2</p>
-                            <p class="font-semibold text-gray-800">Jelaskan Pengaduan</p>
-                        </div>
-                        <div class="p-4 rounded-2xl bg-white/70 backdrop-blur border border-amber-100">
-                            <p class="text-xs text-gray-500">Langkah 3</p>
-                            <p class="font-semibold text-gray-800">Kirim & Tunggu Tindak Lanjut</p>
-                        </div>
-                    </div>
+<div class="min-h-screen bg-gray-50">
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden mb-8 shadow-2xl h-[70vh] min-h-[500px]">
+        <div class="absolute inset-0">
+            <img src="{{ asset('img/DinasPUPR.jpg') }}" alt="Background PUPR Garut" class="w-full h-full object-cover object-center">
+            <div class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/70"></div>
+            <div class="absolute inset-0 bg-black/20"></div>
+        </div>
+
+        <div class="absolute inset-0 z-5">
+            <div class="absolute top-8 left-8 w-16 h-16 bg-white bg-opacity-10 rounded-full animate-pulse"></div>
+            <div class="absolute top-24 right-12 w-12 h-12 bg-yellow-300 bg-opacity-30 rounded-full animate-bounce"></div>
+            <div class="absolute bottom-16 left-1/4 w-10 h-10 bg-green-400 bg-opacity-20 rounded-full animate-ping"></div>
+        </div>
+
+        <div class="relative z-10 container mx-auto px-6 h-full flex items-center justify-center text-center">
+            <div class="max-w-4xl mx-auto">
+                <div class="inline-flex items-center gap-2 bg-white bg-opacity-95 backdrop-blur-md rounded-full px-4 py-2 text-gray-800 text-sm font-semibold mb-6 border border-white border-opacity-50 shadow-lg">
+                    <svg class="w-4 h-4 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"/>
+                    </svg>
+                    Aspirasi & Pengaduan
                 </div>
-                <div class="relative">
-                    <div class="rounded-3xl border border-amber-100 bg-gradient-to-br from-white to-amber-50 p-6 shadow-xl">
-                        <div class="grid grid-cols-3 gap-4">
-                            <div class="p-4 rounded-xl bg-white/70 backdrop-blur border border-amber-100 text-center">
-                                <div class="w-10 h-10 rounded-xl bg-amber-500 text-white mx-auto grid place-items-center shadow">
-                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                                </div>
-                                <p class="mt-2 text-sm font-semibold text-gray-800">Mudah</p>
-                            </div>
-                            <div class="p-4 rounded-xl bg-white/70 backdrop-blur border border-amber-100 text-center">
-                                <div class="w-10 h-10 rounded-xl bg-amber-500 text-white mx-auto grid place-items-center shadow">
-                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01"/></svg>
-                                </div>
-                                <p class="mt-2 text-sm font-semibold text-gray-800">Jelas</p>
-                            </div>
-                            <div class="p-4 rounded-xl bg-white/70 backdrop-blur border border-amber-100 text-center">
-                                <div class="w-10 h-10 rounded-xl bg-amber-500 text-white mx-auto grid place-items-center shadow">
-                                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3"/></svg>
-                                </div>
-                                <p class="mt-2 text-sm font-semibold text-gray-800">Responsif</p>
-                            </div>
-                        </div>
-                    </div>
+
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 drop-shadow-[4px_4px_8px_rgba(0,0,0,0.9)]">
+                    Pengaduan
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-300 drop-shadow-[2px_2px_4px_rgba(0,0,0,0.8)]">Masyarakat</span>
+                </h1>
+
+                <div class="inline-block bg-black/30 backdrop-blur-sm rounded-2xl px-6 py-3 mb-2">
+                    <p class="text-lg md:text-xl text-white font-semibold max-w-3xl mx-auto drop-shadow-[2px_2px_4px_rgba(0,0,0,0.8)]">
+                        Layanan aspirasi dan pengaduan online untuk peningkatan pelayanan infrastruktur Kabupaten Garut.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Form -->
-    <section class="pb-20">
-        <div class="container mx-auto px-6 max-w-4xl">
-            <div class="rounded-3xl border border-amber-100 bg-white/80 backdrop-blur p-6 md:p-8 shadow-xl">
-                <!-- Alert untuk notifikasi -->
-                <div id="alert-success" class="hidden mb-6 p-4 rounded-xl bg-green-50 border border-green-200">
-                    <div class="flex items-center gap-3">
-                        <div class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                            </svg>
-                        </div>
-                        <p class="text-green-800 font-medium">Pengaduan berhasil dikirim! Kami akan menindaklanjuti laporan Anda.</p>
-                    </div>
+    <!-- Main Content (Overlaps Hero) -->
+    <section class="container mx-auto px-4 sm:px-6 pb-16 -mt-16 relative z-10 max-w-4xl">
+        <div class="bg-white/95 backdrop-blur-xl rounded-[32px] p-6 sm:p-8 shadow-2xl border border-white/20">
+            
+            <!-- Steps Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                <div class="p-4 rounded-2xl bg-amber-50/50 border border-amber-100/50 text-center">
+                    <span class="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold text-sm mx-auto mb-2 shadow-sm">1</span>
+                    <h3 class="font-bold text-gray-800 text-sm">Isi Data Diri</h3>
+                    <p class="text-xs text-gray-500 mt-1">Lengkapi nama, email, dan telepon</p>
                 </div>
-
-                <div id="alert-error" class="hidden mb-6 p-4 rounded-xl bg-red-50 border border-red-200">
-                    <div class="flex items-center gap-3">
-                        <div class="w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center">
-                            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
-                            </svg>
-                        </div>
-                        <p class="text-red-800 font-medium">Terjadi kesalahan saat mengirim pengaduan. Silakan coba lagi.</p>
-                    </div>
+                <div class="p-4 rounded-2xl bg-amber-50/50 border border-amber-100/50 text-center">
+                    <span class="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold text-sm mx-auto mb-2 shadow-sm">2</span>
+                    <h3 class="font-bold text-gray-800 text-sm">Jelaskan Laporan</h3>
+                    <p class="text-xs text-gray-500 mt-1">Tuliskan laporan secara mendalam</p>
                 </div>
-
-                <h2 class="text-xl font-extrabold text-gray-900">Form Pengaduan</h2>
-
-                <form id="complaint-form" action="{{ route('pengaduan.store') }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-4">
-                    @csrf
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
-                        <input type="text" name="nama" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Nama Anda" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                        <input type="email" name="email" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="email@domain.com" required>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon</label>
-                        <input type="tel" name="telepon" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="08xxxxxxxxxx">
-                    </div>
-                    
-                    <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Subjek</label>
-                        <input type="text" name="subjek" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Ringkasan pengaduan" required>
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Isi Pengaduan</label>
-                        <textarea name="pesan" rows="6" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Tulis pengaduan Anda secara detail" required></textarea>
-                    </div>
-
-                    <div class="md:col-span-2 flex items-center justify-end">
-                        <button type="submit" id="submit-btn" class="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-amber-600 text-white font-semibold hover:bg-amber-700 active:scale-[.99] transition">
-                            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/>
-                            </svg>
-                            <span id="btn-text">Kirim Pengaduan</span>
-                        </button>
-                    </div>
-                </form>
+                <div class="p-4 rounded-2xl bg-amber-50/50 border border-amber-100/50 text-center">
+                    <span class="w-8 h-8 rounded-full bg-amber-500 text-white flex items-center justify-center font-bold text-sm mx-auto mb-2 shadow-sm">3</span>
+                    <h3 class="font-bold text-gray-800 text-sm">Tunggu Respon</h3>
+                    <p class="text-xs text-gray-500 mt-1">Kami akan segera menindaklanjuti</p>
+                </div>
             </div>
+
+            <!-- Form -->
+            <h2 class="text-xl font-extrabold text-gray-900 mb-2 flex items-center gap-2">
+                <span class="w-1.5 h-6 bg-amber-500 rounded-full"></span>
+                Form Laporan Pengaduan
+            </h2>
+            <p class="text-gray-500 text-sm mb-6">Harap lengkapi semua isian formulir di bawah ini dengan informasi yang valid.</p>
+
+            <!-- Alerts -->
+            <div id="alert-success" class="hidden mb-6 p-4 rounded-xl bg-green-50 border border-green-200">
+                <div class="flex items-center gap-3">
+                    <div class="w-6 h-6 rounded-full bg-green-500 text-white flex items-center justify-center">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                    </div>
+                    <p class="text-green-800 font-medium text-sm">Pengaduan berhasil dikirim! Kami akan menindaklanjuti laporan Anda.</p>
+                </div>
+            </div>
+
+            <div id="alert-error" class="hidden mb-6 p-4 rounded-xl bg-red-50 border border-red-200">
+                <div class="flex items-center gap-3">
+                    <div class="w-6 h-6 rounded-full bg-red-500 text-white flex items-center justify-center">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </div>
+                    <p class="text-red-800 font-medium text-sm">Terjadi kesalahan saat mengirim pengaduan. Silakan coba lagi.</p>
+                </div>
+            </div>
+
+            <form id="complaint-form" action="{{ route('pengaduan.store') }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                @csrf
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nama Lengkap</label>
+                    <input type="text" name="nama" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors" placeholder="Nama Anda" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Email</label>
+                    <input type="email" name="email" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors" placeholder="email@domain.com" required>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Nomor Telepon</label>
+                    <input type="tel" name="telepon" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors" placeholder="08xxxxxxxxxx">
+                </div>
+                
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Subjek</label>
+                    <input type="text" name="subjek" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors" placeholder="Ringkasan pengaduan" required>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Isi Pengaduan</label>
+                    <textarea name="pesan" rows="6" class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors" placeholder="Tulis pengaduan Anda secara detail" required></textarea>
+                </div>
+
+                <div class="md:col-span-2 flex items-center justify-end pt-2">
+                    <button type="submit" id="submit-btn" class="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-amber-600 text-white font-bold hover:bg-amber-700 active:scale-[.99] transition shadow-lg shadow-amber-500/20">
+                        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                        <span id="btn-text">Kirim Pengaduan</span>
+                    </button>
+                </div>
+            </form>
         </div>
     </section>
 </div>

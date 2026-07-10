@@ -10,7 +10,7 @@
 @section('content')
 <div class="min-h-screen bg-gray-50">
     <!-- Hero Section with Background Image -->
-    <div class="relative overflow-hidden mb-8 shadow-2xl mt-20 h-[70vh] min-h-[500px]">
+    <div class="relative overflow-hidden mb-8 shadow-2xl h-[70vh] min-h-[500px]">
         <!-- Background Image -->
         <div class="absolute inset-0">
             <img src="{{ asset('img/DinasPUPR.jpg') }}" alt="Background PUPR Garut" class="w-full h-full object-cover object-center">
@@ -170,8 +170,8 @@
                 <!-- Recent News Sidebar (Dynamic) -->
                 <div class="space-y-6">
                     <h3 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                        <div class="w-1 h-8 bg-blue-600 rounded-full"></div>
-                        Berita <span class="text-blue-600">Terbaru</span>
+                        <div class="w-1 h-8 bg-amber-600 rounded-full"></div>
+                        Berita <span class="text-amber-500">Terbaru</span>
                     </h3>
                     
                     <!-- Recent News Items -->
@@ -211,7 +211,7 @@
         <div class="max-w-7xl mx-auto mb-16">
             <div class="flex flex-col md:flex-row justify-between items-center mb-8">
                 <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 md:mb-0">
-                    Semua <span class="text-blue-600">Berita</span>
+                    Semua <span class="text-amber-500">Berita</span>
                 </h2>
             </div>
 

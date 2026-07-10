@@ -4,8 +4,73 @@
 @section('description', 'Sejarah singkat Dinas Pekerjaan Umum dan Penataan Ruang Kabupaten Garut')
 
 @section('content')
+@php
+    $milestones = [];
+    
+    if (isset($sejarah) && !empty($sejarah->content)) {
+        // Parse database content by double-newlines (paragraphs)
+        $blocks = preg_split('/\r\n\r\n|\n\n/', trim($sejarah->content));
+        
+        $currentYear = null;
+        $currentTitle = null;
+        $currentDesc = [];
+        
+        foreach ($blocks as $block) {
+            $lines = array_map('trim', explode("\n", trim($block)));
+            if (empty($lines)) continue;
+            
+            // Check if the first line is a 4-digit year (e.g. 1942)
+            if (preg_match('/^\d{4}$/', $lines[0])) {
+                if ($currentYear) {
+                    $milestones[] = [
+                        'year' => $currentYear,
+                        'title' => $currentTitle,
+                        'description' => implode("\n\n", $currentDesc)
+                    ];
+                }
+                $currentYear = $lines[0];
+                $currentTitle = isset($lines[1]) ? $lines[1] : '';
+                $currentDesc = array_slice($lines, 2);
+            } else {
+                if ($currentYear) {
+                    $currentDesc[] = implode("\n", $lines);
+                }
+            }
+        }
+        if ($currentYear) {
+            $milestones[] = [
+                'year' => $currentYear,
+                'title' => $currentTitle,
+                'description' => implode("\n\n", $currentDesc)
+            ];
+        }
+    }
+
+    // Fallback if no milestones parsed
+    if (empty($milestones)) {
+        $milestones = [
+            [
+                'year' => '1942',
+                'title' => 'Pembentukan Dinas Pekerjaan Umum',
+                'description' => 'Dinas Pekerjaan Umum (DPU) didirikan oleh Belanda pada tahun 1942 oleh Reguen Shad. Pembentukan ini menjadi fondasi awal pembangunan infrastruktur di wilayah Kabupaten Garut.'
+            ],
+            [
+                'year' => '1998',
+                'title' => 'Transformasi Kelembagaan',
+                'description' => "Pada tahun 1998, Dinas Pekerjaan Umum (DPU) bertransformasi menjadi Dinas Bina Marga.\n\nTransformasi ini menekankan pentingnya manajemen kepegawaian dan pengembangan Sumber Daya Manusia (SDM) dalam mengelola dan memanfaatkan pegawai agar tetap produktif dalam melaksanakan tugas dan tanggung jawab."
+            ],
+            [
+                'year' => '2016',
+                'title' => 'Pembentukan Dinas PUPR',
+                'description' => "Pembentukan Resmi\n5 Oktober 2016\nDinas Pekerjaan Umum dan Penataan Ruang resmi dibentuk berdasarkan Peraturan Bupati No. 27 tentang Struktur Organisasi dan Tata Kerja (SOTK). Instansi ini dipimpin oleh Drs. H. UU Saepudin, ST., M.Si. sebagai Kepala Dinas pertama.\n\nLandasan Hukum\nPerda No. 52 Tahun 2016\nOrganisasi Dinas PUPR ditetapkan melalui Peraturan Daerah Kabupaten Garut Nomor 52 Tahun 2016, yang mengatur tugas pokok, fungsi, dan tata kerja."
+            ]
+        ];
+    }
+@endphp
+
 <div class="min-h-screen bg-gray-50">
-    <section class="relative overflow-hidden mb-8 shadow-2xl mt-20 h-[70vh] min-h-[500px]">
+    {{-- Original Hero Section --}}
+    <section class="relative overflow-hidden mb-8 shadow-2xl h-[70vh] min-h-[500px]">
         <div class="absolute inset-0">
             <img src="{{ asset('img/DinasPUPR.jpg') }}" alt="Background PUPR Garut" class="w-full h-full object-cover object-center">
             <div class="absolute inset-0 bg-gradient-to-br from-black/60 via-black/50 to-black/70"></div>
@@ -39,108 +104,110 @@
         </div>
     </section>
 
-    <section class="container mx-auto px-4 sm:px-6 pb-16 -mt-32 relative z-20 max-w-6xl">
-        
-        <div class="bg-white rounded-[2rem] shadow-xl overflow-hidden border border-gray-100">
-            <!-- Header -->
-            <div class="bg-blue-600 px-6 sm:px-8 py-6 text-center">
-                <h2 class="text-xl sm:text-2xl font-bold text-white tracking-wide">Sejarah Perkembangan</h2>
-            </div>
-
-            <div class="p-6 sm:p-10 space-y-8">
-                
-                <!-- 1942 -->
-                <div class="flex flex-col md:flex-row gap-6 items-start">
-                    <div class="flex-shrink-0">
-                        <div class="w-16 h-16 md:w-20 md:h-20 bg-[#D97706] rounded-lg flex items-center justify-center shadow-lg transition-transform duration-300">
-                            <span class="text-white font-bold text-xl md:text-2xl">1942</span>
-                        </div>
-                    </div>
-                    <div class="flex-1 bg-[#FFFBEB] rounded-2xl p-6 border border-[#FCD34D] hover:shadow-md transition-shadow">
-                        <h3 class="flex items-center gap-3 text-lg font-bold text-gray-900 mb-3">
-                            <svg class="w-5 h-5 text-[#D97706]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-                            Pembentukan Dinas Pekerjaan Umum
-                        </h3>
-                        <p class="text-gray-700 leading-relaxed text-sm md:text-base">
-                            Dinas Pekerjaan Umum (DPU) didirikan oleh Belanda pada tahun 1942 oleh Reguen Shad. 
-                            Pembentukan ini menjadi fondasi awal pembangunan infrastruktur di wilayah Kabupaten Garut.
-                        </p>
+    {{-- Perjalanan Membangun Negeri Section --}}
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                {{-- Left Side: Image from User --}}
+                <div class="relative group">
+                    <div class="absolute -inset-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+                    <div class="relative rounded-3xl aspect-[1.6] shadow-xl overflow-hidden bg-slate-100">
+                        <img src="{{ asset('img/sejarah_kantor.jpg') }}" alt="Kantor Dinas PUPR Garut" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        <div class="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </div>
                 </div>
 
-                <!-- 1998 -->
-                <div class="flex flex-col md:flex-row gap-6 items-start">
-                    <div class="flex-shrink-0">
-                        <div class="w-16 h-16 md:w-20 md:h-20 bg-[#15803d] rounded-lg flex items-center justify-center shadow-lg transition-transform duration-300">
-                            <span class="text-white font-bold text-xl md:text-2xl">1998</span>
-                        </div>
-                    </div>
-                    <div class="flex-1 bg-[#F0FDF4] rounded-2xl p-6 border border-[#86EFAC] hover:shadow-md transition-shadow">
-                        <h3 class="flex items-center gap-3 text-lg font-bold text-gray-900 mb-3">
-                            <svg class="w-5 h-5 text-[#15803d]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-                            Transformasi Kelembagaan
-                        </h3>
-                        <div class="space-y-3">
-                            <p class="text-gray-700 text-sm md:text-base">
-                                Pada tahun 1998, Dinas Pekerjaan Umum (DPU) bertransformasi menjadi <span class="font-bold text-gray-900">Dinas Bina Marga</span>.
-                            </p>
-                            <p class="text-gray-700 text-sm md:text-base leading-relaxed bg-white/50 p-3 rounded-lg border border-green-100">
-                                Transformasi ini menekankan pentingnya manajemen kepegawaian dan pengembangan Sumber Daya Manusia (SDM) 
-                                dalam mengelola dan memanfaatkan pegawai agar tetap produktif dalam melaksanakan tugas dan tanggung jawab.
-                            </p>
-                        </div>
+                {{-- Right Side: Content --}}
+                <div class="space-y-6">
+                    <h2 class="text-3xl font-bold text-slate-900 tracking-tight">
+                        Perjalanan Membangun Negeri
+                    </h2>
+                    
+                    {{-- Small decorative yellow bar --}}
+                    <div class="w-16 h-1 bg-amber-500 rounded-full"></div>
+
+                    <p class="text-slate-600 text-sm md:text-base leading-relaxed">
+                        Sejak berdirinya, Dinas Pekerjaan Umum dan Penataan Ruang (PUPR) Kabupaten Garut telah menjadi tulang punggung pembangunan infrastruktur di wilayah "Swiss van Java". Dedikasi kami berawal dari visi sederhana: menghubungkan setiap sudut kabupaten demi meningkatkan kesejahteraan rakyat.
+                    </p>
+
+                    <p class="text-slate-600 text-sm md:text-base leading-relaxed">
+                        Melalui berbagai dekade, institusi ini telah bertransformasi dari sekadar departemen pemeliharaan jalan menjadi badan yang komprehensif, mencakup pengelolaan sumber daya air, bina marga, cipta karya, hingga penataan ruang strategis yang berkelanjutan.
+                    </p>
+
+                    <div class="flex items-center gap-3 text-sm font-bold text-blue-900 pt-2">
+                        <span class="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center text-amber-600">
+                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        </span>
+                        Berkomitmen untuk Inovasi Berkelanjutan
                     </div>
                 </div>
-
-                <!-- 2016 -->
-                <div class="flex flex-col md:flex-row gap-6 items-start">
-                    <div class="flex-shrink-0">
-                        <div class="w-16 h-16 md:w-20 md:h-20 bg-[#1D4ED8] rounded-lg flex items-center justify-center shadow-lg transition-transform duration-300">
-                            <span class="text-white font-bold text-xl md:text-2xl">2016</span>
-                        </div>
-                    </div>
-                    <div class="flex-1 bg-[#EFF6FF] rounded-2xl p-6 border border-[#BFDBFE] hover:shadow-md transition-shadow">
-                        <h3 class="flex items-center gap-3 text-lg font-bold text-gray-900 mb-4">
-                            <svg class="w-5 h-5 text-[#1D4ED8]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-                            Pembentukan Dinas PUPR
-                        </h3>
-                        
-                        <div class="grid md:grid-cols-1 gap-4">
-                            <!-- Card 1 -->
-                            <div class="bg-white p-4 rounded-xl border border-blue-100 shadow-sm relative overflow-hidden group">
-                                <div class="absolute top-0 left-0 w-1 h-full bg-blue-500 group-hover:w-2 transition-all"></div>
-                                <h4 class="font-bold text-gray-900 mb-2 text-sm flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                                    Pembentukan Resmi
-                                    <span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">5 Oktober 2016</span>
-                                </h4>
-                                <p class="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                                    Dinas Pekerjaan Umum dan Penataan Ruang resmi dibentuk berdasarkan <strong class="text-gray-800">Peraturan Bupati No. 27</strong> tentang Struktur Organisasi dan Tata Kerja (SOTK). Instansi ini dipimpin oleh <strong class="text-gray-800">Drs. H. UU Saepudin, ST., M.Si.</strong> sebagai Kepala Dinas pertama.
-                                </p>
-                            </div>
-
-                            <!-- Card 2 -->
-                            <div class="bg-white p-4 rounded-xl border border-blue-100 shadow-sm relative overflow-hidden group">
-                                <div class="absolute top-0 left-0 w-1 h-full bg-gray-700 group-hover:w-2 transition-all"></div>
-                                <h4 class="font-bold text-gray-900 mb-2 text-sm flex items-center gap-2">
-                                    <svg class="w-4 h-4 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                                    Landasan Hukum
-                                    <span class="text-[10px] bg-gray-800 text-white px-2 py-0.5 rounded-full">Perda No. 52 Tahun 2016</span>
-                                </h4>
-                                <p class="text-gray-600 text-xs sm:text-sm leading-relaxed">
-                                    Organisasi Dinas PUPR ditetapkan melalui <strong class="text-gray-800">Peraturan Daerah Kabupaten Garut Nomor 52 Tahun 2016</strong>, yang mengatur tugas pokok, fungsi, dan tata kerja.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
+    </section>
 
+    {{-- Milestone Pembangunan Section --}}
+    <section class="py-20 bg-slate-50/50 border-t border-slate-100">
+        <div class="container mx-auto px-6 max-w-5xl">
+            {{-- Header --}}
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">
+                    {{ $sejarah->title ?? 'Milestone Pembangunan' }}
+                </h2>
+                <p class="text-slate-500 mt-4 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+                    Jejak langkah nyata dalam pembangunan infrastruktur strategis di Kabupaten Garut dari tahun ke tahun.
+                </p>
+            </div>
+
+            {{-- Custom Alternating Timeline --}}
+            <div class="relative mt-12">
+                {{-- Central Vertical Line --}}
+                <div class="absolute left-4 md:left-1/2 top-0 bottom-0 w-0.5 bg-slate-200 transform -translate-x-1/2"></div>
+
+                @foreach($milestones as $index => $milestone)
+                    @php
+                        $isEven = $index % 2 == 1;
+                        $badgeBg = $isEven ? 'bg-blue-900' : 'bg-amber-500';
+                    @endphp
+                    <div class="relative flex flex-col md:flex-row md:items-center justify-between mb-16">
+                        {{-- Year Circle Badge --}}
+                        <div class="absolute left-4 md:left-1/2 w-10 h-10 rounded-full border-4 border-white {{ $badgeBg }} flex items-center justify-center text-white font-bold text-xs shadow-md transform -translate-x-1/2 z-10">
+                            {{ $milestone['year'] }}
+                        </div>
+                        
+                        @if(!$isEven)
+                            {{-- Left Side Content --}}
+                            <div class="w-full md:w-[calc(50%-2.5rem)] ml-12 md:ml-0 md:text-right">
+                                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition duration-300">
+                                    <h3 class="text-lg font-bold text-slate-800 mb-2">{{ $milestone['title'] }}</h3>
+                                    <div class="text-sm text-slate-500 leading-relaxed space-y-3 md:text-right text-left">
+                                        @foreach(explode("\n\n", $milestone['description']) as $para)
+                                            <p>{!! nl2br(e($para)) !!}</p>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- Empty Spacer on the Right --}}
+                            <div class="hidden md:block w-[calc(50%-2.5rem)]"></div>
+                        @else
+                            {{-- Empty Spacer on the Left --}}
+                            <div class="hidden md:block w-[calc(50%-2.5rem)]"></div>
+                            
+                            {{-- Right Side Content --}}
+                            <div class="w-full md:w-[calc(50%-2.5rem)] ml-12 md:ml-0">
+                                <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition duration-300">
+                                    <h3 class="text-lg font-bold text-slate-800 mb-2">{{ $milestone['title'] }}</h3>
+                                    <div class="text-sm text-slate-500 leading-relaxed space-y-3">
+                                        @foreach(explode("\n\n", $milestone['description']) as $para)
+                                            <p>{!! nl2br(e($para)) !!}</p>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        </div>
     </section>
 </div>
-@php
-    use Illuminate\Support\Str;
-@endphp
 @endsection
