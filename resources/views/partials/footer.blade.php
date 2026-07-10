@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
+<style>
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -53,8 +47,6 @@
             background-size: 60px 60px;
         }
     </style>
-</head>
-<body class="bg-gray-100">
     <!-- Footer Section -->
     <footer class="relative bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white overflow-hidden">
         <!-- Background Pattern -->
@@ -218,5 +210,3 @@
         <div class="absolute top-20 right-10 w-20 h-20 bg-gradient-to-br from-blue-500/20 to-indigo-600/20 rounded-full blur-xl float-animation" style="animation-delay: 2s;"></div>
         <div class="absolute bottom-40 left-20 w-16 h-16 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 rounded-full blur-xl float-animation" style="animation-delay: 4s;"></div>
     </footer>
-</body>
-</html>

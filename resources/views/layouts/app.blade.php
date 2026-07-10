@@ -9,14 +9,12 @@
 
     <!-- Preload critical resources -->
     <link rel="preload" href="{{ asset('img/logoPU.png') }}" as="image" type="image/png">
-    <link rel="preload" href="{{ asset('css/app.css') }}" as="style">
-    
+
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/news-slider.js'])
-    
+
     <!-- Optimized Alpine.js loading -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" integrity="sha384-..." crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     
     @stack('styles')
 </head>
