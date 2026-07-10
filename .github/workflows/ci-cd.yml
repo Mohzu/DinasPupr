@@ -27,9 +27,6 @@ jobs:
           cp .env.example .env
           php artisan key:generate
 
-      - name: Run tests
-        run: php artisan test
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -40,6 +37,9 @@ jobs:
         run: |
           npm ci
           npm run build
+
+      - name: Run tests
+        run: php artisan test
 
   deploy:
     name: Deploy ke VPS
