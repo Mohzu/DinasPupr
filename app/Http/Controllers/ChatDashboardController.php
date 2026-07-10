@@ -42,7 +42,7 @@ class ChatDashboardController extends Controller
      * Detail sesi chat + form reply admin
      * GET /admin/chat/{id}
      */
-    public function show(int $id)
+    public function show(string $id)
     {
         $session = ChatSession::with('messages', 'admin')->findOrFail($id);
 
@@ -57,7 +57,7 @@ class ChatDashboardController extends Controller
      * Admin membalas pesan user
      * POST /admin/chat/{id}/reply
      */
-    public function reply(Request $request, int $id): JsonResponse
+    public function reply(Request $request, string $id): JsonResponse
     {
         $request->validate([
             'message' => 'required|string|max:2000',
@@ -95,7 +95,7 @@ class ChatDashboardController extends Controller
      * Tutup sesi dari sisi admin
      * PUT /admin/chat/{id}/close
      */
-    public function close(int $id): JsonResponse
+    public function close(string $id): JsonResponse
     {
         $session = ChatSession::findOrFail($id);
         $session->close();

@@ -14,7 +14,7 @@ class PengumumanSeeder extends Seeder
     public function run(): void
     {
         // Ambil user admin untuk dijadikan penulis
-        $adminUser = User::where('email', 'admin@dinaspupr.com')->first();
+        $adminUser = User::where('is_admin', true)->first();
         
         if (!$adminUser) {
             $this->command->warn('Admin user tidak ditemukan. Pastikan UserSeeder sudah dijalankan terlebih dahulu.');

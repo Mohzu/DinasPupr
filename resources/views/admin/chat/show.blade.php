@@ -92,13 +92,45 @@
         @endif
     </div>
 </div>
+
+{{-- Custom Confirmation Modal --}}
+<div id="confirm-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden">
+    {{-- Backdrop --}}
+    <div class="absolute inset-0 bg-gray-900/40 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
+    
+    {{-- Modal Content --}}
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-100 max-w-md w-full mx-4 overflow-hidden transform scale-95 opacity-0 transition-all duration-300 relative z-10 p-6 space-y-6">
+        <div class="flex items-start gap-4">
+            <div class="p-3 bg-red-50 text-red-600 rounded-full flex-shrink-0">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                </svg>
+            </div>
+            <div class="space-y-1.5">
+                <h3 class="text-lg font-bold text-gray-900">Tutup Sesi Chat</h3>
+                <p class="text-sm text-gray-500">Apakah Anda yakin ingin menutup sesi percakapan ini? Tindakan ini akan mengakhiri obrolan dengan pengguna.</p>
+            </div>
+        </div>
+        
+        <div class="flex justify-end gap-3">
+            <button id="btn-cancel-close" 
+                    class="px-4 py-2 text-sm font-semibold text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-xl transition-all duration-200">
+                Batal
+            </button>
+            <button id="btn-confirm-close" 
+                    class="px-5 py-2 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 rounded-xl shadow-sm hover:shadow-md transition-all duration-200">
+                Ya, Tutup Sesi
+            </button>
+        </div>
+    </div>
+</div>
 @endsection
 
 @include('admin.chat.partials.message-bubble', ['msg' => null, 'template_only' => true])
 
 @push('scripts')
 <script>
-const SESSION_ID     = {{ $session->id }};
+const SESSION_ID     = '{{ $session->id }}';
 const SESSION_TOKEN  = '{{ $session->session_token }}';
 const SESSION_STATUS = '{{ $session->status }}';
 const CSRF           = document.querySelector('meta[name="csrf-token"]').content;
@@ -149,17 +181,53 @@ async function sendAdminReply() {
     }
 }
 
-// Tutup sesi
-document.getElementById('close-session-btn')?.addEventListener('click', async () => {
-    if (!confirm('Tutup sesi chat ini?')) return;
+// Tutup sesi dengan Custom Modal
+const confirmModal = document.getElementById('confirm-modal');
+const modalContent = confirmModal.querySelector('.bg-white');
+const backdrop = confirmModal.querySelector('.absolute');
+const closeBtn = document.getElementById('close-session-btn');
+const cancelBtn = document.getElementById('btn-cancel-close');
+const confirmBtn = document.getElementById('btn-confirm-close');
 
-    const res = await fetch(`/admin/chat/${SESSION_ID}/close`, {
-        method: 'PUT',
-        headers: {'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json'},
-    });
-    const data = await res.json();
-    if (data.success) {
-        window.location.href = '{{ route("admin.chat.index") }}';
+function openConfirmModal() {
+    confirmModal.classList.remove('hidden');
+    // Trigger transition
+    setTimeout(() => {
+        backdrop.classList.replace('opacity-0', 'opacity-100');
+        modalContent.classList.replace('scale-95', 'scale-100');
+        modalContent.classList.replace('opacity-0', 'opacity-100');
+    }, 20);
+}
+
+function closeConfirmModal() {
+    backdrop.classList.replace('opacity-100', 'opacity-0');
+    modalContent.classList.replace('scale-100', 'scale-95');
+    modalContent.classList.replace('opacity-100', 'opacity-0');
+    setTimeout(() => {
+        confirmModal.classList.add('hidden');
+    }, 300);
+}
+
+closeBtn?.addEventListener('click', openConfirmModal);
+cancelBtn?.addEventListener('click', closeConfirmModal);
+
+confirmBtn?.addEventListener('click', async () => {
+    confirmBtn.disabled = true;
+    confirmBtn.innerText = 'Menutup...';
+    try {
+        const res = await fetch(`/admin/chat/${SESSION_ID}/close`, {
+            method: 'PUT',
+            headers: {'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json'},
+        });
+        const data = await res.json();
+        if (data.success) {
+            window.location.href = '{{ route("admin.chat.index") }}';
+        }
+    } catch (e) {
+        alert('Gagal menutup sesi. Silakan coba lagi.');
+        confirmBtn.disabled = false;
+        confirmBtn.innerText = 'Ya, Tutup Sesi';
+        closeConfirmModal();
     }
 });
 

@@ -13,19 +13,19 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Admin user untuk mengelola konten melalui Filament
+        // Admin user 
         User::create([
             'name' => 'Administrator Dinas PUPR',
-            'email' => 'admin@dinaspupr.com',
-            'password' => Hash::make('password'),
+            'email' => env('ADMIN_EMAIL', 'admin@dinaspuprgarut.cloud'),
+            'password' => Hash::make(env('ADMIN_PASSWORD', 'password')),
             'is_admin' => true,
         ]);
 
         // Admin tambahan untuk keperluan backup/alternatif
         User::create([
             'name' => 'Kepala Dinas PUPR',
-            'email' => 'kepala@dinaspupr.com',
-            'password' => Hash::make('password'),
+            'email' => env('ADMIN_ALT_EMAIL', 'kepala@dinaspuprgarut.cloud'),
+            'password' => Hash::make(env('ADMIN_ALT_PASSWORD', 'password')),
             'is_admin' => true,
         ]);
     }
