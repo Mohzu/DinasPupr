@@ -15,16 +15,16 @@
     <!-- Content -->
     <div x-show="!loading" class="space-y-6">
         <!-- Statistik Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
             <!-- Berita -->
-            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 shadow-lg border border-blue-200">
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-4 sm:p-6 shadow-lg border border-blue-200">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-blue-600 mb-1">Total Berita</p>
-                        <p class="text-3xl font-bold text-blue-900" x-text="stats?.berita || 0"></p>
+                        <p class="text-xs sm:text-sm font-medium text-blue-600 mb-1">Total Berita</p>
+                        <p class="text-2xl sm:text-3xl font-bold text-blue-900" x-text="stats?.berita || 0"></p>
                     </div>
-                    <div class="h-12 w-12 rounded-xl bg-blue-500 flex items-center justify-center shadow-md">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-blue-500 flex items-center justify-center shadow-md flex-shrink-0">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"/>
                         </svg>
                     </div>
@@ -32,14 +32,14 @@
             </div>
 
             <!-- Pengumuman -->
-            <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 shadow-lg border border-green-200">
+            <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-4 sm:p-6 shadow-lg border border-green-200">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-green-600 mb-1">Total Pengumuman</p>
-                        <p class="text-3xl font-bold text-green-900" x-text="stats?.pengumuman || 0"></p>
+                        <p class="text-xs sm:text-sm font-medium text-green-600 mb-1">Total Pengumuman</p>
+                        <p class="text-2xl sm:text-3xl font-bold text-green-900" x-text="stats?.pengumuman || 0"></p>
                     </div>
-                    <div class="h-12 w-12 rounded-xl bg-green-500 flex items-center justify-center shadow-md">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-green-500 flex items-center justify-center shadow-md flex-shrink-0">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
                         </svg>
                     </div>
@@ -47,14 +47,14 @@
             </div>
 
             <!-- Dokumen -->
-            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6 shadow-lg border border-purple-200">
+            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-4 sm:p-6 shadow-lg border border-purple-200">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-purple-600 mb-1">Total Dokumen</p>
-                        <p class="text-3xl font-bold text-purple-900" x-text="stats?.dokumen || 0"></p>
+                        <p class="text-xs sm:text-sm font-medium text-purple-600 mb-1">Total Dokumen</p>
+                        <p class="text-2xl sm:text-3xl font-bold text-purple-900" x-text="stats?.dokumen || 0"></p>
                     </div>
-                    <div class="h-12 w-12 rounded-xl bg-purple-500 flex items-center justify-center shadow-md">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-purple-500 flex items-center justify-center shadow-md flex-shrink-0">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
                     </div>
@@ -62,15 +62,15 @@
             </div>
 
             <!-- Pengaduan -->
-            <div class="bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl p-6 shadow-lg border border-amber-200">
+            <div class="bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl p-4 sm:p-6 shadow-lg border border-amber-200">
                 <div class="flex items-center justify-between">
                     <div>
-                        <p class="text-sm font-medium text-amber-600 mb-1">Total Pengaduan</p>
-                        <p class="text-3xl font-bold text-amber-900" x-text="stats?.pengaduan?.total || 0"></p>
-                        <p class="text-xs text-amber-700 mt-1" x-text="`${stats?.pengaduan?.baru || 0} baru`"></p>
+                        <p class="text-xs sm:text-sm font-medium text-amber-600 mb-1">Total Pengaduan</p>
+                        <p class="text-2xl sm:text-3xl font-bold text-amber-900" x-text="stats?.pengaduan?.total || 0"></p>
+                        <p class="text-[10px] sm:text-xs text-amber-700 mt-0.5" x-text="`${stats?.pengaduan?.baru || 0} baru`"></p>
                     </div>
-                    <div class="h-12 w-12 rounded-xl bg-amber-500 flex items-center justify-center shadow-md">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div class="h-10 w-10 sm:h-12 sm:w-12 rounded-xl bg-amber-500 flex items-center justify-center shadow-md flex-shrink-0">
+                        <svg class="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
                     </div>

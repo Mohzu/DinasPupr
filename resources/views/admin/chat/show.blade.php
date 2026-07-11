@@ -6,36 +6,41 @@
 <div class="max-w-4xl mx-auto space-y-6">
 
     {{-- Header --}}
-    <div class="flex items-center gap-4">
-        <a href="{{ route('admin.chat.index') }}"
-           class="p-2 text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-            </svg>
-        </a>
-        <div class="flex-1">
-            <h1 class="text-xl font-bold text-gray-900">
-                Sesi Chat #{{ $session->id }}
-                <span class="text-base font-normal text-gray-500">— {{ $session->user_name ?? 'Anonim' }}</span>
-            </h1>
-            <div class="flex items-center gap-3 mt-1">
-                @if($session->status === 'bot')
-                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700">🤖 Bot AI</span>
-                @elseif($session->status === 'human')
-                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-700">👤 Dengan Admin</span>
-                @else
-                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">✅ Selesai</span>
-                @endif
-                <span class="text-gray-400 text-xs">Dimulai {{ $session->created_at->format('d M Y, H:i') }}</span>
-                @if($session->transferred_at)
-                    <span class="text-orange-400 text-xs">Transfer: {{ $session->transferred_at->format('H:i') }}</span>
-                @endif
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-gray-100">
+        <div class="flex items-center gap-3">
+            <a href="{{ route('admin.chat.index') }}"
+               class="p-2 text-gray-500 hover:text-gray-800 hover:bg-gray-100 rounded-lg transition-colors flex-shrink-0">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </a>
+            <div class="min-w-0">
+                <h1 class="text-base sm:text-lg font-bold text-gray-900 flex flex-wrap items-center gap-1">
+                    <span>Sesi Chat</span>
+                    <span class="font-mono text-xs sm:text-sm text-gray-500 bg-gray-100 px-1.5 py-0.5 rounded" title="{{ $session->id }}">
+                        #{{ substr($session->id, 0, 8) }}...
+                    </span>
+                    <span class="text-sm sm:text-base font-normal text-gray-500">— {{ $session->user_name ?? 'Anonim' }}</span>
+                </h1>
+                <div class="flex flex-wrap items-center gap-2 mt-1">
+                    @if($session->status === 'bot')
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-700">🤖 Bot AI</span>
+                    @elseif($session->status === 'human')
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-700">👤 Dengan Admin</span>
+                    @else
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-700">✅ Selesai</span>
+                    @endif
+                    <span class="text-gray-400 text-xs">Dimulai {{ $session->created_at->format('d M Y, H:i') }}</span>
+                    @if($session->transferred_at)
+                        <span class="text-orange-400 text-xs">Transfer: {{ $session->transferred_at->format('H:i') }}</span>
+                    @endif
+                </div>
             </div>
         </div>
         @if($session->status !== 'closed')
             <button id="close-session-btn"
                     data-session-id="{{ $session->id }}"
-                    class="px-4 py-2 bg-red-100 hover:bg-red-200 text-red-700 text-sm font-medium rounded-lg transition-colors">
+                    class="w-full sm:w-auto px-4 py-2 bg-red-100 hover:bg-red-200 text-red-700 text-sm font-medium rounded-lg transition-colors flex justify-center items-center">
                 Tutup Sesi
             </button>
         @endif
@@ -171,6 +176,14 @@ async function sendAdminReply() {
         if (data.success) {
             replyInput.value = '';
             appendAdminBubble(data.message);
+        } else {
+            let errMsg = 'Gagal mengirim balasan.';
+            if (data.errors && data.errors.message) {
+                errMsg = data.errors.message.join('\n');
+            } else if (data.message) {
+                errMsg = data.message;
+            }
+            alert(errMsg);
         }
     } catch (e) {
         alert('Gagal mengirim balasan. Silakan coba lagi.');

@@ -133,6 +133,19 @@
     <!-- Admin Sidebar -->
     @include('admin.partials.sidebar')
 
+    <!-- Sidebar Backdrop for Mobile/Tablet -->
+    <div x-show="$store.sidebar.open" 
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-30 bg-gray-900/40 backdrop-blur-sm lg:hidden"
+         @click="$store.sidebar.open = false"
+         x-cloak>
+    </div>
+
     <!-- Main Content -->
     <div class="lg:ml-72 min-h-screen transition-all duration-300">
         <!-- Top Navigation -->

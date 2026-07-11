@@ -18,7 +18,7 @@
     </div>
 
     {{-- Stats Cards --}}
-    <div class="grid grid-cols-2 lg:grid-cols-5 gap-4">
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
         <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100">
             <p class="text-gray-500 text-xs font-medium">Total Sesi</p>
             <p class="text-2xl font-bold text-gray-800 mt-1">{{ $stats['total'] }}</p>
@@ -40,7 +40,7 @@
             <p class="text-green-600 text-xs font-medium">Selesai</p>
             <p class="text-2xl font-bold text-green-700 mt-1">{{ $stats['closed'] }}</p>
         </div>
-        <div class="bg-red-50 rounded-xl p-4 shadow-sm border border-red-100">
+        <div class="bg-red-50 rounded-xl p-4 shadow-sm border border-red-100 col-span-2 sm:col-span-1">
             <p class="text-red-600 text-xs font-medium">Belum Dibaca</p>
             <p class="text-2xl font-bold text-red-700 mt-1">{{ $stats['unread'] }}</p>
         </div>
@@ -68,7 +68,7 @@
                 <p class="text-sm mt-1">Sesi dari masyarakat akan muncul di sini</p>
             </div>
         @else
-            <div class="overflow-x-auto">
+            <div class="admin-table-wrapper">
                 <table class="w-full">
                     <thead class="bg-gray-50 border-b border-gray-100">
                         <tr>

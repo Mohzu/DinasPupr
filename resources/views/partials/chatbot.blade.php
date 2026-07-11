@@ -398,7 +398,8 @@
                             scheduleVerification(lastMsg.timestamp);
                         }
                     }
-                }
+            } else {
+                alert(data.message || 'Gagal mengirim pesan.');
             }
         } catch (err) {
             showTyping(false);
@@ -439,6 +440,8 @@
                 } else if (data.session_status === 'human') {
                     updateStatusUI();
                 }
+            } else {
+                alert(data.message || 'Sesi tidak valid dan permintaan tidak diproses.');
             }
         } catch (err) {
             showTyping(false);
