@@ -11,6 +11,7 @@ use App\Models\Sejarah;
 use App\Models\VisiMisi;
 use App\Models\StrukturOrganisasi;
 use App\Models\PejabatStruktural;
+use App\Models\Dokumen;
 use App\Events\MessageSent;
 use App\Events\ChatTransferredToAdmin;
 use Illuminate\Http\JsonResponse;
@@ -40,6 +41,11 @@ ATURAN KETAT:
 4. Jangan menjawab pertanyaan tentang politik praktis, SARA, atau hal di luar Tupoksi PUPR.
 5. Jangan mengarang informasi. Jika data tidak tersedia dalam konteks yang diberikan, katakan dengan jujur.
 6. Untuk topik sensitif (kepegawaian internal, rahasia instansi), tolak dengan sopan.
+
+INFORMASI DOKUMEN:
+- Jika masyarakat menanyakan dokumen terbaru atau daftar dokumen, sebutkan nama-nama dokumen yang tersedia di database sistem.
+- Jangan pernah menyertakan link download langsung atau alamat file (seperti /storage/...) kepada pengguna.
+- Berikan arahan yang ramah manusia untuk mengakses halaman dokumen (misalnya: "Silakan akses Halaman Dokumen di menu website kami" atau "Anda bisa mengunduhnya secara mandiri melalui menu Dokumen di website Dinas PUPR"). Jangan pernah menggunakan path teknis seperti "/pages/dokumen".
 
 STRUKTUR RESPONS WAJIB:
 - Berikan jawaban yang informatif dan ringkas.
@@ -452,6 +458,18 @@ PROMPT;
             foreach ($pengumumans as $p) {
                 $context .= "Judul: {$p->judul}\n";
                 $context .= "Isi: " . \Str::limit(strip_tags($p->isi), 200) . "\n---\n";
+            }
+        }
+
+        // 4. Dokumen Resmi / Publik Terbaru
+        $dokumens = Dokumen::orderByDesc('published_at')->orderByDesc('created_at')->limit(10)->get();
+        if ($dokumens->isNotEmpty()) {
+            $context .= "\n=== DAFTAR DOKUMEN RESMI / PUBLIK ===\n";
+            foreach ($dokumens as $dokumen) {
+                $context .= "Judul Dokumen: {$dokumen->title}\n";
+                if ($dokumen->description) $context .= "Deskripsi: {$dokumen->description}\n";
+                $context .= "Tahun: {$dokumen->year}\n";
+                $context .= "---\n";
             }
         }
 

@@ -398,6 +398,7 @@
                             scheduleVerification(lastMsg.timestamp);
                         }
                     }
+                }
             } else {
                 alert(data.message || 'Gagal mengirim pesan.');
             }
@@ -546,6 +547,7 @@
 
     function formatMarkdown(text) {
         return text
+            .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="text-blue-600 hover:underline font-semibold">$1</a>')
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
             .replace(/\*(.*?)\*/g, '<em>$1</em>')
             .replace(/\n/g, '<br>')
