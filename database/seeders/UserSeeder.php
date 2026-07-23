@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             'name' => 'Administrator Dinas PUPR',
             'email' => env('ADMIN_EMAIL', 'admin@dinaspuprgarut.cloud'),
             'password' => Hash::make(env('ADMIN_PASSWORD', 'password')),
-            'is_admin' => true,
+            'role' => 'admin',
         ]);
 
         // Admin tambahan untuk keperluan backup/alternatif
@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'name' => 'Kepala Dinas PUPR',
             'email' => env('ADMIN_ALT_EMAIL', 'kepala@dinaspuprgarut.cloud'),
             'password' => Hash::make(env('ADMIN_ALT_PASSWORD', 'password')),
-            'is_admin' => true,
+            'role' => 'kepala_dinas',
         ]);
     }
 }

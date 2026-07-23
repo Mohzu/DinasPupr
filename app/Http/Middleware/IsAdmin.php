@@ -16,7 +16,7 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::check() || !Auth::user()->is_admin) {
+        if (!Auth::check() || !Auth::user()->isAdmin()) {
             // Jika user tidak login atau bukan admin
             // Jika request ajax/json, return 403
             if ($request->expectsJson()) {

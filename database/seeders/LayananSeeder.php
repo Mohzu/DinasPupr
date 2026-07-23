@@ -84,7 +84,7 @@ class LayananSeeder extends Seeder
             ],
         ];
 
-        $adminId = \App\Models\User::where('is_admin', true)->first()?->id;
+        $adminId = \App\Models\User::whereIn('role', ['admin', 'kepala_dinas'])->first()?->id;
 
         foreach ($layanans as $layanan) {
             if ($adminId) {

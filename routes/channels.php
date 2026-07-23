@@ -14,5 +14,5 @@ Broadcast::channel('chat.{token}', function () {
 
 // Channel notifikasi admin (hanya admin yang login)
 Broadcast::channel('admin-chat-notifications', function ($user) {
-    return $user && $user->is_admin; // Hanya admin terautentikasi
+    return $user && $user->isAdmin(); // Hanya admin terautentikasi
 });

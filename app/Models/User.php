@@ -16,7 +16,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_admin', // Mengganti 'role' dengan 'is_admin'
+        'role',
     ];
 
     protected $hidden = [
@@ -29,8 +29,23 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'is_admin' => 'boolean', // Menambahkan casting untuk 'is_admin'
         ];
+    }
+
+    /**
+     * Check if user is Kepala Dinas
+     */
+    public function isKepalaDinas(): bool
+    {
+        return $this->role === 'kepala_dinas';
+    }
+
+    /**
+     * Check if user is Admin (Kepala Dinas or normal Admin)
+     */
+    public function isAdmin(): bool
+    {
+        return in_array($this->role, ['kepala_dinas', 'admin']);
     }
 
     public function berita(): HasMany

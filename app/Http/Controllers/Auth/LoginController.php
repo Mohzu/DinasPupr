@@ -31,7 +31,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
             // Cek apakah user adalah admin
-            if (!Auth::user()->is_admin) {
+            if (!Auth::user()->isAdmin()) {
                 Auth::logout();
                 return back()->withErrors([
                     'email' => 'Anda tidak memiliki akses admin.',

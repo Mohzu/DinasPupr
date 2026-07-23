@@ -72,6 +72,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::get('/api/active',  [ChatDashboardController::class, 'activeSessionsApi'])->name('active-api');
     });
 
+    // Manajemen Admin (Hanya Kepala Dinas)
+    Route::middleware(['kepala_dinas'])->group(function () {
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class);
+    });
+
     // Dashboard
     Route::get('/dashboard', function() {
         return view('admin.dashboard');
