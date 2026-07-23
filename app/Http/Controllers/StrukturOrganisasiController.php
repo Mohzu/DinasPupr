@@ -22,7 +22,7 @@ class StrukturOrganisasiController extends Controller
                 $leader->foto_url = $leader->foto
                     ? (Str::startsWith($leader->foto, ['http://', 'https://'])
                         ? $leader->foto
-                        : Storage::disk('public')->url($leader->foto))
+                        : asset('storage/' . $leader->foto))
                     : null;
                 return $leader;
             });

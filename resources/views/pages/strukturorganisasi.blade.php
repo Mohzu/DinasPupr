@@ -62,7 +62,7 @@
       <div class="relative group mb-6 sm:mb-8">
         <div class="rounded-lg border bg-white p-2 sm:p-3 shadow hover:shadow-lg transition-all duration-300 overflow-x-auto">
           <div class="min-w-[600px] sm:min-w-[800px] md:min-w-0 md:w-full aspect-[20/9] rounded-md border overflow-hidden bg-white relative">
-            <img src="{{ Storage::disk('public')->url($struktur->gambar) }}" alt="{{ $struktur->title }}" class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-102" loading="lazy">
+            <img src="{{ asset('storage/' . $struktur->gambar) }}" alt="{{ $struktur->title }}" class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-102" loading="lazy">
           </div>
         </div>
       </div>

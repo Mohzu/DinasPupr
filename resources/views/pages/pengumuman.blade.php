@@ -128,7 +128,7 @@
                                                     </div>
                                                 @endif
                                                 @if ($item->lampiran)
-                                                    <a class="inline-flex items-center gap-1 text-blue-600 hover:underline" href="{{ Storage::disk('public')->url($item->lampiran) }}" target="_blank" rel="noopener">Lampiran</a>
+                                                    <a class="inline-flex items-center gap-1 text-blue-600 hover:underline" href="{{ asset('storage/' . $item->lampiran) }}" target="_blank" rel="noopener">Lampiran</a>
                                                 @endif
                                             </div>
 

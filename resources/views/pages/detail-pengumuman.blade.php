@@ -49,7 +49,7 @@
                 @if ($pengumuman->lampiran)
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6">
                         <h2 class="text-base font-semibold text-gray-900 mb-4">Lampiran</h2>
-                        <a href="{{ Storage::disk('public')->url($pengumuman->lampiran) }}"
+                        <a href="{{ asset('storage/' . $pengumuman->lampiran) }}"
                            download="{{ basename($pengumuman->lampiran) }}"
                            class="group flex items-center gap-4 p-4 rounded-xl border border-gray-200 hover:border-amber-300 hover:bg-amber-50/50 transition">
                             <span class="flex items-center justify-center w-12 h-12 rounded-lg bg-amber-100 text-amber-700">

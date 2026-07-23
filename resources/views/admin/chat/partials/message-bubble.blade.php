@@ -19,7 +19,7 @@
     @else
         {{-- Bot message --}}
         <div class="flex items-end gap-2">
-            <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-[10px] font-bold flex-shrink-0">AI</div>
+            <img src="{{ asset('img/sapa_pupr.png') }}" alt="AI" class="w-8 h-8 rounded-full object-cover flex-shrink-0 bg-white border border-gray-200">
             <div class="bg-blue-50 text-gray-800 rounded-2xl rounded-bl-none px-4 py-3 shadow-sm max-w-lg border border-blue-100">
                 <p class="text-sm leading-relaxed whitespace-pre-wrap">{{ $msg->message }}</p>
                 <span class="text-gray-400 text-[10px] block mt-1">{{ $msg->created_at->format('H:i') }} · Bot AI</span>

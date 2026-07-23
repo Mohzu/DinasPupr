@@ -10,6 +10,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resources/js/index-animations.js',
                 'resources/js/news-slider.js',
+                'resources/js/chatbot.js',
             ],
             refresh: true,
         }),

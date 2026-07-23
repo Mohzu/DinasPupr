@@ -52,7 +52,7 @@
                     @if ($berita->gambar)
                     <div class="p-4 sm:p-6 pb-0">
                         <div class="relative rounded-lg overflow-hidden">
-                            <img src="{{ Storage::disk('public')->url($berita->gambar) }}" 
+                            <img src="{{ asset('storage/' . $berita->gambar) }}" 
                                  alt="{{ $berita->judul }}" 
                                  class="w-full h-auto object-contain bg-gray-50">
                         </div>
