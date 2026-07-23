@@ -242,7 +242,7 @@
                 updateStatusUI();
 
                 if (data.bot_reply) {
-                    appendBubble('bot', data.bot_reply.message, data.bot_reply.created_at);
+                    appendBubble('bot', data.bot_reply.message, data.bot_reply.created_at, data.bot_reply.id);
                     // Jadwalkan verifikasi setelah bot menjawab
                     scheduleVerification(data.bot_reply.timestamp);
                 }
@@ -251,7 +251,7 @@
                 if (data.messages) {
                     // Clear default welcome dan tampilkan dari server
                     clearMessages();
-                    data.messages.forEach(m => appendBubble(m.sender_type, m.message, m.created_at));
+                    data.messages.forEach(m => appendBubble(m.sender_type, m.message, m.created_at, m.id));
                     
                     if (data.messages.length > 0) {
                         const lastMsg = data.messages[data.messages.length - 1];
@@ -292,7 +292,7 @@
             if (data.success) {
                 sessionStatus = data.session_status;
                 updateStatusUI();
-                appendBubble('bot', data.bot_reply.message, data.bot_reply.created_at);
+                appendBubble('bot', data.bot_reply.message, data.bot_reply.created_at, data.bot_reply.id);
 
                 if (data.session_status === 'closed') {
                     // Jangan hapus token dari sessionStorage agar user masih bisa membaca riwayat
@@ -322,7 +322,7 @@
             if (data.success) {
                 sessionStatus = data.session_status;
                 clearMessages();
-                data.messages.forEach(m => appendBubble(m.sender_type, m.message, m.created_at));
+                data.messages.forEach(m => appendBubble(m.sender_type, m.message, m.created_at, m.id));
                 updateStatusUI();
 
                 if (data.session_status === 'closed') {
@@ -358,7 +358,7 @@
                 }
                 if (e.message.sender_type !== 'user') {
                     showTyping(false);
-                    appendBubble(e.message.sender_type, e.message.message, e.message.created_at);
+                    appendBubble(e.message.sender_type, e.message.message, e.message.created_at, e.message.id);
                     
                     // Jadwalkan ulang verifikasi jika bot mengirim pesan via ws
                     if (e.message.sender_type === 'bot' && sessionStatus === 'bot') {
@@ -370,14 +370,18 @@
             })
             .listen('.admin.replied', (e) => {
                 if (!isOpen) newBadge.classList.remove('hidden');
-                appendBubble('admin', e.message.message, e.message.created_at);
+                appendBubble('admin', e.message.message, e.message.created_at, e.message.id);
             });
     }
 
     // =============================================
     // UI Helpers
     // =============================================
-    function appendBubble(senderType, message, time) {
+    function appendBubble(senderType, message, time, messageId = null) {
+        if (messageId && document.querySelector(`[data-message-id="${messageId}"]`)) {
+            return;
+        }
+
         const isUser   = senderType === 'user';
         const isAdmin  = senderType === 'admin';
         const label    = isUser ? null : (isAdmin ? 'ADM' : 'AI');
@@ -396,7 +400,7 @@
         const formattedMsg = formatMarkdown(message);
 
         const html = `
-            <div class="flex ${wrapAlign} gap-2 animate-fade-in">
+            <div ${messageId ? `data-message-id="${messageId}"` : ''} class="flex ${wrapAlign} gap-2 animate-fade-in">
                 ${!isUser ? avatarHtml : ''}
                 <div class="${bubbleColor} ${bubbleRound} px-4 py-3 shadow-sm max-w-[85%]">
                     <div class="text-sm leading-relaxed prose-sm">${formattedMsg}</div>
