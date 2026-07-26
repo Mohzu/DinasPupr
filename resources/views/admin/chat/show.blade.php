@@ -245,14 +245,19 @@ confirmBtn?.addEventListener('click', async () => {
 });
 
 // Real-time: terima pesan user via Reverb
-if (window.Echo) {
-    window.Echo.channel(`chat.${SESSION_TOKEN}`)
-        .listen('.message.sent', (e) => {
-            if (e.message.sender_type === 'user') {
-                appendUserBubble(e.message);
-            }
-        });
-}
+// Echo dimuat secara async oleh Vite, jadi kita perlu menunggu sampai siap
+(function initEcho() {
+    if (typeof window.Echo !== 'undefined') {
+        window.Echo.channel(`chat.${SESSION_TOKEN}`)
+            .listen('.message.sent', (e) => {
+                if (e.message.sender_type === 'user') {
+                    appendUserBubble(e.message);
+                }
+            });
+    } else {
+        setTimeout(initEcho, 100);
+    }
+})();
 
 function appendAdminBubble(msg) {
     const html = `
