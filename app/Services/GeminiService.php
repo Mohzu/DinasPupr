@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Log;
 
 class GeminiService
 {
-    private ?string $apiKey;
+    private array $apiKeys = [];
     private string $apiUrl;
 
     // Sistem prompt identitas SAPA PUPR Garut
@@ -58,7 +58,9 @@ PROMPT;
 
     public function __construct()
     {
-        $this->apiKey = config('services.gemini.api_key') ?: null;
+        $rawKeys = config('services.gemini.api_key') ?: '';
+        // Memecah berdasarkan koma jika ada beberapa API key untuk rotasi
+        $this->apiKeys = array_filter(array_map('trim', explode(',', $rawKeys)));
         $this->apiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
     }
 
@@ -67,7 +69,7 @@ PROMPT;
      */
     public function generateReply(string $userMessage, array $conversationHistory = []): string
     {
-        if (empty($this->apiKey)) {
+        if (empty($this->apiKeys)) {
             Log::warning('Chatbot dipanggil tapi GEMINI_API_KEY belum diset.');
             return "Mohon maaf, layanan chat otomatis sedang belum aktif. "
                 . "Silakan hubungi Dinas PUPR Kabupaten Garut melalui halaman Kontak untuk bantuan. 🙏";
@@ -83,31 +85,55 @@ PROMPT;
             // Bangun array contents untuk Gemini (termasuk riwayat percakapan)
             $contents = $this->buildContents($conversationHistory, $fullPrompt);
 
-            $response = Http::timeout(30)->post($this->apiUrl . '?key=' . $this->apiKey, [
-                'system_instruction' => [
-                    'parts' => [['text' => $this->systemPrompt]],
-                ],
-                'contents'           => $contents,
-                'generationConfig'   => [
-                    'temperature'     => 0.3,
-                    'maxOutputTokens' => 1024,
-                ],
-            ]);
+            // Gunakan API Key berurutan dari kiri ke kanan (sequential fallback)
+            // Hanya jika key pertama limit, sistem akan mencoba key berikutnya
+            $keysToTry = $this->apiKeys;
 
-            if ($response->successful()) {
-                $data = $response->json();
-                return $data['candidates'][0]['content']['parts'][0]['text']
-                    ?? $this->defaultErrorResponse();
+            foreach ($keysToTry as $index => $apiKey) {
+                try {
+                    $response = Http::timeout(30)->post($this->apiUrl . '?key=' . $apiKey, [
+                        'system_instruction' => [
+                            'parts' => [['text' => $this->systemPrompt]],
+                        ],
+                        'contents'           => $contents,
+                        'generationConfig'   => [
+                            'temperature'     => 0.3,
+                            'maxOutputTokens' => 1024,
+                        ],
+                    ]);
+
+                    if ($response->successful()) {
+                        $data = $response->json();
+                        return $data['candidates'][0]['content']['parts'][0]['text']
+                            ?? $this->defaultErrorResponse();
+                    }
+
+                    // Jika terkena rate limit (429), log dan coba key selanjutnya
+                    if ($response->status() === 429) {
+                        Log::warning("Gemini API Key ke-" . ($index + 1) . " terkena limit (429). Mencoba API Key berikutnya...");
+                        continue;
+                    }
+
+                    Log::error('Gemini API Error dengan Key ke-' . ($index + 1), [
+                        'status'   => $response->status(),
+                        'response' => $response->body(),
+                    ]);
+
+                    // Jika error lain, tetap coba key berikutnya sebagai fallback
+                    continue;
+                } catch (\Exception $e) {
+                    Log::error('GeminiService Exception dengan Key ke-' . ($index + 1), [
+                        'error' => $e->getMessage()
+                    ]);
+                    continue;
+                }
             }
 
-            Log::error('Gemini API Error', [
-                'status'   => $response->status(),
-                'response' => $response->body(),
-            ]);
-
+            // Jika semua key sudah dicoba dan tidak ada yang berhasil
+            Log::error('Semua Gemini API Key yang dikonfigurasi gagal merespons.');
             return $this->defaultErrorResponse();
         } catch (\Exception $e) {
-            Log::error('GeminiService Exception', ['error' => $e->getMessage()]);
+            Log::error('GeminiService General Exception', ['error' => $e->getMessage()]);
             return $this->defaultErrorResponse();
         }
     }
